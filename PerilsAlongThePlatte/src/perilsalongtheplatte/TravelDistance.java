@@ -34,6 +34,13 @@ public class TravelDistance {
 		// Generate a random integer between min and max (inclusive)
 		int randomNumber = random.nextInt(max - min + 1) + min;
 		int Distance = 0;
+		int min = 10;
+        int max = 20;
+     // Create a Random object
+        Random random = new Random();
+
+        // Generate a random integer between min and max (inclusive)
+        int randomNumber = random.nextInt(max - min + 1) + min;
 		while (isStopped() == false) {
 			for (int i = 0; i <= day; i++) {
 				Distance = Distance + randomNumber;
