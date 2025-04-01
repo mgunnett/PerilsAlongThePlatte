@@ -7,7 +7,7 @@ public class Perils {
 	public String weather;
 	Random rng = new Random();
 	Boolean isSick;
-	
+	 
 	/**
 	 * Checks to see if the pioneer gets sick based off of their health
 	 * @param personHealth checks the health of the pioneer
@@ -73,18 +73,18 @@ public class Perils {
 		}
 		
 		switch (sickness) {										// ADD PENALTIES
-		case "fever" : return 0;
-		case "typhoid fever" : return 0;
-		case "flu": return 0;
-		case "dysentery": return 0;
-		case "cholera": return 0;
-		case "tuberculosis": return 0;
-		case "food poisoning" : return 0;
-		case "dehydration" : return 0;
-		case "malnutrition" : return 0;
-		case "hyperthermia" : return 0;
-		case "hypothermia" : return 0;
-		case "exhaustion" : return 0;
+		case "fever" : return 1;
+		case "typhoid fever" : return 3;
+		case "flu": return 2;
+		case "dysentery": return 5;
+		case "cholera": return 15;
+		case "tuberculosis": return 4;
+		case "food poisoning" : return 1;
+		case "dehydration" : return 5;
+		case "malnutrition" : return 5;
+		case "hyperthermia" : return 2;
+		case "hypothermia" : return 2;
+		case "exhaustion" : return 1;
 		default: return 0;
 		}
 		
@@ -97,12 +97,13 @@ public class Perils {
 	public Integer injuryPenalty() {															//EDIT
 		String injury = "";
 		int chance = rng.nextInt(101);
-		if (chance > 0) { injury = "firearm misfire"; }
-		if (chance > 0) { injury = "snakebite"; }
-		if (chance > 0) { injury = "been trampled"; }
-		if (chance > 0) { injury = "fell of wagon"; }
-		if (chance > 0) { injury = "drowned"; }
-		if (chance > 0) { injury = "broken bone"; }
+		if (chance < 15) { injury = "fell of wagon"; }
+		if (chance < 10) { injury = "broken bone"; }
+		if (chance < 7) { injury = "snakebite"; }
+		if (chance < 4) { injury = "been trampled"; }
+		if (chance < 3) { injury = "drowned"; }
+		if (chance < 2) { injury = "firearm misfire"; }
+		
 		
 		switch (injury) {
 		case "drowned" : return 100;
@@ -137,5 +138,4 @@ public class Perils {
 		if (chance < chanceOfOxInjury) {return true;}
 		else {return false;}
 	}
-
 }
