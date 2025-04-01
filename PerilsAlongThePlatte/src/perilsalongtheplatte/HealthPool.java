@@ -73,7 +73,7 @@ public class HealthPool {
 		for(int i = 0; i < numOfPeople; i++) {
 			if (peril.getsSick(personHealth.get(i)) == true) {
 				isSick.set(i, true);
-				personHealth.set(i, personHealth.get(i) - peril.sicknessPenalty(isSick.get(i), weather) - peril.injuryPenalty());
+			//	personHealth.set(i, personHealth.get(i) - peril.sicknessPenalty(isSick.get(i), weather) - peril.injuryPenalty());
 			}
 		}
 	}

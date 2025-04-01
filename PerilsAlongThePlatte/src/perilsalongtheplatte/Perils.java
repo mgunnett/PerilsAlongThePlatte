@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class Perils {
 	public int speed;
+	public int rations;
 	public String weather;
 	Random rng = new Random();
 	Boolean isSick;
@@ -66,13 +67,13 @@ public class Perils {
 			if (chance > 0) { sickness = "tuberculosis"; }
 			if (chance > 0) { sickness = "food poisoning"; }
 			if (chance > 0) { sickness = "dehydration"; }
-			if (chance > 0) { sickness = "malnutrition"; }
+			if (chance > 0 && rations == 1) { sickness = "malnutrition"; }
 			if (chance > 0 && weather.equals("hot")) { sickness = "hyperthermia"; }
 			if (chance > 0 && weather.equals("cold")) { sickness = "hypothermia"; }
-			if (chance > 0) { sickness = "exhaustion"; }
+			if (chance > 0 && speed == 3) { sickness = "exhaustion"; }
 		}
 		
-		switch (sickness) {										// ADD PENALTIES
+		switch (sickness) {
 		case "fever" : return 1;
 		case "typhoid fever" : return 3;
 		case "flu": return 2;
@@ -87,7 +88,6 @@ public class Perils {
 		case "exhaustion" : return 1;
 		default: return 0;
 		}
-		
 	}
 	
 	/**
@@ -114,7 +114,6 @@ public class Perils {
 		case "fell of wagon": return 15;
 		default: return 0;
 		}
-		
 	}
 	
 	/**
