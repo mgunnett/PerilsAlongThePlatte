@@ -13,6 +13,7 @@ import java.awt.Color;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import java.util.Scanner;
+import java.util.Random;
 
 public class GAME { 
 
@@ -39,12 +40,15 @@ public class GAME {
 	String person2Name;
 	String person3Name;
 	String person4Name;
+	int distanceTraveled = 0;
 	 
 	private StartingStats stats = new StartingStats(isMale); 
 	private JButton StartTripButton;
 	private JButton TravelButton;
 	private JLabel lbl_DistanceTraveled;
 	private JLabel lbl_DistanceTraveledValue;
+	private JLabel lbl_Landmark;
+	private JLabel lbl_RandomEvent;
 	
 	/**
 	 * Launch the application.
@@ -85,9 +89,27 @@ public class GAME {
 		TravelButton.setVisible(false);
 		TravelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+					distanceTraveled = distanceTraveled + 5;
+					String distance = Integer.toString(distanceTraveled);
+					lbl_DistanceTraveledValue.setText(distance);
+					if (distanceTraveled == 30) {
+						lbl_Landmark.setText("You have reached Fort Loramie!");
+						Random random = new Random();
+//							if (distanceTraveled == 20) {
+//								lbl_RandomEvent.setVisible(true);
+//								lbl_RandomEvent.setText("You have a fever.");
+//								}
+						
+					
+					}
+					
 			}
 		});
+		
+		lbl_RandomEvent = new JLabel("");
+		lbl_RandomEvent.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		lbl_RandomEvent.setBounds(219, 114, 323, 48);
+		frame.getContentPane().add(lbl_RandomEvent);
 		TravelButton.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		TravelButton.setBounds(232, 248, 310, 84);
 		frame.getContentPane().add(TravelButton);
@@ -125,13 +147,6 @@ public class GAME {
 		rdbtnFemale.setBounds(390, 46, 96, 48);
 		frame.getContentPane().add(rdbtnFemale);
 		rdbtnFemale.setVisible(false);
-		
-		Title = new JLabel("Perils Along the Platte");
-		Title.setForeground(new Color(0, 0, 0));
-		Title.setHorizontalAlignment(SwingConstants.CENTER);
-		Title.setFont(new Font("Tahoma", Font.PLAIN, 50));
-		Title.setBounds(26, 52, 681, 110);
-		frame.getContentPane().add(Title);
 		
 		lblNewLabel = new JLabel("Traveller Names:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
@@ -289,6 +304,19 @@ public class GAME {
 		lbl_DistanceTraveled.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lbl_DistanceTraveled.setBounds(172, 381, 204, 48);
 		frame.getContentPane().add(lbl_DistanceTraveled);
+		
+		lbl_Landmark = new JLabel("");
+		lbl_Landmark.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_Landmark.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		lbl_Landmark.setBounds(76, 440, 623, 45);
+		frame.getContentPane().add(lbl_Landmark);
+		
+		Title = new JLabel("Perils Along the Platte");
+		Title.setForeground(new Color(0, 0, 0));
+		Title.setHorizontalAlignment(SwingConstants.CENTER);
+		Title.setFont(new Font("Tahoma", Font.PLAIN, 50));
+		Title.setBounds(26, 52, 681, 110);
+		frame.getContentPane().add(Title);
 		lbl_DistanceTraveled.setVisible(false);
 		lbl_DistanceTraveledValue.setVisible(false);
 		StartTripButton.setVisible(false);
