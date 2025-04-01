@@ -13,7 +13,7 @@ public class Perils {
 	 * @param personHealth checks the health of the pioneer
 	 * @return true or false based off of if the pioneer gets sick or not
 	 */
-	public Boolean getsSick( int personHealth ) {											//EDIT
+	public Boolean getsSick( int personHealth ) {
 		int chance = rng.nextInt(101);
 		int sickChance = 0;
 		if (personHealth > 90) { sickChance = 5; }
@@ -29,7 +29,7 @@ public class Perils {
 	/**
 	 * If a pioneer is already sick, checks to see if the pioneer gets better
 	 * @param isSick checks to see if a pioneer is sick
-	 * @param personHealth checks the health to see if the pioneer is healthy enought to get better
+	 * @param personHealth checks the health to see if the pioneer is healthy enough to get better
 	 * @return
 	 */
 	public Boolean getsBetter ( boolean isSick, int personHealth ) {
@@ -52,17 +52,42 @@ public class Perils {
 	 * @param gotSick is used to see if the pioneer gets a random sickness
 	 * @return an integer that correlates to a sickness
 	 */
-	public Integer sicknessObtained(Boolean gotSick) {
+	public String sicknessObtained(Boolean gotSick, String weather) {
 		// TODO Auto-generated method stub
-		return null;
+		String sickness = "";
+		
+		if (gotSick) {
+			int chance = rng.nextInt(101);						// Penalties:
+			if (chance > 20) { sickness = "fever"; }			// 1
+			if (chance > 0) { sickness = "typhoid fever"; }		// 4
+			if (chance > 0) { sickness = "flu"; }				// 2
+			if (chance > 0) { sickness = "dysentery"; }			// 5
+			if (chance > 0) { sickness = "cholera"; }			// 10
+			if (chance > 0) { sickness = "tuberculosis"; }
+			if (chance > 0) { sickness = "food poisoning"; }	// 2
+			if (chance > 0) { sickness = "dehydration"; }		//
+			if (chance > 0) { sickness = "malnutrition"; }		//
+			if (chance > 0) { sickness = "hyperthermia"; }		//
+			if (chance > 0) { sickness = "hypothermia"; }		//
+			if (chance > 0) { sickness = "exhaustion"; }
+		}
+		
+		return sickness;
 	}
 	
 	/**
 	 * Takes the speed and rations to see if the pioneers get injured on the journey
 	 * @return an integer that correlates to an injury
 	 */
-	public Integer injuryObtained() {															//EDIT
-		return 0; // no injury obtained
+	public String injuryObtained() {															//EDIT
+		String injury = "";
+		int chance = rng.nextInt(101);
+		if (chance > 0) { injury = "firearm misfire"; }
+		if (chance > 0) { injury = "snakebite"; }
+		if (chance > 0) { injury = "trampled"; }
+		if (chance > 0) { injury = "fell of wagon"; }
+		if (chance > 0) { injury = "drowned"; }
+		return injury;
 	}
 	
 	/**

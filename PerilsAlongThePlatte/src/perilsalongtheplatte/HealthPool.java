@@ -6,7 +6,7 @@ import perilsalongtheplatte.Perils;
 
 public class HealthPool {
 	Perils peril;
-	int numOfPeople = 5;
+	int numOfPeople = 5; 
     ArrayList<Integer> personHealth;
     ArrayList<String> personName;
     ArrayList<String> whoIsDead;
