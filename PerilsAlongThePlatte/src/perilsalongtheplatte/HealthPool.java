@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import perilsalongtheplatte.Perils;
 
 public class HealthPool {
+	
 	Perils peril;
 	int numOfPeople = 5; 
+	String weather = "";
     ArrayList<Integer> personHealth;
     ArrayList<String> personName;
     ArrayList<String> whoIsDead;
@@ -71,7 +73,7 @@ public class HealthPool {
 		for(int i = 0; i < numOfPeople; i++) {
 			if (peril.getsSick(personHealth.get(i)) == true) {
 				isSick.set(i, true);
-				personHealth.set(i, personHealth.get(i) - peril.sicknessObtained(isSick.get(i)));
+				personHealth.set(i, personHealth.get(i) - peril.sicknessPenalty(isSick.get(i), weather));
 			}
 		}
 	}

@@ -52,42 +52,68 @@ public class Perils {
 	 * @param gotSick is used to see if the pioneer gets a random sickness
 	 * @return an integer that correlates to a sickness
 	 */
-	public String sicknessObtained(Boolean gotSick, String weather) {
+	public Integer sicknessPenalty(Boolean gotSick, String weather) {
 		// TODO Auto-generated method stub
 		String sickness = "";
 		
 		if (gotSick) {
-			int chance = rng.nextInt(101);						// Penalties:
-			if (chance > 20) { sickness = "fever"; }			// 1
-			if (chance > 0) { sickness = "typhoid fever"; }		// 4
-			if (chance > 0) { sickness = "flu"; }				// 2
-			if (chance > 0) { sickness = "dysentery"; }			// 5
-			if (chance > 0) { sickness = "cholera"; }			// 10
+			int chance = rng.nextInt(101);	
+			if (chance > 20) { sickness = "fever"; }
+			if (chance > 0) { sickness = "typhoid fever"; }
+			if (chance > 0) { sickness = "flu"; }
+			if (chance > 0) { sickness = "dysentery"; }
+			if (chance > 0) { sickness = "cholera"; }
 			if (chance > 0) { sickness = "tuberculosis"; }
-			if (chance > 0) { sickness = "food poisoning"; }	// 2
-			if (chance > 0) { sickness = "dehydration"; }		//
-			if (chance > 0) { sickness = "malnutrition"; }		//
-			if (chance > 0) { sickness = "hyperthermia"; }		//
-			if (chance > 0) { sickness = "hypothermia"; }		//
+			if (chance > 0) { sickness = "food poisoning"; }
+			if (chance > 0) { sickness = "dehydration"; }
+			if (chance > 0) { sickness = "malnutrition"; }
+			if (chance > 0 && weather.equals("hot")) { sickness = "hyperthermia"; }
+			if (chance > 0 && weather.equals("cold")) { sickness = "hypothermia"; }
 			if (chance > 0) { sickness = "exhaustion"; }
 		}
 		
-		return sickness;
+		switch (sickness) {										// ADD PENALTIES
+		case "fever" : return 0;
+		case "typhoid fever" : return 0;
+		case "flu": return 0;
+		case "dysentery": return 0;
+		case "cholera": return 0;
+		case "tuberculosis": return 0;
+		case "food poisoning" : return 0;
+		case "dehydration" : return 0;
+		case "malnutrition" : return 0;
+		case "hyperthermia" : return 0;
+		case "hypothermia" : return 0;
+		case "exhaustion" : return 0;
+		default: return 0;
+		}
+		
 	}
 	
 	/**
 	 * Takes the speed and rations to see if the pioneers get injured on the journey
 	 * @return an integer that correlates to an injury
 	 */
-	public String injuryObtained() {															//EDIT
+	public Integer injuryPenalty() {															//EDIT
 		String injury = "";
 		int chance = rng.nextInt(101);
 		if (chance > 0) { injury = "firearm misfire"; }
 		if (chance > 0) { injury = "snakebite"; }
-		if (chance > 0) { injury = "trampled"; }
+		if (chance > 0) { injury = "been trampled"; }
 		if (chance > 0) { injury = "fell of wagon"; }
 		if (chance > 0) { injury = "drowned"; }
-		return injury;
+		if (chance > 0) { injury = "broken bone"; }
+		
+		switch (injury) {
+		case "drowned" : return 100;
+		case "been trampled" : return 80;
+		case "firearm misfire": return 75;
+		case "snakebite": return 30;
+		case "broken bone": return 20;
+		case "fell of wagon": return 15;
+		default: return 0;
+		}
+		
 	}
 	
 	/**
@@ -98,9 +124,9 @@ public class Perils {
 	public Boolean oxInjured() {
 		int chanceOfOxInjury = 0;
 		int chance = rng.nextInt(101);
-		if (speed==1 && weather.equals("good")) {chanceOfOxInjury = 10;}
-		if (speed==1 && weather.equals("ok")) {chanceOfOxInjury = 15;}
-		if (speed==1 && weather.equals("bad")) {chanceOfOxInjury = 20;}
+		if (speed==1 && weather.equals("good")) {chanceOfOxInjury = 5;}
+		if (speed==1 && weather.equals("ok")) {chanceOfOxInjury = 10;}
+		if (speed==1 && weather.equals("bad")) {chanceOfOxInjury = 15;}
 		if (speed==2 && weather.equals("good")) {chanceOfOxInjury = 15;}
 		if (speed==2 && weather.equals("ok")) {chanceOfOxInjury = 20;}
 		if (speed==2 && weather.equals("bad")) {chanceOfOxInjury = 25;}
