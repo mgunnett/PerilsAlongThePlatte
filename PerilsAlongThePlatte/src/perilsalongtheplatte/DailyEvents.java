@@ -11,7 +11,7 @@ public class DailyEvents{
 	String weather[] = {"Sun", "Rain", "Thunderstorm", "Snow", "Wind"}; 
 	
 	public boolean hasWeather() {
-		if ()
+		return true; 
 	}
 	
 	
