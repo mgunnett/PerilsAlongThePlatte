@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-public class GAME {
+public class GAME { 
 
 	private JFrame frame;
 
