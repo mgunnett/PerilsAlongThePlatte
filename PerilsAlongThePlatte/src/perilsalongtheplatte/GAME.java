@@ -42,7 +42,7 @@ public class GAME {
 	String person4Name;
 	int distanceTraveled = 0;
 	 
-	private StartingStats stats = new StartingStats(isMale); 
+	//private StartingStats stats = new StartingStats(isMale); 
 	private JButton StartTripButton;
 	private JButton TravelButton;
 	private JLabel lbl_DistanceTraveled;
