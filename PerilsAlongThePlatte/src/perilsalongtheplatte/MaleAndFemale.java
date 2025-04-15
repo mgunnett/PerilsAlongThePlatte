@@ -24,10 +24,11 @@ public class MaleAndFemale {
 		if (playergender == 'F') {
 			if (pregnancychance == 4) {
 				pregnancystatus = true;
+				return true;
 			}
 			else {
 				pregnancystatus = false;
-				return pregnancystatus;
+				return false;
 			}
 		}
 	}
