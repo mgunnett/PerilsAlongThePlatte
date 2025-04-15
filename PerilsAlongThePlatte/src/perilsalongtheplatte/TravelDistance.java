@@ -1,18 +1,6 @@
 package perilsalongtheplatte;
 import java.util.Random;
 
-/**
- * Calculates and controls all elements directly tied to the player's distance traveled in the Perils Along the Platte game.
- * <p>
- * The TravelDistance class contains methods that track the current distance the player has traveled,how many days they've traveled, 
- * the next landmark the player will come across, as well as what that landmark will be. The purpose of this class is to provide 
- * essential randomization and specific calculations that will interact with the other classes. 
- * 
- * @version 0.1 
- * @author Landon Bollenbacher
- * @since 04/14/2025
- */
-
 
 public class TravelDistance {
 	// declare global variables
