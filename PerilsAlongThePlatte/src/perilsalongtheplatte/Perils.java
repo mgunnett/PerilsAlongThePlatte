@@ -59,18 +59,20 @@ public class Perils {
 		
 		if (gotSick) {
 			int chance = rng.nextInt(101);	
-			if (chance > 20) { sickness = "fever"; }
-			if (chance > 0) { sickness = "typhoid fever"; }
-			if (chance > 0) { sickness = "flu"; }
-			if (chance > 0) { sickness = "dysentery"; }
-			if (chance > 0) { sickness = "cholera"; }
-			if (chance > 0) { sickness = "tuberculosis"; }
-			if (chance > 0) { sickness = "food poisoning"; }
-			if (chance > 0) { sickness = "dehydration"; }
-			if (chance > 0 && rations == 1) { sickness = "malnutrition"; }
-			if (chance > 0 && weather.equals("hot")) { sickness = "hyperthermia"; }
-			if (chance > 0 && weather.equals("cold")) { sickness = "hypothermia"; }
-			if (chance > 0 && speed == 3) { sickness = "exhaustion"; }
+			if (chance > 90) { sickness = "fever"; }
+			else if (chance > 85) { sickness = "dehydration"; }
+			else if (chance > 85 && rations == 1) { sickness = "malnutrition"; }
+			else if (chance > 80 && speed == 3) { sickness = "exhaustion"; }
+			else if (chance > 75) { sickness = "food poisoning"; }
+			else if (chance > 70) { sickness = "flu"; }
+			else if (chance > 60 && weather.equals("Sunny")) { sickness = "hyperthermia"; }
+			else if (chance > 60 && weather.equals("Snowy")) { sickness = "hypothermia"; }
+			else if (chance > 30) { sickness = "cholera"; }
+			else if (chance > 25) { sickness = "typhoid fever"; }
+			else if (chance > 20) { sickness = "dysentery"; }
+			else if (chance > 10) { sickness = "tuberculosis"; }
+			
+			
 		}
 		
 		switch (sickness) {
@@ -78,7 +80,7 @@ public class Perils {
 		case "typhoid fever" : return 3;
 		case "flu": return 2;
 		case "dysentery": return 5;
-		case "cholera": return 15;
+		case "cholera": return 25;
 		case "tuberculosis": return 4;
 		case "food poisoning" : return 1;
 		case "dehydration" : return 5;
@@ -123,16 +125,27 @@ public class Perils {
 	 */
 	public Boolean oxInjured() {
 		int chanceOfOxInjury = 0;
+		String weather1 = "";
+		
+		switch (weather) {
+		case "Snowy": weather1.equals("bad");
+		case "Rainy": weather1.equals("ok");
+		case "Thunderstorms": weather1.equals("bad");
+		case "Sunny": weather1.equals("good");
+		case "Windy": weather1.equals("ok");
+		default: ;
+		}
+		
 		int chance = rng.nextInt(101);
-		if (speed==1 && weather.equals("good")) {chanceOfOxInjury = 5;}
-		if (speed==1 && weather.equals("ok")) {chanceOfOxInjury = 10;}
-		if (speed==1 && weather.equals("bad")) {chanceOfOxInjury = 15;}
-		if (speed==2 && weather.equals("good")) {chanceOfOxInjury = 15;}
-		if (speed==2 && weather.equals("ok")) {chanceOfOxInjury = 20;}
-		if (speed==2 && weather.equals("bad")) {chanceOfOxInjury = 25;}
-		if (speed==3 && weather.equals("good")) {chanceOfOxInjury = 20;}
-		if (speed==3 && weather.equals("ok")) {chanceOfOxInjury = 25;}
-		if (speed==3 && weather.equals("bad")) {chanceOfOxInjury = 35;}
+		if (speed==1 && weather1.equals("good")) {chanceOfOxInjury = 5;}
+		if (speed==1 && weather1.equals("ok")) {chanceOfOxInjury = 10;}
+		if (speed==1 && weather1.equals("bad")) {chanceOfOxInjury = 15;}
+		if (speed==2 && weather1.equals("good")) {chanceOfOxInjury = 15;}
+		if (speed==2 && weather1.equals("ok")) {chanceOfOxInjury = 20;}
+		if (speed==2 && weather1.equals("bad")) {chanceOfOxInjury = 25;}
+		if (speed==3 && weather1.equals("good")) {chanceOfOxInjury = 20;}
+		if (speed==3 && weather1.equals("ok")) {chanceOfOxInjury = 25;}
+		if (speed==3 && weather1.equals("bad")) {chanceOfOxInjury = 35;}
 		
 		if (chance < chanceOfOxInjury) {return true;}
 		else {return false;}

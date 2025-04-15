@@ -6,8 +6,8 @@ import perilsalongtheplatte.Perils;
 
 public class HealthPool {
 	
-	Perils peril;
-	int numOfPeople = 5; 
+	public Perils peril;
+	public int numOfPeople = 5; 
 	String weather = "";
     ArrayList<Integer> personHealth;
     ArrayList<String> personName;
