@@ -55,11 +55,28 @@ public class TravelDistance {
 		else
 		return true;
 	}
+	
+	
+	/**
+	 * LANDMARK ORDER
+	 * 
+	 * Kansas River
+	 * 
+	 * Big Blue River
+	 * 
+	 * Fort Kearny
+	 * 
+	 * Chimney Rock
+	 * 
+	 * Fort Laramie
+	 */
+	
+	
 	/**
 	 * Determines if the player has reached the next landmark.
 	 * */
 	public boolean reachedLandmark(int n) {
-		
+		if (distanceTraveled())
 		return true;
 	
 	}
@@ -68,8 +85,12 @@ public class TravelDistance {
 	 * Determines if the current landmark is a river.
 	 * */
 	public boolean isRiver(int n) {
-		
-		return true;
+		if (distanceTraveled() <= 78 || distanceTraveled() > 78 && distanceTraveled() <= 137)
+		{
+			return true;
+		}
+		else
+			return false;
 	}
 	
 	/**
