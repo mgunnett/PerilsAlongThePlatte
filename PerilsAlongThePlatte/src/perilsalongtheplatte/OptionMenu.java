@@ -2,18 +2,6 @@ package perilsalongtheplatte;
 import java.util.Scanner;
 
 
-/**
- * Contains and controls elements relating to the option screen when the player stops moving in the Perils Along the Platte game.
- * <p>
- * The OptionMenu class contains methods controlling all the various options in the menu while the player has stopped along the trail.
- * The purpose of this class is to provide essential gameplay mechanics that will be used consistently throughout the game, providing the
- * player with options that allow them to take as much control as they can in their situation.
- * 
- * @version 0.1 
- * @author Landon Bollenbacher
- * @since 04/14/2025
- */
-
 public class OptionMenu {
 	
 	/**
