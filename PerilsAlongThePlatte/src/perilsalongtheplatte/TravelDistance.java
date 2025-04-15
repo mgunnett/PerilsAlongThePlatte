@@ -23,8 +23,8 @@ public class TravelDistance {
 	 * */
 	public int distanceTraveled() {
 		int Distance = 0;
-		int min = 10;
-        int max = 20;
+		int min = 5;
+        int max = 15;
      // Create a Random object
         Random random = new Random();
 
@@ -41,11 +41,20 @@ public class TravelDistance {
 	/**
 	 * Tracks the number of days traveled.
 	 * */
-	public int daysTraveled(int day) {
-		
-		
-		return day;
+	public int daysTraveled(int unused) {
+	    java.util.Timer timer = new java.util.Timer();
+
+	    timer.scheduleAtFixedRate(new java.util.TimerTask() {
+	        public void run() {
+	            while (!isStopped()) {
+	                day++;
+	            } 
+	        }
+	    }, 0, 1000);
+
+	    return day;
 	}
+
 	
 	public boolean isStopped() {
 		int Stopped = 0;
