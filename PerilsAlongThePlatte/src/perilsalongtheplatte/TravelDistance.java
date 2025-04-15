@@ -3,9 +3,14 @@ import java.util.Random;
 
 
 public class TravelDistance {
+	
+	TravelDistance(){
+		;
+	}
+	
 	// declare global variables
-		int day = 0;
-		int pace = 0;
+		public int day = 0;
+		public int pace = 0;
 	/**
 	 * Tracks the current distance traveled.
 	 * */
