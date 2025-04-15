@@ -64,15 +64,15 @@ public class OptionMenu {
 		in.close();
 		if (paceSelect == 1)
 		{
-			pace = 10;
+			pace = 5;
 		}
 		else if (paceSelect == 2)
 		{
-			pace = 15;
+			pace = 10;
 		}
 		else if (paceSelect == 3)
 		{
-			pace = 20;
+			pace = 15;
 		}
 		return pace;
 	}

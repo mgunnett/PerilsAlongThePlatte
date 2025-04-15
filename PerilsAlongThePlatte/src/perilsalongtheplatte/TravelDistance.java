@@ -10,7 +10,7 @@ import java.util.Random;
  * 
  * @version 0.1 
  * @author Landon Bollenbacher
- * @since 03/26/2025
+ * @since 04/14/2025
  */
 
 
@@ -69,6 +69,10 @@ public class TravelDistance {
 	 * Chimney Rock
 	 * 
 	 * Fort Laramie
+	 * 
+	 * Reference this order in relation to the reachedLandmark function below
+	 *                                |
+	 *                                V
 	 */
 	
 	
@@ -76,9 +80,12 @@ public class TravelDistance {
 	 * Determines if the player has reached the next landmark.
 	 * */
 	public boolean reachedLandmark(int n) {
-		if (distanceTraveled())
-		return true;
-	
+		if (distanceTraveled() >= 70 && distanceTraveled() < 85 || distanceTraveled() >= 130 && distanceTraveled() < 145 || distanceTraveled() >= 355 && distanceTraveled() < 370 || distanceTraveled() >= 610 && distanceTraveled() < 625 || distanceTraveled() >= 680 && distanceTraveled() < 700)
+		{
+			return true;
+		}
+		else
+			return false;
 	}
 	
 	/**
@@ -97,15 +104,23 @@ public class TravelDistance {
 	 * Determines if the current landmark is a town.
 	 * */
 	public boolean isTown(int n) {
-		
-		return true;
+		if (distanceTraveled() > 137 && distanceTraveled() <= 359 || distanceTraveled() > 615 && distanceTraveled() <=689 )
+		{
+			return true;
+		}
+		else
+			return false;
 	}
 	
 	/**
 	 * Determines if the current landmark is a scenic landmark.
 	 * */
 	public boolean isScenicSpot(int n) {
-	
-		return true;
+		if (distanceTraveled() > 359 && distanceTraveled() <= 615)
+		{
+			return true;
+		}
+		else
+			return false;
 	}
 }
