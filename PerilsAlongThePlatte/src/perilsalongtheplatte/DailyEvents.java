@@ -37,6 +37,7 @@ public class DailyEvents {
         this.perils = new Perils();
     }
 
+
     public void weatherEvents() {
     	handleWeatherEvent();
 
@@ -78,7 +79,9 @@ public class DailyEvents {
         if (random.nextDouble() < WEATHER_EVENT_PROBABILITY) {
             String event = weatherEvents[random.nextInt(weatherEvents.length)];
             System.out.println("The weather is " + event);
-        } else {
+        } 
+        // Prints weather is clear if no weather event happens
+        if (random.nextDouble() >= WEATHER_EVENT_PROBABILITY) {
             System.out.println("The weather is clear.");
         }
     }
