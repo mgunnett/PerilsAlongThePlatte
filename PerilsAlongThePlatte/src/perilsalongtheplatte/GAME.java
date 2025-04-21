@@ -1,25 +1,25 @@
 package perilsalongtheplatte;
-
+//import java classes
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.JPanel;
 import java.awt.Color;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JSpinner;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.*;
+import java.util.Timer; 
 
 public class GAME {
 	//create objects of the class, including each widget
 	private JFrame frame;
 	
+	private Timer timer = new Timer(); 
+	
 	//create objects of each of our custom classes
 	private Popups popup = new Popups(); 
+	private TravelDistance travel = new TravelDistance(); 
+	private Perils perils = new Perils(); 
 	
 
 
@@ -46,6 +46,43 @@ public class GAME {
 		initialize();
 	}
 
+	/***********
+	 *WORKSPACE*
+	 ***********/
+	//a method that passes an in-game day, where the all values are updated
+	private void passDay() {
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/***********************
+	 *ACTION EVENT HANDLERS*
+	 ***********************/
+	//method that controls the 
+	private void btnRestActionPerformed() {
+		//TEST CODE
+		int mymommy = popup.restDays(); 
+		System.out.println(""+ mymommy);
+		popup.perilPopup("Hello there!");
+	}
+	
+	
+	
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -89,9 +126,7 @@ public class GAME {
 		JButton btnRest = new JButton("Rest");
 		btnRest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TEST CODE ONly
-				int mymommy = popup.restDays(); 
-				System.out.println(""+ mymommy);
+			btnRestActionPerformed(); 
 			}
 		});
 		btnRest.setBackground(new Color(220, 207, 180));
