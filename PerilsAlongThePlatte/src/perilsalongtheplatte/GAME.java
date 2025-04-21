@@ -18,7 +18,6 @@ import perilsalongtheplatte.DailyEvents;
 public class GAME {
 	//create objects of the class, including each widget
 	private JFrame frame;
-	private JLabel lblWeather;
 	
 	//create objects of each of our custom classes
 	private Popups popup = new Popups(); 
@@ -61,26 +60,33 @@ public class GAME {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		JPanel GamePanel = new JPanel();
+		GamePanel.setBackground(new Color(0, 0, 0));
+		GamePanel.setBounds(0, 0, 1283, 699);
+		frame.getContentPane().add(GamePanel);
+		GamePanel.setLayout(null);
+		
+		
 		JPanel OptionsPanel = new JPanel();
-		OptionsPanel.setBackground(new Color(154, 128, 71));
-		OptionsPanel.setBounds(36, 168, 1212, 490);
-		frame.getContentPane().add(OptionsPanel);
 		OptionsPanel.setLayout(null);
+		OptionsPanel.setBackground(new Color(154, 128, 71));
+		OptionsPanel.setBounds(38, 198, 1212, 490);
+		GamePanel.add(OptionsPanel);
 		
 		JSpinner spinnerSpeed = new JSpinner();
-		spinnerSpeed.setBackground(new Color(255, 255, 255));
 		spinnerSpeed.setFont(new Font("Serif", Font.PLAIN, 20));
+		spinnerSpeed.setBackground(Color.WHITE);
 		spinnerSpeed.setBounds(115, 35, 172, 32);
 		OptionsPanel.add(spinnerSpeed);
 		
 		JLabel lblSpeed = new JLabel("Speed:");
-		lblSpeed.setForeground(new Color(0, 0, 0));
+		lblSpeed.setForeground(Color.BLACK);
 		lblSpeed.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblSpeed.setBounds(12, 31, 93, 32);
 		OptionsPanel.add(lblSpeed);
 		
 		JLabel lblRations = new JLabel("Rations:");
-		lblRations.setForeground(new Color(0, 0, 0));
+		lblRations.setForeground(Color.BLACK);
 		lblRations.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblRations.setBounds(12, 78, 104, 32);
 		OptionsPanel.add(lblRations);
@@ -92,15 +98,8 @@ public class GAME {
 		OptionsPanel.add(spinnerRations);
 		
 		JButton btnRest = new JButton("Rest");
-		btnRest.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//TEST CODE ONly
-				int mymommy = popup.restDays(); 
-				System.out.println(""+ mymommy);
-			}
-		});
-		btnRest.setBackground(new Color(220, 207, 180));
 		btnRest.setFont(new Font("Serif", Font.PLAIN, 35));
+		btnRest.setBackground(new Color(220, 207, 180));
 		btnRest.setBounds(16, 369, 145, 110);
 		OptionsPanel.add(btnRest);
 		
@@ -117,10 +116,10 @@ public class GAME {
 		OptionsPanel.add(btnHunt);
 		
 		JPanel InventoryPanel = new JPanel();
+		InventoryPanel.setLayout(null);
 		InventoryPanel.setBackground(new Color(220, 207, 180));
 		InventoryPanel.setBounds(894, 11, 308, 468);
 		OptionsPanel.add(InventoryPanel);
-		InventoryPanel.setLayout(null);
 		
 		JLabel lblInventory = new JLabel("<html><u>Inventory</u>");
 		lblInventory.setHorizontalAlignment(SwingConstants.CENTER);
@@ -130,10 +129,10 @@ public class GAME {
 		InventoryPanel.add(lblInventory);
 		
 		JPanel EventLogPanel = new JPanel();
+		EventLogPanel.setLayout(null);
 		EventLogPanel.setBackground(new Color(220, 207, 180));
 		EventLogPanel.setBounds(576, 11, 308, 468);
 		OptionsPanel.add(EventLogPanel);
-		EventLogPanel.setLayout(null);
 		
 		JLabel lblEventLog = new JLabel("<html><u>Event Log</u>");
 		lblEventLog.setHorizontalAlignment(SwingConstants.CENTER);
@@ -150,59 +149,59 @@ public class GAME {
 		OptionsPanel.add(lblConstOverallGroupHealth);
 		
 		JLabel lblOverallGroupHealth = new JLabel("");
-		lblOverallGroupHealth.setForeground(new Color(0, 0, 0));
+		lblOverallGroupHealth.setForeground(Color.BLACK);
 		lblOverallGroupHealth.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblOverallGroupHealth.setBounds(281, 156, 153, 32);
 		OptionsPanel.add(lblOverallGroupHealth);
 		
-		JLabel lblNewLabel = new JLabel("Date:");
-		lblNewLabel.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setBounds(36, 11, 83, 39);
-		frame.getContentPane().add(lblNewLabel);
-		
-		JLabel lblConstWeather = new JLabel("Weather:");
-		lblConstWeather.setForeground(Color.WHITE);
-		lblConstWeather.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblConstWeather.setBounds(36, 46, 142, 39);
-		frame.getContentPane().add(lblConstWeather);
-		
-		JLabel lblConstDistanceTraveled = new JLabel("Distance Traveled:");
-		lblConstDistanceTraveled.setForeground(Color.WHITE);
-		lblConstDistanceTraveled.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblConstDistanceTraveled.setBounds(36, 84, 256, 39);
-		frame.getContentPane().add(lblConstDistanceTraveled);
-		
 		JLabel lblConstDistanceUntilNext = new JLabel("Distance Until Next Landmark:");
 		lblConstDistanceUntilNext.setForeground(Color.WHITE);
 		lblConstDistanceUntilNext.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblConstDistanceUntilNext.setBounds(36, 125, 406, 32);
-		frame.getContentPane().add(lblConstDistanceUntilNext);
-		
-		JLabel lblDate = new JLabel("");
-		lblDate.setForeground(Color.WHITE);
-		lblDate.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblDate.setBounds(129, 11, 153, 24);
-		frame.getContentPane().add(lblDate);
-		
-		lblWeather = new JLabel("");
-		lblWeather.setForeground(Color.WHITE);
-		lblWeather.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblWeather.setBounds(149, 49, 256, 32);
-		frame.getContentPane().add(lblWeather);
-		lblWeather.setText(daily_events.handleWeatherEvent());
-		
-		
-		JLabel lblDistanceTraveled = new JLabel("");
-		lblDistanceTraveled.setForeground(Color.WHITE);
-		lblDistanceTraveled.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblDistanceTraveled.setBounds(289, 98, 153, 24);
-		frame.getContentPane().add(lblDistanceTraveled);
+		lblConstDistanceUntilNext.setBounds(38, 146, 406, 32);
+		GamePanel.add(lblConstDistanceUntilNext);
 		
 		JLabel lblDistanceUntilNextLandmark = new JLabel("");
 		lblDistanceUntilNextLandmark.setForeground(Color.WHITE);
 		lblDistanceUntilNextLandmark.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblDistanceUntilNextLandmark.setBounds(441, 125, 153, 24);
-		frame.getContentPane().add(lblDistanceUntilNextLandmark);
+		lblDistanceUntilNextLandmark.setBounds(443, 146, 153, 24);
+		GamePanel.add(lblDistanceUntilNextLandmark);
+		
+		JLabel lblConstDistanceTraveled = new JLabel("Distance Traveled:");
+		lblConstDistanceTraveled.setForeground(Color.WHITE);
+		lblConstDistanceTraveled.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblConstDistanceTraveled.setBounds(38, 105, 256, 39);
+		GamePanel.add(lblConstDistanceTraveled);
+		
+		JLabel lblDistanceTraveled = new JLabel("");
+		lblDistanceTraveled.setForeground(Color.WHITE);
+		lblDistanceTraveled.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblDistanceTraveled.setBounds(291, 119, 153, 24);
+		GamePanel.add(lblDistanceTraveled);
+		
+		JLabel lblWeather = new JLabel("Clear");
+		lblWeather.setForeground(Color.WHITE);
+		lblWeather.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblWeather.setBounds(151, 70, 256, 32);
+		GamePanel.add(lblWeather);
+		lblWeather.setText(daily_events.handleWeatherEvent());
+		
+		
+		JLabel lblConstWeather = new JLabel("Weather:");
+		lblConstWeather.setForeground(Color.WHITE);
+		lblConstWeather.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblConstWeather.setBounds(38, 67, 142, 39);
+		GamePanel.add(lblConstWeather);
+		
+		JLabel lblNewLabel = new JLabel("Date:");
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblNewLabel.setBounds(38, 32, 83, 39);
+		GamePanel.add(lblNewLabel);
+		
+		JLabel lblDate = new JLabel("");
+		lblDate.setForeground(Color.WHITE);
+		lblDate.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblDate.setBounds(131, 32, 153, 24);
+		GamePanel.add(lblDate);
 	}
 }
