@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import perilsalongtheplatte.DailyEvents;
+import javax.swing.JLayeredPane;
 
 public class GAME {
 	//create objects of the class, including each widget
@@ -65,7 +66,7 @@ public class GAME {
 		GamePanel.setBounds(0, 0, 1283, 699);
 		frame.getContentPane().add(GamePanel);
 		GamePanel.setLayout(null);
-		
+		GamePanel.setVisible(false);		
 		
 		JPanel OptionsPanel = new JPanel();
 		OptionsPanel.setLayout(null);
@@ -217,5 +218,35 @@ public class GAME {
 		lblDate.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblDate.setBounds(131, 32, 153, 24);
 		GamePanel.add(lblDate);
+		
+		JLabel label = new JLabel("New label");
+		label.setBounds(584, 181, 49, 14);
+		GamePanel.add(label);
+		
+		JPanel WelcomePanel = new JPanel();
+		WelcomePanel.setBackground(new Color(154, 128, 71));
+		WelcomePanel.setBounds(0, 0, 1283, 689);
+		frame.getContentPane().add(WelcomePanel);
+		WelcomePanel.setLayout(null);
+		
+		JLabel lblTitlePerils = new JLabel("Perils Along The Platte");
+		lblTitlePerils.setForeground(Color.BLACK);
+		lblTitlePerils.setFont(new Font("Serif", Font.PLAIN, 80));
+		lblTitlePerils.setBackground(new Color(220, 207, 180));
+		lblTitlePerils.setBounds(193, 5, 747, 102);
+		WelcomePanel.add(lblTitlePerils);
+		
+		JButton btnStart = new JButton("Start");
+		btnStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				WelcomePanel.setVisible(false);
+				GamePanel.setVisible(true);
+			}
+		});
+		btnStart.setBackground(new Color(203, 193, 167));
+		btnStart.setFont(new Font("Serif", Font.BOLD, 80));
+		btnStart.setBounds(193, 156, 815, 181);
+		WelcomePanel.add(btnStart);
+		
 	}
 }
