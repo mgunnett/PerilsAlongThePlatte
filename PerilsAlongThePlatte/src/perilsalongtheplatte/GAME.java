@@ -216,12 +216,31 @@ public class GAME {
 		JLabel lblDate = new JLabel("");
 		lblDate.setForeground(Color.WHITE);
 		lblDate.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblDate.setBounds(131, 32, 153, 24);
+		lblDate.setBounds(111, 47, 153, 24);
 		GamePanel.add(lblDate);
 		
 		JLabel label = new JLabel("New label");
 		label.setBounds(584, 181, 49, 14);
 		GamePanel.add(label);
+		
+		JPanel StartingOptionsPanel = new JPanel();
+		StartingOptionsPanel.setBounds(0, 0, 1283, 688);
+		StartingOptionsPanel.setBackground(new Color(154, 128, 71));
+		frame.getContentPane().add(StartingOptionsPanel);
+		StartingOptionsPanel.setLayout(null);
+		StartingOptionsPanel.setVisible(false);
+		
+		JLabel lblCPlayer1Name = new JLabel("Person 1's Name:");
+		lblCPlayer1Name.setForeground(Color.WHITE);
+		lblCPlayer1Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblCPlayer1Name.setBounds(38, 32, 226, 39);
+		StartingOptionsPanel.add(lblCPlayer1Name);
+		
+		JLabel lblCPlayer2Name = new JLabel("Person 2's Name:");
+		lblCPlayer2Name.setForeground(Color.WHITE);
+		lblCPlayer2Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblCPlayer2Name.setBounds(38, 67, 226, 39);
+		StartingOptionsPanel.add(lblCPlayer2Name);
 		
 		JPanel WelcomePanel = new JPanel();
 		WelcomePanel.setBackground(new Color(154, 128, 71));
@@ -240,7 +259,8 @@ public class GAME {
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				WelcomePanel.setVisible(false);
-				GamePanel.setVisible(true);
+				GamePanel.setVisible(false);
+				StartingOptionsPanel.setVisible(true);
 			}
 		});
 		btnStart.setBackground(new Color(203, 193, 167));
