@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import perilsalongtheplatte.DailyEvents;
 import javax.swing.JLayeredPane;
+import javax.swing.JTextField;
 
 public class GAME {
 	//create objects of the class, including each widget
@@ -24,6 +25,11 @@ public class GAME {
 	private Popups popup = new Popups(); 
 	
 	private DailyEvents daily_events;
+	private JTextField txtPlayer1Name;
+	private JTextField txtPlayer2Name;
+	private JTextField txtPlayer3Name;
+	private JTextField txtPlayer4Name;
+	private JTextField txtPlayer5Name;
 	
 
 
@@ -55,6 +61,8 @@ public class GAME {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		JPanel StartingOptionsPanel;
+		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(0, 0, 0));
 		frame.setBounds(100, 100, 1300, 726);
@@ -219,28 +227,84 @@ public class GAME {
 		lblDate.setBounds(111, 47, 153, 24);
 		GamePanel.add(lblDate);
 		
-		JLabel label = new JLabel("New label");
-		label.setBounds(584, 181, 49, 14);
-		GamePanel.add(label);
-		
-		JPanel StartingOptionsPanel = new JPanel();
+		StartingOptionsPanel = new JPanel();
 		StartingOptionsPanel.setBounds(0, 0, 1283, 688);
 		StartingOptionsPanel.setBackground(new Color(154, 128, 71));
 		frame.getContentPane().add(StartingOptionsPanel);
 		StartingOptionsPanel.setLayout(null);
 		StartingOptionsPanel.setVisible(false);
 		
+		txtPlayer1Name = new JTextField();
+		txtPlayer1Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		txtPlayer1Name.setBounds(250, 30, 234, 35);
+		StartingOptionsPanel.add(txtPlayer1Name);
+		
+		txtPlayer2Name = new JTextField();
+		txtPlayer2Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		txtPlayer2Name.setColumns(10);
+		txtPlayer2Name.setBounds(250, 80, 234, 35);
+		StartingOptionsPanel.add(txtPlayer2Name);
+		
+		txtPlayer3Name = new JTextField();
+		txtPlayer3Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		txtPlayer3Name.setColumns(10);
+		txtPlayer3Name.setBounds(250, 130, 234, 35);
+		StartingOptionsPanel.add(txtPlayer3Name);
+		
+		txtPlayer4Name = new JTextField();
+		txtPlayer4Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		txtPlayer4Name.setColumns(10);
+		txtPlayer4Name.setBounds(250, 180, 234, 35);
+		StartingOptionsPanel.add(txtPlayer4Name);
+		
+		txtPlayer5Name = new JTextField();
+		txtPlayer5Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		txtPlayer5Name.setColumns(10);
+		txtPlayer5Name.setBounds(250, 230, 234, 35);
+		StartingOptionsPanel.add(txtPlayer5Name);
+		
+		
 		JLabel lblCPlayer1Name = new JLabel("Person 1's Name:");
 		lblCPlayer1Name.setForeground(Color.WHITE);
 		lblCPlayer1Name.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblCPlayer1Name.setBounds(38, 32, 226, 39);
+		lblCPlayer1Name.setBounds(38, 30, 226, 39);
 		StartingOptionsPanel.add(lblCPlayer1Name);
 		
 		JLabel lblCPlayer2Name = new JLabel("Person 2's Name:");
 		lblCPlayer2Name.setForeground(Color.WHITE);
 		lblCPlayer2Name.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblCPlayer2Name.setBounds(38, 67, 226, 39);
+		lblCPlayer2Name.setBounds(38, 80, 226, 39);
 		StartingOptionsPanel.add(lblCPlayer2Name);
+		
+		JLabel lblCPlayer3Name = new JLabel("Person 3's Name:");
+		lblCPlayer3Name.setForeground(Color.WHITE);
+		lblCPlayer3Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblCPlayer3Name.setBounds(38, 130, 226, 39);
+		StartingOptionsPanel.add(lblCPlayer3Name);
+		
+		JLabel lblCPlayer4Name = new JLabel("Person 4's Name:");
+		lblCPlayer4Name.setForeground(Color.WHITE);
+		lblCPlayer4Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblCPlayer4Name.setBounds(38, 180, 226, 39);
+		StartingOptionsPanel.add(lblCPlayer4Name);
+		
+		JLabel lblCPlayer5Name = new JLabel("Person 5's Name:");
+		lblCPlayer5Name.setForeground(Color.WHITE);
+		lblCPlayer5Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblCPlayer5Name.setBounds(38, 230, 226, 39);
+		StartingOptionsPanel.add(lblCPlayer5Name);
+		
+		JButton btnContinue = new JButton("Continue");
+		btnContinue.setBackground(new Color(220, 207, 180));
+		btnContinue.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				StartingOptionsPanel.setVisible(false);
+				GamePanel.setVisible(true);
+			}
+		});
+		btnContinue.setFont(new Font("Serif", Font.PLAIN, 45));
+		btnContinue.setBounds(312, 550, 572, 110);
+		StartingOptionsPanel.add(btnContinue);
 		
 		JPanel WelcomePanel = new JPanel();
 		WelcomePanel.setBackground(new Color(154, 128, 71));
@@ -263,7 +327,7 @@ public class GAME {
 				StartingOptionsPanel.setVisible(true);
 			}
 		});
-		btnStart.setBackground(new Color(203, 193, 167));
+		btnStart.setBackground(new Color(220, 207, 180));
 		btnStart.setFont(new Font("Serif", Font.BOLD, 80));
 		btnStart.setBounds(193, 156, 815, 181);
 		WelcomePanel.add(btnStart);
