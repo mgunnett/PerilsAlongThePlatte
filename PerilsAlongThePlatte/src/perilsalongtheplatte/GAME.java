@@ -98,18 +98,32 @@ public class GAME {
 		OptionsPanel.add(spinnerRations);
 		
 		JButton btnRest = new JButton("Rest");
+		btnRest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int mymommy = popup.restDays(); 
+ 				System.out.println(""+ mymommy);
+			}
+		});
 		btnRest.setFont(new Font("Serif", Font.PLAIN, 35));
 		btnRest.setBackground(new Color(220, 207, 180));
 		btnRest.setBounds(16, 369, 145, 110);
 		OptionsPanel.add(btnRest);
 		
 		JButton btnTravel = new JButton("Travel");
+		btnTravel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnTravel.setFont(new Font("Serif", Font.PLAIN, 35));
 		btnTravel.setBackground(new Color(220, 207, 180));
 		btnTravel.setBounds(215, 369, 145, 110);
 		OptionsPanel.add(btnTravel);
 		
 		JButton btnHunt = new JButton("Hunt");
+		btnHunt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnHunt.setFont(new Font("Serif", Font.PLAIN, 35));
 		btnHunt.setBackground(new Color(220, 207, 180));
 		btnHunt.setBounds(421, 369, 145, 110);
