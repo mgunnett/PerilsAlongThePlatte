@@ -20,8 +20,8 @@ public class DailyEvents {
     // Random number generator
     private Random random;
 
-    // Player health (out of 100)
-    private int playerHealth;
+    // Player health (out of 100) 
+    private int playerHealth; 
     boolean isSick;
 
     // Perils object to simulate sickness and events
