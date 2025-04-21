@@ -15,8 +15,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class GAME {
-
+	//create objects of the class, including each widget
 	private JFrame frame;
+	
+	//create objects of each of our custom classes
+	private Popups popup = new Popups(); 
+	
+
 
 	/**
 	 * Launch the application.
@@ -84,6 +89,9 @@ public class GAME {
 		JButton btnRest = new JButton("Rest");
 		btnRest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//TEST CODE ONly
+				int mymommy = popup.restDays(); 
+				System.out.println(""+ mymommy);
 			}
 		});
 		btnRest.setBackground(new Color(220, 207, 180));

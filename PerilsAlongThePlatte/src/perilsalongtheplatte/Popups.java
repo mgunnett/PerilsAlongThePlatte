@@ -28,13 +28,17 @@ public class Popups {
 		//popup dialog with a JSpinner to get input for the number of days to rest
 		days = JOptionPane.showOptionDialog(
 				null, 						  //no parent component
-				model, 						  //inputs the spinner into the popup
+				spinner, 						  //inputs the spinner into the popup
 				"How many days to rest?", 	  //title
 				JOptionPane.OK_CANCEL_OPTION, //which buttons to display. This popup uses a OK/Cancel option to confirm
 				JOptionPane.QUESTION_MESSAGE, //what icon to display. This popup uses the question icon
 				null, 						  //no custom icon
 				null, 						  //no custom buttons
 				null);						  //no initial object selection
+		//update days if the OK label is selected
+		if (days == JOptionPane.OK_OPTION) {
+		    days = (Integer) spinner.getValue(); //downcast to an integer value
+		}
 		return days; 
 	}
 
