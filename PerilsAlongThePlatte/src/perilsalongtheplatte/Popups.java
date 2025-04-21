@@ -10,6 +10,11 @@ import javax.swing.*;
 
 public class Popups {
 	
+	/*********************
+	 * OPTION MENU ITEMS *
+	 *********************/
+	//these menu items will be called when the user selects a button option, such as rest
+	
 	/**
 	 * Creates a popup that will allow the user to enter the total number of days to rest. 
 	 * @return the number of days the user selects to rest for. 
@@ -28,7 +33,7 @@ public class Popups {
 		//popup dialog with a JSpinner to get input for the number of days to rest
 		days = JOptionPane.showOptionDialog(
 				null, 						  //no parent component
-				spinner, 						  //inputs the spinner into the popup
+				spinner, 					  //inputs the spinner into the popup
 				"How many days to rest?", 	  //title
 				JOptionPane.OK_CANCEL_OPTION, //which buttons to display. This popup uses a OK/Cancel option to confirm
 				JOptionPane.QUESTION_MESSAGE, //what icon to display. This popup uses the question icon
@@ -41,7 +46,11 @@ public class Popups {
 		}
 		return days; 
 	}
-
+	
+	/*********************
+	 *    EVENT POPUPS   *
+	 *********************/
+	//these popups run when the user reaches a critical event, such as a landmark, deadly peril, etc. 
 	
 
 }
