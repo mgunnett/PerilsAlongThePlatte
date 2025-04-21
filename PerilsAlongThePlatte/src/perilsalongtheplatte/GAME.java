@@ -13,13 +13,17 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import perilsalongtheplatte.DailyEvents;
 
 public class GAME {
 	//create objects of the class, including each widget
 	private JFrame frame;
+	private JLabel lblWeather;
 	
 	//create objects of each of our custom classes
 	private Popups popup = new Popups(); 
+	
+	private DailyEvents daily_events;
 	
 
 
@@ -43,6 +47,7 @@ public class GAME {
 	 * Create the application.
 	 */
 	public GAME() {
+		daily_events = new DailyEvents("any", 100); // change for gender and health in the future. Not Final.
 		initialize();
 	}
 
@@ -153,25 +158,25 @@ public class GAME {
 		JLabel lblNewLabel = new JLabel("Date:");
 		lblNewLabel.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setBounds(36, 11, 83, 24);
+		lblNewLabel.setBounds(36, 11, 83, 39);
 		frame.getContentPane().add(lblNewLabel);
 		
 		JLabel lblConstWeather = new JLabel("Weather:");
 		lblConstWeather.setForeground(Color.WHITE);
 		lblConstWeather.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblConstWeather.setBounds(36, 46, 142, 24);
+		lblConstWeather.setBounds(36, 46, 142, 39);
 		frame.getContentPane().add(lblConstWeather);
 		
 		JLabel lblConstDistanceTraveled = new JLabel("Distance Traveled:");
 		lblConstDistanceTraveled.setForeground(Color.WHITE);
 		lblConstDistanceTraveled.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblConstDistanceTraveled.setBounds(36, 81, 256, 24);
+		lblConstDistanceTraveled.setBounds(36, 84, 256, 39);
 		frame.getContentPane().add(lblConstDistanceTraveled);
 		
 		JLabel lblConstDistanceUntilNext = new JLabel("Distance Until Next Landmark:");
 		lblConstDistanceUntilNext.setForeground(Color.WHITE);
 		lblConstDistanceUntilNext.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblConstDistanceUntilNext.setBounds(36, 117, 406, 24);
+		lblConstDistanceUntilNext.setBounds(36, 125, 406, 32);
 		frame.getContentPane().add(lblConstDistanceUntilNext);
 		
 		JLabel lblDate = new JLabel("");
@@ -180,22 +185,24 @@ public class GAME {
 		lblDate.setBounds(129, 11, 153, 24);
 		frame.getContentPane().add(lblDate);
 		
-		JLabel lblWeather = new JLabel("");
+		lblWeather = new JLabel("");
 		lblWeather.setForeground(Color.WHITE);
 		lblWeather.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblWeather.setBounds(178, 46, 153, 24);
+		lblWeather.setBounds(149, 49, 256, 32);
 		frame.getContentPane().add(lblWeather);
+		lblWeather.setText(daily_events.handleWeatherEvent());
+		
 		
 		JLabel lblDistanceTraveled = new JLabel("");
 		lblDistanceTraveled.setForeground(Color.WHITE);
 		lblDistanceTraveled.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblDistanceTraveled.setBounds(289, 81, 153, 24);
+		lblDistanceTraveled.setBounds(289, 98, 153, 24);
 		frame.getContentPane().add(lblDistanceTraveled);
 		
 		JLabel lblDistanceUntilNextLandmark = new JLabel("");
 		lblDistanceUntilNextLandmark.setForeground(Color.WHITE);
 		lblDistanceUntilNextLandmark.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblDistanceUntilNextLandmark.setBounds(441, 117, 153, 24);
+		lblDistanceUntilNextLandmark.setBounds(441, 125, 153, 24);
 		frame.getContentPane().add(lblDistanceUntilNextLandmark);
 	}
 }

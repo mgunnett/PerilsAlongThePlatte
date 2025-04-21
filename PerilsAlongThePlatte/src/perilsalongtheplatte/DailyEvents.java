@@ -1,6 +1,7 @@
 package perilsalongtheplatte;
 
 import perilsalongtheplatte.Perils;
+import perilsalongtheplatte.GAME;
 import java.util.Random;
 
 /**
@@ -26,6 +27,9 @@ public class DailyEvents {
 
     // Perils object to simulate sickness and events
     private Perils perils;
+    // GAME object to use labels
+    private GAME game;
+ 
 
     // Constructor to set player gender and health
     public DailyEvents(String gender, int health) {
@@ -37,8 +41,7 @@ public class DailyEvents {
         this.perils = new Perils();
     }
 
-
-    public void weatherEvents() {
+	public void weatherEvents() {
     	handleWeatherEvent();
 
         // Check if a weather event happens
@@ -71,19 +74,23 @@ public class DailyEvents {
     }
 
     // Handle weather event
-    private void handleWeatherEvent() {
+    public String handleWeatherEvent() {
     	// List of weather events
     	String[] weatherEvents = {"Sunny", "Rainy", "Windy", "Thunderstorms", "Snowy"};
 
     	// Determines if a weather event will happen
         if (random.nextDouble() < WEATHER_EVENT_PROBABILITY) {
             String event = weatherEvents[random.nextInt(weatherEvents.length)];
-            System.out.println("The weather is " + event);
+            return event;
         } 
-        // Prints weather is clear if no weather event happens
-        if (random.nextDouble() >= WEATHER_EVENT_PROBABILITY) {
-            System.out.println("The weather is clear.");
+        else {
+        	// Prints weather is clear if no weather event happens
+        	return "Clear";
         }
+//        // Prints weather is clear if no weather event happens
+//        if (random.nextDouble() >= WEATHER_EVENT_PROBABILITY) {
+//            return "Clear";
+//        }
     }
 
     // Main method to test
