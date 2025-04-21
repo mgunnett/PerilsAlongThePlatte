@@ -1,0 +1,43 @@
+package perilsalongtheplatte;
+import javax.swing.*;
+
+/**
+ * Popups contains the many Java popups the program will display to give educational content. These popups will be used to both collect input from the user
+ * (such as names, day to rest, etc.) and display when the user experiences an event. Each popup utilizes the JOptionPane class to show specific popups. 
+ * @author Parker West
+ * 
+ */
+
+public class Popups {
+	
+	/**
+	 * Creates a popup that will allow the user to enter the total number of days to rest. 
+	 * @return the number of days the user selects to rest for. 
+	 */
+	public int restDays() {
+		//create objects to be integrated into the JOptionPane
+		int days; //value that will be stored
+		final int MAX = 7; //the user can only rest a MAX of 7 days (1 week)
+		final int MIN = 0; //useful if the user wants to exit without doing anything
+		
+		 SpinnerNumberModel model = new SpinnerNumberModel //creates the parameters of the spinner
+		 (0, MIN, MAX, 1); //sets the bound/increments of the spinner. 
+	     JSpinner spinner = new JSpinner(model); //creates the actual spinner object
+		
+		
+		//popup dialog with a JSpinner to get input for the number of days to rest
+		days = JOptionPane.showOptionDialog(
+				null, 						  //no parent component
+				model, 						  //inputs the spinner into the popup
+				"How many days to rest?", 	  //title
+				JOptionPane.OK_CANCEL_OPTION, //which buttons to display. This popup uses a OK/Cancel option to confirm
+				JOptionPane.QUESTION_MESSAGE, //what icon to display. This popup uses the question icon
+				null, 						  //no custom icon
+				null, 						  //no custom buttons
+				null);						  //no initial object selection
+		return days; 
+	}
+
+	
+
+}
