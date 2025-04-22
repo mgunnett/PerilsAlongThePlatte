@@ -20,7 +20,7 @@ public class TravelDistance {
 	 */
 		
 	public TravelDistance(Runnable updateCallback) {
-		int delay = 5000; // This is 10 seconds for each in-game day
+		int delay = 5000; // This is 5 seconds for each in-game day
 
 		dayTimer = new Timer(delay, null);
 		dayTimer.setRepeats(false); // this makes sure the timer resets
@@ -47,9 +47,12 @@ public class TravelDistance {
 		     }
 	     });
 
-		dayTimer.start(); // Start the first timer
+
 	}
 
+	public void startTimer() {
+		dayTimer.start();
+	}
 	
 	/**
 	 * Tracks the current distance traveled.

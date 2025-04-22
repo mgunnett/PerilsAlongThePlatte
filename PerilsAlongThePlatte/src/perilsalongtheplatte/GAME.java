@@ -27,12 +27,6 @@ import javax.swing.JTextPane;
 public class GAME {
 	//create objects of the class, including each widget
 	private JFrame frame;
-	
-	//create objects of each of our custom classes
-	private Popups popup = new Popups(); 
-	private TravelDistance travelDistance;
-	
-	private DailyEvents daily_events;
 	private JTextField txtPlayer1Name;
 	private JTextField txtPlayer2Name;
 	private JTextField txtPlayer3Name;
@@ -40,6 +34,29 @@ public class GAME {
 	private JTextField txtPlayer5Name;
 	JLabel lblDaysPassed;
 	JLabel lblDistanceTraveled;
+	JLabel lblWeather;
+	JButton btnContinue;
+	JPanel GamePanel;
+	JPanel HuntingPanel;
+	JPanel StartingOptionsPanel;
+	
+	//create objects of each of our custom classes
+	private Popups popup = new Popups(); 
+	private TravelDistance travelDistance;
+	private DailyEvents daily_events;
+	
+	
+	
+	//Hunting Game
+	public JTextField txtFldResponse;
+	public ImageIcon icon;
+	public JLabel lblBang2Shoot;
+	public Timer timer;
+	public JLabel imageHolder;
+	public JLabel lblNewLabel1;
+	private int counter = 0;
+	public int meat = 100;
+	public boolean closeGame = false;
 
 	/**
 	 * Launch the application.
@@ -62,31 +79,42 @@ public class GAME {
 	 */
 	public GAME() {
 		daily_events = new DailyEvents("any", 100); // change for gender and health in the future. Not Final.
-		travelDistance = new TravelDistance(() -> {
-            // This method will run every time the day is updated. 
-            // You should update your label here with the current day and distance.
-            updateDayAndDistanceLabel();
-        });
+		 travelDistance = new TravelDistance(() -> {
+	            daily_events.weatherEvents();              // <-- TRIGGER daily event logic
+	            updateDayAndDistanceLabel();     // updates gui
+	            
+			    daily_events.weatherEvents();
+			    String todayWeather = daily_events.handleWeatherEvent(); // get weather string
+		        lblWeather.setText(todayWeather); // update label
+	        });
+		
 		initialize();
+		
+		btnContinue.addActionListener(e -> {
+			travelDistance.startTimer();
+		});
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-
-		
-		JPanel StartingOptionsPanel;
-		
-		
+			
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(0, 0, 0));
 		frame.setBounds(100, 100, 1300, 726);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		HuntingPanel = new JPanel();
+		HuntingPanel.setBackground(new Color(154, 128, 71));
+		HuntingPanel.setBounds(100, 100, 450, 300);
+		frame.getContentPane().add(HuntingPanel);
+		HuntingPanel.setLayout(null);
+		HuntingPanel.setVisible(false);
 		
-		JPanel GamePanel = new JPanel();
+		
+		GamePanel = new JPanel();
 		GamePanel.setBackground(new Color(0, 0, 0));
 		GamePanel.setBounds(0, 0, 1283, 699);
 		frame.getContentPane().add(GamePanel);
@@ -148,6 +176,141 @@ public class GAME {
 		JButton btnHunt = new JButton("Hunt");
 		btnHunt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				HuntingPanel.setVisible(true);
+				GamePanel.setVisible(false);
+
+				timer = new Timer(1000, new ActionListener() {
+					public void actionPerformed(ActionEvent evt) {
+						timerActionPerformed();
+					}
+				});
+				timer.start();
+
+				imageHolder = new JLabel("                                  \\      . .(");
+				imageHolder.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder.setBounds(95, 65, 246, 24);
+				HuntingPanel.add(imageHolder);
+				
+				
+				lblBang2Shoot = new JLabel("Type BANG to shoot");
+				lblBang2Shoot.setFont(new Font("Tw Cen MT", Font.BOLD, 25));
+				lblBang2Shoot.setHorizontalAlignment(SwingConstants.CENTER);
+				lblBang2Shoot.setBounds(109, 11, 218, 24);
+				HuntingPanel.add(lblBang2Shoot);
+				
+
+				JLabel lblResult = new JLabel("");
+				lblResult.setHorizontalAlignment(SwingConstants.CENTER);
+				lblResult.setFont(new Font("Tahoma", Font.PLAIN, 15));
+				lblResult.setBounds(217, 159, 209, 35);
+				HuntingPanel.add(lblResult);
+				
+				txtFldResponse = new JTextField();
+				txtFldResponse.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						timer.stop();
+						if (meat < 0) {
+							meat = 0;
+						}
+						String response = txtFldResponse.getText();
+						if (response.equalsIgnoreCase("bang")) {
+							if (meat > 0) {
+								lblResult.setText("You got " + meat + " meat.");
+							} else {
+								lblResult.setText("The deer ran away.");
+							}
+						} else {
+							lblResult.setText("You missed. :(");
+						}
+						closeGame = true;
+
+						//  Delay panel closing by 2 seconds (5000 milliseconds)
+						new Timer(2000, new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent evt) {
+								HuntingPanel.setVisible(false);
+								GamePanel.setVisible(true);
+								((Timer) evt.getSource()).stop(); // Stop the 5-second timer after it fires
+							}
+						}).start();
+					}
+				});
+				txtFldResponse.setHorizontalAlignment(SwingConstants.CENTER);
+				txtFldResponse.setFont(new Font("Tahoma", Font.PLAIN, 30));
+				txtFldResponse.setBounds(170, 224, 96, 35);
+				HuntingPanel.add(txtFldResponse);
+				txtFldResponse.setColumns(10);
+				
+				lblNewLabel1 = new JLabel("Time");
+				lblNewLabel1.setBounds(338, 122, 49, 14);
+				HuntingPanel.add(lblNewLabel1);
+				
+				JLabel lblt = new JLabel("                                   |  __T |");
+				lblt.setHorizontalAlignment(SwingConstants.LEFT);
+				lblt.setBounds(95, 77, 246, 24);
+				HuntingPanel.add(lblt);
+				
+				JLabel imageHolder_2 = new JLabel("                                  /       |");
+				imageHolder_2.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_2.setBounds(95, 89, 246, 24);
+				HuntingPanel.add(imageHolder_2);
+				
+				JLabel imageHolder_3 = new JLabel("         _.---======='          |");
+				imageHolder_3.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_3.setBounds(95, 100, 246, 24);
+				HuntingPanel.add(imageHolder_3);
+				
+				JLabel imageHolder_4 = new JLabel("     //                                 {}");
+				imageHolder_4.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_4.setBounds(95, 112, 246, 24);
+				HuntingPanel.add(imageHolder_4);
+				
+				JLabel imageHolder_5 = new JLabel("   `|             ,       ,            {}");
+				imageHolder_5.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_5.setBounds(95, 124, 246, 24);
+				HuntingPanel.add(imageHolder_5);
+				
+				JLabel imageHolder_6 = new JLabel("      \\            /___;          ,'");
+				imageHolder_6.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_6.setBounds(95, 135, 246, 24);
+				HuntingPanel.add(imageHolder_6);
+				
+				JLabel imageHolder_7 = new JLabel("                                  |`\\__/ /");
+				imageHolder_7.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_7.setBounds(95, 53, 246, 24);
+				HuntingPanel.add(imageHolder_7);
+				
+				JLabel imageHolder_1 = new JLabel("       )      ,-;`       `\\      / /");
+				imageHolder_1.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_1.setBounds(95, 147, 246, 24);
+				HuntingPanel.add(imageHolder_1);
+				
+				JLabel imageHolder_7_1 = new JLabel("       |     /   (          ;|   | |");
+				imageHolder_7_1.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_7_1.setBounds(95, 159, 246, 24);
+				HuntingPanel.add(imageHolder_7_1);
+				
+				JLabel imageHolder_7_2 = new JLabel("       |    |`\\  \\            |  | |");
+				imageHolder_7_2.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_7_2.setBounds(95, 170, 246, 24);
+				HuntingPanel.add(imageHolder_7_2);
+				
+				JLabel imageHolder_7_3 = new JLabel("       |   |    \\  \\          |  | |");
+				imageHolder_7_3.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_7_3.setBounds(95, 182, 246, 24);
+				HuntingPanel.add(imageHolder_7_3);
+				
+				JLabel imageHolder_7_4 = new JLabel("        )  \\     )  \\        )  | |");
+				imageHolder_7_4.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_7_4.setBounds(95, 194, 246, 24);
+				HuntingPanel.add(imageHolder_7_4);
+				
+				JLabel imageHolder_7_5 = new JLabel("         `\"      `\"         `\"\"");
+				imageHolder_7_5.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_7_5.setBounds(95, 205, 246, 24);
+				HuntingPanel.add(imageHolder_7_5);
+				
+				
 			}
 		});
 		btnHunt.setFont(new Font("Serif", Font.PLAIN, 35));
@@ -215,10 +378,10 @@ public class GAME {
 		lblDistanceTraveled = new JLabel("");
 		lblDistanceTraveled.setForeground(Color.WHITE);
 		lblDistanceTraveled.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblDistanceTraveled.setBounds(291, 119, 153, 24);
+		lblDistanceTraveled.setBounds(271, 111, 153, 24);
 		GamePanel.add(lblDistanceTraveled);
 		
-		JLabel lblWeather = new JLabel("Clear");
+		lblWeather = new JLabel("Clear");
 		lblWeather.setForeground(Color.WHITE);
 		lblWeather.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblWeather.setBounds(151, 70, 256, 32);
@@ -329,7 +492,7 @@ public class GAME {
 		lblCPlayer5Name.setBounds(38, 230, 226, 39);
 		StartingOptionsPanel.add(lblCPlayer5Name);
 		
-		JButton btnContinue = new JButton("Continue");
+		btnContinue = new JButton("Continue");
 		btnContinue.setBackground(new Color(220, 207, 180));
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -389,16 +552,19 @@ public class GAME {
 		lblGender.setBounds(739, 30, 108, 39);
 		StartingOptionsPanel.add(lblGender);
 		
-		JPanel HuntingPanel = new JPanel();
-		HuntingPanel.setBackground(new Color(154, 128, 71));
-		HuntingPanel.setBounds(0, 0, 1283, 689);
-		frame.getContentPane().add(HuntingPanel);
-		HuntingPanel.setLayout(null);
-
-		// ------------------- HUNTING GAME -------------------
 		
+	}
 	
-		
+	private void timerActionPerformed() {
+		counter++;
+		lblNewLabel1.setText("" + counter);
+		meat -= 10;
+
+		if (closeGame == true) {
+			timer.stop();
+			GamePanel.setVisible(true);
+			HuntingPanel.setVisible(false);
+		}
 	}
 	
 	 private void updateDayAndDistanceLabel() {
