@@ -41,6 +41,7 @@ public class GAME {
 	JLabel lblDaysPassed;
 	JLabel lblDistanceTraveled;
 	JLabel lblWeather;
+	JButton btnContinue;
 
 	/**
 	 * Launch the application.
@@ -73,6 +74,10 @@ public class GAME {
 	        });
 		
 		initialize();
+		
+		btnContinue.addActionListener(e -> {
+			travelDistance.startTimer();
+		});
 	}
 
 	/**
@@ -334,7 +339,7 @@ public class GAME {
 		lblCPlayer5Name.setBounds(38, 230, 226, 39);
 		StartingOptionsPanel.add(lblCPlayer5Name);
 		
-		JButton btnContinue = new JButton("Continue");
+		btnContinue = new JButton("Continue");
 		btnContinue.setBackground(new Color(220, 207, 180));
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
