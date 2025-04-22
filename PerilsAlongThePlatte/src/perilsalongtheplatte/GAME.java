@@ -402,6 +402,121 @@ public class GAME {
 
 		// ------------------- HUNTING GAME -------------------
 		
+		/*
+		 * frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+
+		imageHolder = new JLabel("                                  \\      . .(");
+		imageHolder.setHorizontalAlignment(SwingConstants.LEFT);
+		imageHolder.setBounds(95, 65, 246, 24);
+		frame.getContentPane().add(imageHolder);
+		
+		
+		lblBang2Shoot = new JLabel("Type BANG to shoot");
+		lblBang2Shoot.setFont(new Font("Tw Cen MT", Font.BOLD, 25));
+		lblBang2Shoot.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBang2Shoot.setBounds(109, 11, 218, 24);
+		frame.getContentPane().add(lblBang2Shoot);
+		
+
+		JLabel lblResult = new JLabel("");
+		lblResult.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResult.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblResult.setBounds(217, 159, 209, 35);
+		frame.getContentPane().add(lblResult);
+		
+		txtFldResponse = new JTextField();
+		txtFldResponse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				timer.stop();
+				if (meat < 0) {meat = 0;}
+				String response = txtFldResponse.getText();
+				if (response.equalsIgnoreCase("bang")) {
+					if (meat > 0) {
+						lblResult.setText("You got " + meat + " meat.");
+					}
+					else {lblResult.setText("The deer ran away.");}
+				}
+				else { lblResult.setText("You missed. :(");}
+			}
+		});
+		txtFldResponse.setHorizontalAlignment(SwingConstants.CENTER);
+		txtFldResponse.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		txtFldResponse.setBounds(170, 224, 96, 35);
+		frame.getContentPane().add(txtFldResponse);
+		txtFldResponse.setColumns(10);
+		
+		lblNewLabel = new JLabel("Time");
+		lblNewLabel.setBounds(338, 122, 49, 14);
+		frame.getContentPane().add(lblNewLabel);
+		
+		JLabel lblt = new JLabel("                                   |  __T |");
+		lblt.setHorizontalAlignment(SwingConstants.LEFT);
+		lblt.setBounds(95, 77, 246, 24);
+		frame.getContentPane().add(lblt);
+		
+		JLabel imageHolder_2 = new JLabel("                                  /       |");
+		imageHolder_2.setHorizontalAlignment(SwingConstants.LEFT);
+		imageHolder_2.setBounds(95, 89, 246, 24);
+		frame.getContentPane().add(imageHolder_2);
+		
+		JLabel imageHolder_3 = new JLabel("         _.---======='          |");
+		imageHolder_3.setHorizontalAlignment(SwingConstants.LEFT);
+		imageHolder_3.setBounds(95, 100, 246, 24);
+		frame.getContentPane().add(imageHolder_3);
+		
+		JLabel imageHolder_4 = new JLabel("     //                                 {}");
+		imageHolder_4.setHorizontalAlignment(SwingConstants.LEFT);
+		imageHolder_4.setBounds(95, 112, 246, 24);
+		frame.getContentPane().add(imageHolder_4);
+		
+		JLabel imageHolder_5 = new JLabel("   `|             ,       ,            {}");
+		imageHolder_5.setHorizontalAlignment(SwingConstants.LEFT);
+		imageHolder_5.setBounds(95, 124, 246, 24);
+		frame.getContentPane().add(imageHolder_5);
+		
+		JLabel imageHolder_6 = new JLabel("      \\            /___;          ,'");
+		imageHolder_6.setHorizontalAlignment(SwingConstants.LEFT);
+		imageHolder_6.setBounds(95, 135, 246, 24);
+		frame.getContentPane().add(imageHolder_6);
+		
+		JLabel imageHolder_7 = new JLabel("                                  |`\\__/ /");
+		imageHolder_7.setHorizontalAlignment(SwingConstants.LEFT);
+		imageHolder_7.setBounds(95, 53, 246, 24);
+		frame.getContentPane().add(imageHolder_7);
+		
+		JLabel imageHolder_1 = new JLabel("       )      ,-;`       `\\      / /");
+		imageHolder_1.setHorizontalAlignment(SwingConstants.LEFT);
+		imageHolder_1.setBounds(95, 147, 246, 24);
+		frame.getContentPane().add(imageHolder_1);
+		
+		JLabel imageHolder_7_1 = new JLabel("       |     /   (          ;|   | |");
+		imageHolder_7_1.setHorizontalAlignment(SwingConstants.LEFT);
+		imageHolder_7_1.setBounds(95, 159, 246, 24);
+		frame.getContentPane().add(imageHolder_7_1);
+		
+		JLabel imageHolder_7_2 = new JLabel("       |    |`\\  \\            |  | |");
+		imageHolder_7_2.setHorizontalAlignment(SwingConstants.LEFT);
+		imageHolder_7_2.setBounds(95, 170, 246, 24);
+		frame.getContentPane().add(imageHolder_7_2);
+		
+		JLabel imageHolder_7_3 = new JLabel("       |   |    \\  \\          |  | |");
+		imageHolder_7_3.setHorizontalAlignment(SwingConstants.LEFT);
+		imageHolder_7_3.setBounds(95, 182, 246, 24);
+		frame.getContentPane().add(imageHolder_7_3);
+		
+		JLabel imageHolder_7_4 = new JLabel("        )  \\     )  \\        )  | |");
+		imageHolder_7_4.setHorizontalAlignment(SwingConstants.LEFT);
+		imageHolder_7_4.setBounds(95, 194, 246, 24);
+		frame.getContentPane().add(imageHolder_7_4);
+		
+		JLabel imageHolder_7_5 = new JLabel("         `\"      `\"         `\"\"");
+		imageHolder_7_5.setHorizontalAlignment(SwingConstants.LEFT);
+		imageHolder_7_5.setBounds(95, 205, 246, 24);
+		frame.getContentPane().add(imageHolder_7_5);
+		 */
 	
 		
 	}
