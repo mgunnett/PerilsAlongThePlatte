@@ -10,12 +10,13 @@ public class TravelDistance {
 		public int pace = 0;
 		private int dayTime = 0; 
 		Timer dayTimer;  //create Timer object to track time progression
+		
 	/**
 	 * A constructor that creates a Timer object with the amount of REAL time an in-game day will take. 
 	 * @param delay how long (in ms) an in-game day will take
 	 */
-	TravelDistance(int delay){
-		this.dayTime = delay; //set the value of dayTime to the inputed delay time
+	public TravelDistance(){
+		
 	}
 	
 	
@@ -89,7 +90,7 @@ public class TravelDistance {
 	 * 
 	 * Chimney Rock
 	 * 
-	 * Fort Laramie
+	 * Fort Loramie
 	 * 
 	 * Reference this order in relation to the reachedLandmark function below
 	 *                                |
