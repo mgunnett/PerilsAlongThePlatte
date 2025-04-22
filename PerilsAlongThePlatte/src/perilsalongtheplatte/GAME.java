@@ -403,6 +403,30 @@ public class GAME {
 		// ------------------- HUNTING GAME -------------------
 		
 		/*
+		 * 
+		 * 	public JFrame frame;
+	public JTextField txtFldResponse;
+	public ImageIcon icon;
+	public JLabel lblBang2Shoot;
+	public Timer timer;
+	public JLabel imageHolder;
+	public JLabel lblNewLabel;
+	private int counter = 0;
+	public int meat = 100;
+		 * 
+		 * 		timer = new javax.swing.Timer(1000, new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				timerActionPerformed();
+			}
+			});
+			timer.start();
+		 * 
+		 * public void timerActionPerformed() {
+		counter = counter + 1;
+		lblNewLabel.setText("" + counter);
+		meat = meat - 10;
+	}
+		 * 
 		 * frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
