@@ -9,6 +9,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JSpinner;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
@@ -16,6 +17,8 @@ import java.awt.event.ActionEvent;
 import perilsalongtheplatte.DailyEvents;
 import javax.swing.JLayeredPane;
 import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+import javax.swing.JTextPane;
 
 public class GAME {
 	//create objects of the class, including each widget
@@ -332,5 +335,26 @@ public class GAME {
 		btnStart.setBounds(193, 156, 815, 181);
 		WelcomePanel.add(btnStart);
 		
+		JRadioButton rdbtnMale = new JRadioButton("Male");
+		rdbtnMale.setFont(new Font("Serif", Font.PLAIN, 35));
+		rdbtnMale.setBackground(new Color(220, 207, 180));
+		rdbtnMale.setBounds(853, 30, 167, 46);
+		StartingOptionsPanel.add(rdbtnMale);
+		
+		JRadioButton rdbtnFemale = new JRadioButton("Female");
+		rdbtnFemale.setFont(new Font("Serif", Font.PLAIN, 35));
+		rdbtnFemale.setBackground(new Color(220, 207, 180));
+		rdbtnFemale.setBounds(1053, 30, 167, 46);
+		StartingOptionsPanel.add(rdbtnFemale);
+		
+		 ButtonGroup group = new ButtonGroup();
+	        group.add(rdbtnMale);
+	        group.add(rdbtnFemale);
+		
+		JLabel lblGender = new JLabel("Gender:");
+		lblGender.setForeground(Color.WHITE);
+		lblGender.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblGender.setBounds(739, 30, 108, 39);
+		StartingOptionsPanel.add(lblGender);
 	}
 }
