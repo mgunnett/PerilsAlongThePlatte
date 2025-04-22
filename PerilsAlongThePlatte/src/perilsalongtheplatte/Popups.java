@@ -64,7 +64,7 @@ public class Popups {
 				null, 						   //no parent
 				message, 					   //displays the passed String to the dialog area
 				"Peril Encountered!",		   //<-- displays that title
-				JOptionPane.WARNING_MESSAGE ); //display warning icon
+				JOptionPane.WARNING_MESSAGE);  //display warning icon
 				
 	}
 
@@ -74,7 +74,11 @@ public class Popups {
 	//these popups run when the user reaches an educational event, such as a landmark, 
 	
 	public void landmarkPopup(String landmark) {
-		
+		JOptionPane.showMessageDialog(
+				null,
+				"You have reached " + landmark + "!",
+				"Landmark Reached!",
+				JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	

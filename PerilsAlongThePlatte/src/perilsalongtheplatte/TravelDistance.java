@@ -11,8 +11,10 @@ public class TravelDistance {
 		private int dayTime = 0;
 		private int distance = 0;
 		private boolean isStopped = false;
+		public String landmark; 
 		private Timer dayTimer;
 		private Random random = new Random();
+		private Popups popup = new Popups(); 
 		
 	/**
 	 * A constructor that creates a Timer object with the amount of REAL time an in-game day will take. 
@@ -42,6 +44,9 @@ public class TravelDistance {
 		         // if you want to test... print here to console - Megan c:
 
 		         // Restart the timer for the next day
+		         if(reachedLandmark(distance))
+		        	 popup.landmarkPopup(landmark);
+		        	 
 		         dayTimer.restart();
 		         }
 		     }
@@ -108,10 +113,36 @@ public class TravelDistance {
 	 * Determines if the player has reached the next landmark.
 	 * */
 	 public boolean reachedLandmark(int n) {
-	        int d = distanceTraveled();
-	        return (d >= 70 && d < 85) || (d >= 130 && d < 145) ||
+	        int d = distanceTraveled(); //get the distance traveled
+	        
+	        //check if the wagon is within range of a certain landmark and report its string value
+	        if (d >= 70 && d < 85) {
+	        	landmark = "Kansas River"; 
+	        	return true;
+	        }
+	        if (d >= 130 && d < 145) {
+	        	landmark = "Big Blue River"; 
+	        	return true;
+	        }
+	        if (d >= 355 && d < 370) {
+		        landmark = "Fort Kearny"; 
+	        	return true;
+	        }
+	        if (d >= 610 && d < 625) {
+	        	landmark = "Chimney Rock";
+	        	return true; 
+	        }
+	        if (d >= 680 && d < 700) {
+	        	landmark = "Fort Loramie";
+	        	return true; 
+	        }
+	        
+	        return false; //then no landmark has been reached
+	        
+	       /* return (d >= 70 && d < 85) || (d >= 130 && d < 145) ||
 	               (d >= 355 && d < 370) || (d >= 610 && d < 625) ||
-	               (d >= 680 && d < 700);
+	               (d >= 680 && d < 700);*/
+	        
 	    }
 	
 	/**
