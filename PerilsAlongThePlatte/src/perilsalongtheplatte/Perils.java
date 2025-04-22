@@ -6,8 +6,10 @@ public class Perils {
 	public int speed;
 	public int rations;
 	public String weather;
+	public String sickness = "";
 	Random rng = new Random();
 	Boolean isSick;
+	
 	 
 	/**
 	 * Checks to see if the pioneer gets sick based off of their health
@@ -55,7 +57,7 @@ public class Perils {
 	 */
 	public Integer sicknessPenalty(Boolean gotSick, String weather) {
 		// TODO Auto-generated method stub
-		String sickness = "";
+		
 		
 		if (gotSick) {
 			int chance = rng.nextInt(101);	

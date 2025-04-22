@@ -61,15 +61,21 @@ public class Popups {
 	 */
 	public void perilPopup(String message) {
 		JOptionPane.showMessageDialog(
-				null, 						//no parent
-				message, 					//displays the passed String to the dialog area
-				"Peril Encountered!",		//<-- displays that title
-				JOptionPane.WARNING_MESSAGE //display warning icon
-				);
+				null, 						   //no parent
+				message, 					   //displays the passed String to the dialog area
+				"Peril Encountered!",		   //<-- displays that title
+				JOptionPane.WARNING_MESSAGE ); //display warning icon
+				
 	}
 
 	/********************
 	 *EDUCATIONAL POPUPS*
 	 ********************/
 	//these popups run when the user reaches an educational event, such as a landmark, 
+	
+	public void landmarkPopup(String landmark) {
+		
+	}
+	
+	
 }

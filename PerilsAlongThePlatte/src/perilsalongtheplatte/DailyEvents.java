@@ -68,6 +68,7 @@ public class DailyEvents {
         int sicknessPenalty = perils.sicknessPenalty(gotSick, "good"); // Pass parameters
         if (sicknessPenalty > 0) {
             System.out.println("You suffer a sickness penalty of: " + sicknessPenalty);
+            System.out.println("You are suffering from: " + perils.sickness); 
         } else {
             System.out.println("You're not suffering from any sickness right now.");
         }
