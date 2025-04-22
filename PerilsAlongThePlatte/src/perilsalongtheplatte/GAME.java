@@ -10,8 +10,11 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JSpinner;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import perilsalongtheplatte.DailyEvents;
@@ -66,17 +69,13 @@ public class GAME {
 		
 		JPanel StartingOptionsPanel;
 		
-		JPanel HuntingPanel = new JPanel();
-		HuntingPanel.setBackground(new Color(154, 128, 71));
-		HuntingPanel.setBounds(0, 0, 1283, 689);
-		frame.getContentPane().add(HuntingPanel);
-		HuntingPanel.setLayout(null);
 		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(0, 0, 0));
 		frame.setBounds(100, 100, 1300, 726);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
 		
 		JPanel GamePanel = new JPanel();
 		GamePanel.setBackground(new Color(0, 0, 0));
@@ -246,6 +245,12 @@ public class GAME {
 		txtPlayer1Name = new JTextField();
 		txtPlayer1Name.setFont(new Font("Serif", Font.PLAIN, 30));
 		txtPlayer1Name.setBounds(250, 30, 234, 35);
+		txtPlayer1Name.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        String input = txtPlayer1Name.getText();
+		        System.out.println("Player 1 name entered: " + input);
+		    }
+		});
 		StartingOptionsPanel.add(txtPlayer1Name);
 		
 		txtPlayer2Name = new JTextField();
@@ -362,9 +367,83 @@ public class GAME {
 		lblGender.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblGender.setBounds(739, 30, 108, 39);
 		StartingOptionsPanel.add(lblGender);
+		
+		JPanel HuntingPanel = new JPanel();
+		HuntingPanel.setBackground(new Color(154, 128, 71));
+		HuntingPanel.setBounds(0, 0, 1283, 689);
+		frame.getContentPane().add(HuntingPanel);
+		HuntingPanel.setLayout(null);
 
 		// ------------------- HUNTING GAME -------------------
 		
+		/*
+		 * 
+	public JTextField txtFldResponse;
+	public ImageIcon icon;
+	public JLabel lblBang2Shoot;
+	public String filename = "/images/imageForVG" + ".jpg";
+	public Timer timer;
+	public JLabel imageHolder;
+	public JLabel lblNewLabel;
+	private int counter = 0;
+	public int meat = 100;
+		 * 
+		 * 
+		 * public void timerActionPerformed() {
+		counter = counter + 1;
+		lblNewLabel.setText("" + counter);
+		meat = meat - 10;
+	}
+		timer = new javax.swing.Timer(1000, new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				timerActionPerformed();
+			}
+			});
+			timer.start();
+		
+		 * 
+		 * frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+
+		imageHolder = new JLabel("");
+		imageHolder.setHorizontalAlignment(SwingConstants.CENTER);
+		imageHolder.setBounds(10, 52, 416, 135);
+		frame.getContentPane().add(imageHolder);
+		
+		
+		lblBang2Shoot = new JLabel("Type BANG to shoot");
+		lblBang2Shoot.setFont(new Font("Tw Cen MT", Font.BOLD, 25));
+		lblBang2Shoot.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBang2Shoot.setBounds(109, 11, 218, 24);
+		frame.getContentPane().add(lblBang2Shoot);
+		
+		txtFldResponse = new JTextField();
+		txtFldResponse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				timer.stop();
+				if (meat < 0) {meat = 0;}
+				String response = txtFldResponse.getText();
+				if (response.equalsIgnoreCase("bang")) {
+					if (meat > 0) {
+						imageHolder.setText("You got " + meat + " meat.");
+					}
+					else {imageHolder.setText("The deer ran away.");}
+				}
+				else { imageHolder.setText("You missed. :(");}
+			}
+		});
+		txtFldResponse.setHorizontalAlignment(SwingConstants.CENTER);
+		txtFldResponse.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		txtFldResponse.setBounds(170, 217, 96, 35);
+		frame.getContentPane().add(txtFldResponse);
+		txtFldResponse.setColumns(10);
+		
+		lblNewLabel = new JLabel("Time");
+		lblNewLabel.setBounds(358, 20, 49, 14);
+		frame.getContentPane().add(lblNewLabel);
+		 */
 		
 	}
 	
