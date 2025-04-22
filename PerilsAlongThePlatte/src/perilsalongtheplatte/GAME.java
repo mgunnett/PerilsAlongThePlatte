@@ -31,8 +31,8 @@ public class GAME {
 	//create objects of each of our custom classes
 	private Popups popup = new Popups(); 
 	private TravelDistance travelDistance;
-	
 	private DailyEvents daily_events;
+	
 	private JTextField txtPlayer1Name;
 	private JTextField txtPlayer2Name;
 	private JTextField txtPlayer3Name;
@@ -40,6 +40,7 @@ public class GAME {
 	private JTextField txtPlayer5Name;
 	JLabel lblDaysPassed;
 	JLabel lblDistanceTraveled;
+	JLabel lblWeather;
 
 	/**
 	 * Launch the application.
@@ -62,11 +63,15 @@ public class GAME {
 	 */
 	public GAME() {
 		daily_events = new DailyEvents("any", 100); // change for gender and health in the future. Not Final.
-		travelDistance = new TravelDistance(() -> {
-            // This method will run every time the day is updated. 
-            // You should update your label here with the current day and distance.
-            updateDayAndDistanceLabel();
-        });
+		 travelDistance = new TravelDistance(() -> {
+	            daily_events.weatherEvents();              // <-- TRIGGER daily event logic
+	            updateDayAndDistanceLabel();     // updates gui
+	            
+			    daily_events.weatherEvents();
+			    String todayWeather = daily_events.handleWeatherEvent(); // get weather string
+		        lblWeather.setText(todayWeather); // update label
+	        });
+		
 		initialize();
 	}
 
@@ -215,10 +220,10 @@ public class GAME {
 		lblDistanceTraveled = new JLabel("");
 		lblDistanceTraveled.setForeground(Color.WHITE);
 		lblDistanceTraveled.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblDistanceTraveled.setBounds(291, 119, 153, 24);
+		lblDistanceTraveled.setBounds(271, 111, 153, 24);
 		GamePanel.add(lblDistanceTraveled);
 		
-		JLabel lblWeather = new JLabel("Clear");
+		lblWeather = new JLabel("Clear");
 		lblWeather.setForeground(Color.WHITE);
 		lblWeather.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblWeather.setBounds(151, 70, 256, 32);
