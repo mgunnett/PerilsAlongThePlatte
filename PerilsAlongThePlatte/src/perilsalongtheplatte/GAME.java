@@ -69,17 +69,13 @@ public class GAME {
 		
 		JPanel StartingOptionsPanel;
 		
-		JPanel HuntingPanel = new JPanel();
-		HuntingPanel.setBackground(new Color(154, 128, 71));
-		HuntingPanel.setBounds(0, 0, 1283, 689);
-		frame.getContentPane().add(HuntingPanel);
-		HuntingPanel.setLayout(null);
 		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(0, 0, 0));
 		frame.setBounds(100, 100, 1300, 726);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
 		
 		JPanel GamePanel = new JPanel();
 		GamePanel.setBackground(new Color(0, 0, 0));
@@ -249,6 +245,12 @@ public class GAME {
 		txtPlayer1Name = new JTextField();
 		txtPlayer1Name.setFont(new Font("Serif", Font.PLAIN, 30));
 		txtPlayer1Name.setBounds(250, 30, 234, 35);
+		txtPlayer1Name.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        String input = txtPlayer1Name.getText();
+		        System.out.println("Player 1 name entered: " + input);
+		    }
+		});
 		StartingOptionsPanel.add(txtPlayer1Name);
 		
 		txtPlayer2Name = new JTextField();
@@ -365,6 +367,12 @@ public class GAME {
 		lblGender.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblGender.setBounds(739, 30, 108, 39);
 		StartingOptionsPanel.add(lblGender);
+		
+		JPanel HuntingPanel = new JPanel();
+		HuntingPanel.setBackground(new Color(154, 128, 71));
+		HuntingPanel.setBounds(0, 0, 1283, 689);
+		frame.getContentPane().add(HuntingPanel);
+		HuntingPanel.setLayout(null);
 
 		// ------------------- HUNTING GAME -------------------
 		

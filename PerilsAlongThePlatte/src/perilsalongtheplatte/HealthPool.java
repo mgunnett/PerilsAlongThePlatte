@@ -15,6 +15,15 @@ public class HealthPool {
     ArrayList<Boolean> isSick; 
     Boolean dayOfRest;
 	
+    //create a constructor to initialize the inputtted names from GAME into this class
+    HealthPool(String playerName, String person1, String person2, String person3, String person4) {
+    	personName.add(playerName); 
+    	personName.add(person1); 
+    	personName.add(person2); 
+    	personName.add(person3);
+    	personName.add(person4); 
+    }
+    
     
 	/**
 	 * Initializes the health for any and all pioneers
