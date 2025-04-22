@@ -79,8 +79,7 @@ public class GAME {
 	 */
 	public GAME() {
 		daily_events = new DailyEvents("any", 100); // change for gender and health in the future. Not Final.
-		 travelDistance = new TravelDistance(() -> {
-	            daily_events.weatherEvents();              // <-- TRIGGER daily event logic
+		 travelDistance = new TravelDistance(() -> {             // <-- TRIGGER daily event logic
 	            updateDayAndDistanceLabel();     // updates gui
 	            
 			    daily_events.weatherEvents();
@@ -163,15 +162,15 @@ public class GAME {
 		btnRest.setBounds(16, 369, 145, 110);
 		OptionsPanel.add(btnRest);
 		
-		JButton btnTravel = new JButton("Travel");
-		btnTravel.addActionListener(new ActionListener() {
+		JButton btnTrade = new JButton("Trade");
+		btnTrade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnTravel.setFont(new Font("Serif", Font.PLAIN, 35));
-		btnTravel.setBackground(new Color(220, 207, 180));
-		btnTravel.setBounds(215, 369, 145, 110);
-		OptionsPanel.add(btnTravel);
+		btnTrade.setFont(new Font("Serif", Font.PLAIN, 35));
+		btnTrade.setBackground(new Color(220, 207, 180));
+		btnTrade.setBounds(215, 369, 145, 110);
+		OptionsPanel.add(btnTrade);
 		
 		JButton btnHunt = new JButton("Hunt");
 		btnHunt.addActionListener(new ActionListener() {
