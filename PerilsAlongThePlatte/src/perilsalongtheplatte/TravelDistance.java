@@ -1,16 +1,24 @@
 package perilsalongtheplatte;
 import java.util.Random;
-
+import javax.swing.Timer;
+import java.awt.event.*;
 
 public class TravelDistance {
 	
-	TravelDistance(){
-		;
-	}
-	
-	// declare global variables
+	//declare public variables
 		public int day = 0;
 		public int pace = 0;
+		private int dayTime = 0; 
+		Timer dayTimer;  //create Timer object to track time progression
+	/**
+	 * A constructor that creates a Timer object with the amount of REAL time an in-game day will take. 
+	 * @param delay how long (in ms) an in-game day will take
+	 */
+	TravelDistance(int delay){
+		this.dayTime = delay; //set the value of dayTime to the inputed delay time
+	}
+	
+	
 	/**
 	 * Tracks the current distance traveled.
 	 * */
@@ -34,7 +42,7 @@ public class TravelDistance {
 	/**
 	 * Tracks the number of days traveled.
 	 * */
-	public int daysTraveled(int unused) {
+	public int daysTraveled() {
 	    java.util.Timer timer = new java.util.Timer();
 
 	    timer.scheduleAtFixedRate(new java.util.TimerTask() {
@@ -57,8 +65,19 @@ public class TravelDistance {
 		else
 		return true;
 	}
-	
-	
+	/**
+	 * Create a timer that will 
+	 */
+	 public void startDayTimer() {
+		 //below is a (ugly) way to create a timer that will continuously run the code within the ActionPerformed method
+	        dayTimer = new Timer(dayTime, new ActionListener() { //construct the timer with a new ActionListener
+	            public void actionPerformed(ActionEvent e) {
+	                System.out.println("A day has passed!");
+	            }
+	        });
+
+	        dayTimer.start();  //start the timer to run
+	    }
 	/**
 	 * LANDMARK ORDER
 	 * 
