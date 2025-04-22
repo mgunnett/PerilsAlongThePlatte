@@ -18,34 +18,38 @@ public class TravelDistance {
 	 * A constructor that creates a Timer object with the amount of REAL time an in-game day will take. 
 	 * @param updateCallback - allows you to "callback" to the function to set a label in the GUI
 	 */
-	public TravelDistance(Runnable updateCallback){
-		int delay = 10000; // This is 10 seconds for each in-game day
 		
+	public TravelDistance(Runnable updateCallback) {
+		int delay = 10000; // This is 10 seconds for each in-game day
+
 		dayTimer = new Timer(delay, null);
 		dayTimer.setRepeats(false); // this makes sure the timer resets
-		
+
 		dayTimer.addActionListener(new ActionListener() {
-           // Overrides the current settings no matter what they are
-			@Override
-            public void actionPerformed(ActionEvent e) {
-                // if the timer is stopped, it will add a day (it stops at 10 seconds)
-				if (!isStopped) {
-                    day++;
-                    // will update with pace later on
-                    distance += random.nextInt(11) + 5; // Adds 5–15 miles
+			// Overrides the current settings no matter what they are
+		     @Override
+		     public void actionPerformed(ActionEvent e) {
+		    	// if the timer is stopped, it will add a day (it stops at 10 seconds)
+		    	 if (!isStopped) {
+		               day++;
+		               // will update with pace later on
+		               distance += random.nextInt(11) + 5; // Adds 5–15 miles
 
-                    if (updateCallback != null) {
-                        updateCallback.run(); // UI update
-                    }
+		         if (updateCallback != null) {
+		        	 	updateCallback.run(); // UI update
+		         }
+		         
+		         // if you want to test... print here to console - Megan c:
 
-                    // if you want to test... print here - Megan c:
+		         // Restart the timer for the next day
+		         dayTimer.restart();
+		         }
+		     }
+	     });
 
-                    // Restart the timer for the next day
-                    dayTimer.restart();
-                }
-            }
-	});
-	
+		dayTimer.start(); // Start the first timer
+	}
+
 	
 	/**
 	 * Tracks the current distance traveled.
@@ -62,7 +66,7 @@ public class TravelDistance {
 	}
 
 	// Can later on be used to help with resting
-	public boolean stopTravel() {
+	public void stopTravel() { //bool?
 		isStopped = true;
 		dayTimer.stop();
 	}
