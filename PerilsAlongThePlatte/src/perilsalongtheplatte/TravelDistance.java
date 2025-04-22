@@ -8,76 +8,76 @@ public class TravelDistance {
 	//declare public variables
 		public int day = 0;
 		public int pace = 0;
-		private int dayTime = 0; 
-		Timer dayTimer;  //create Timer object to track time progression
+		private int dayTime = 0;
+		private int distance = 0;
+		private boolean isStopped = false;
+		private Timer dayTimer;
+		private Random random = new Random();
+		
 	/**
 	 * A constructor that creates a Timer object with the amount of REAL time an in-game day will take. 
-	 * @param delay how long (in ms) an in-game day will take
+	 * @param updateCallback - allows you to "callback" to the function to set a label in the GUI
 	 */
-	TravelDistance(int delay){
-		this.dayTime = delay; //set the value of dayTime to the inputed delay time
-	}
+	public TravelDistance(Runnable updateCallback){
+		int delay = 10000; // This is 10 seconds for each in-game day
+		
+		dayTimer = new Timer(delay, null);
+		dayTimer.setRepeats(false); // this makes sure the timer resets
+		
+		dayTimer.addActionListener(new ActionListener() {
+           // Overrides the current settings no matter what they are
+			@Override
+            public void actionPerformed(ActionEvent e) {
+                // if the timer is stopped, it will add a day (it stops at 10 seconds)
+				if (!isStopped) {
+                    day++;
+                    // will update with pace later on
+                    distance += random.nextInt(11) + 5; // Adds 5–15 miles
+
+                    if (updateCallback != null) {
+                        updateCallback.run(); // UI update
+                    }
+
+                    // if you want to test... print here - Megan c:
+
+                    // Restart the timer for the next day
+                    dayTimer.restart();
+                }
+            }
+	});
 	
 	
 	/**
 	 * Tracks the current distance traveled.
 	 * */
 	public int distanceTraveled() {
-		int Distance = 0;
-		int min = 5;
-        int max = 15;
-     // Create a Random object
-        Random random = new Random();
-
-        // Generate a random integer between min and max (inclusive)
-        int randomNumber = random.nextInt(max - min + 1) + min;
-		while (isStopped() == false) {
-			for (int i = 0; i <= day; i++) {
-				Distance += randomNumber;
-			}
-		}
-			return Distance;
+		return distance;
 	}
 	
 	/**
 	 * Tracks the number of days traveled.
 	 * */
 	public int daysTraveled() {
-	    java.util.Timer timer = new java.util.Timer();
-
-	    timer.scheduleAtFixedRate(new java.util.TimerTask() {
-	        public void run() {
-	            while (!isStopped()) {
-	                day++;
-	            } 
-	        }
-	    }, 0, 1000);
-
-	    return day;
+	   return day;
 	}
 
+	// Can later on be used to help with resting
+	public boolean stopTravel() {
+		isStopped = true;
+		dayTimer.stop();
+	}
+	
+	public void resumeTravel() {
+		if (isStopped) {
+			isStopped = false;
+			dayTimer.restart();
+		}
+	}
 	
 	public boolean isStopped() {
-		int Stopped = 0;
-		if (Stopped == 0) {
-			return false;
-		}
-		else
-		return true;
+		return isStopped;
 	}
-	/**
-	 * Create a timer that will 
-	 */
-	 public void startDayTimer() {
-		 //below is a (ugly) way to create a timer that will continuously run the code within the ActionPerformed method
-	        dayTimer = new Timer(dayTime, new ActionListener() { //construct the timer with a new ActionListener
-	            public void actionPerformed(ActionEvent e) {
-	                System.out.println("A day has passed!");
-	            }
-	        });
-
-	        dayTimer.start();  //start the timer to run
-	    }
+	
 	/**
 	 * LANDMARK ORDER
 	 * 
@@ -89,7 +89,7 @@ public class TravelDistance {
 	 * 
 	 * Chimney Rock
 	 * 
-	 * Fort Laramie
+	 * Fort Loramie
 	 * 
 	 * Reference this order in relation to the reachedLandmark function below
 	 *                                |
@@ -100,48 +100,34 @@ public class TravelDistance {
 	/**
 	 * Determines if the player has reached the next landmark.
 	 * */
-	public boolean reachedLandmark(int n) {
-		if (distanceTraveled() >= 70 && distanceTraveled() < 85 || distanceTraveled() >= 130 && distanceTraveled() < 145 || distanceTraveled() >= 355 && distanceTraveled() < 370 || distanceTraveled() >= 610 && distanceTraveled() < 625 || distanceTraveled() >= 680 && distanceTraveled() < 700)
-		{
-			return true;
-		}
-		else
-			return false;
-	}
+	 public boolean reachedLandmark(int n) {
+	        int d = distanceTraveled();
+	        return (d >= 70 && d < 85) || (d >= 130 && d < 145) ||
+	               (d >= 355 && d < 370) || (d >= 610 && d < 625) ||
+	               (d >= 680 && d < 700);
+	    }
 	
 	/**
 	 * Determines if the current landmark is a river.
 	 * */
-	public boolean isRiver(int n) {
-		if (distanceTraveled() <= 78 || distanceTraveled() > 78 && distanceTraveled() <= 137)
-		{
-			return true;
-		}
-		else
-			return false;
-	}
+	  public boolean isRiver(int n) {
+	        int d = distanceTraveled();
+	        return d <= 78 || (d > 78 && d <= 137);
+	    }
 	
 	/**
 	 * Determines if the current landmark is a town.
 	 * */
-	public boolean isTown(int n) {
-		if (distanceTraveled() > 137 && distanceTraveled() <= 359 || distanceTraveled() > 615 && distanceTraveled() <=689 )
-		{
-			return true;
-		}
-		else
-			return false;
-	}
+	  public boolean isTown(int n) {
+	        int d = distanceTraveled();
+	        return (d > 137 && d <= 359) || (d > 615 && d <= 689);
+	    }
 	
 	/**
 	 * Determines if the current landmark is a scenic landmark.
 	 * */
-	public boolean isScenicSpot(int n) {
-		if (distanceTraveled() > 359 && distanceTraveled() <= 615)
-		{
-			return true;
-		}
-		else
-			return false;
-	}
+	    public boolean isScenicSpot(int n) {
+	        int d = distanceTraveled();
+	        return d > 359 && d <= 615;
+	    }
 }

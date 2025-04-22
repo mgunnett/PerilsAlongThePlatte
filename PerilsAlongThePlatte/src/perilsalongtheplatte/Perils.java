@@ -149,5 +149,25 @@ public class Perils {
 		
 		if (chance < chanceOfOxInjury) {return true;}
 		else {return false;}
+		
 	}
+	
+	/*
+	 * 
+	
+                   |`\__/ /
+                   \  . .(
+                    | __T|
+                   /   |
+      _.---======='    |
+     //               {}
+    `|      ,   ,     {}
+     \      /___;    ,'
+      ) ,-;`    `\  //
+     | / (        ;||
+     ||`\\        |||
+     ||  \\       |||
+     )\   )\      )||
+     `"   `"      `""
+	 */
 }
