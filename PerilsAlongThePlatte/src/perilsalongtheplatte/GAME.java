@@ -23,12 +23,14 @@ import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
 
+
 public class GAME {
 	//create objects of the class, including each widget
 	private JFrame frame;
 	
 	//create objects of each of our custom classes
 	private Popups popup = new Popups(); 
+	private TravelDistance travelDistance;
 	
 	private DailyEvents daily_events;
 	private JTextField txtPlayer1Name;
@@ -36,6 +38,8 @@ public class GAME {
 	private JTextField txtPlayer3Name;
 	private JTextField txtPlayer4Name;
 	private JTextField txtPlayer5Name;
+	JLabel lblDaysPassed;
+	JLabel lblDistanceTraveled;
 
 	/**
 	 * Launch the application.
@@ -58,6 +62,11 @@ public class GAME {
 	 */
 	public GAME() {
 		daily_events = new DailyEvents("any", 100); // change for gender and health in the future. Not Final.
+		travelDistance = new TravelDistance(() -> {
+            // This method will run every time the day is updated. 
+            // You should update your label here with the current day and distance.
+            updateDayAndDistanceLabel();
+        });
 		initialize();
 	}
 
@@ -203,7 +212,7 @@ public class GAME {
 		lblConstDistanceTraveled.setBounds(38, 105, 256, 39);
 		GamePanel.add(lblConstDistanceTraveled);
 		
-		JLabel lblDistanceTraveled = new JLabel("");
+		lblDistanceTraveled = new JLabel("");
 		lblDistanceTraveled.setForeground(Color.WHITE);
 		lblDistanceTraveled.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblDistanceTraveled.setBounds(291, 119, 153, 24);
@@ -234,6 +243,18 @@ public class GAME {
 		lblDate.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblDate.setBounds(111, 47, 153, 24);
 		GamePanel.add(lblDate);
+		
+		JLabel lblCDaysPassed = new JLabel("Days Passed:");
+		lblCDaysPassed.setForeground(Color.WHITE);
+		lblCDaysPassed.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblCDaysPassed.setBounds(38, -3, 171, 39);
+		GamePanel.add(lblCDaysPassed);
+		
+		lblDaysPassed = new JLabel("");
+		lblDaysPassed.setForeground(Color.WHITE);
+		lblDaysPassed.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblDaysPassed.setBounds(200, -3, 153, 39);
+		GamePanel.add(lblDaysPassed);
 		
 		StartingOptionsPanel = new JPanel();
 		StartingOptionsPanel.setBounds(0, 0, 1283, 688);
@@ -376,76 +397,17 @@ public class GAME {
 
 		// ------------------- HUNTING GAME -------------------
 		
-		/*
-		 * 
-	public JTextField txtFldResponse;
-	public ImageIcon icon;
-	public JLabel lblBang2Shoot;
-	public String filename = "/images/imageForVG" + ".jpg";
-	public Timer timer;
-	public JLabel imageHolder;
-	public JLabel lblNewLabel;
-	private int counter = 0;
-	public int meat = 100;
-		 * 
-		 * 
-		 * public void timerActionPerformed() {
-		counter = counter + 1;
-		lblNewLabel.setText("" + counter);
-		meat = meat - 10;
-	}
-		timer = new javax.swing.Timer(1000, new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				timerActionPerformed();
-			}
-			});
-			timer.start();
-		
-		 * 
-		 * frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-
-		imageHolder = new JLabel("");
-		imageHolder.setHorizontalAlignment(SwingConstants.CENTER);
-		imageHolder.setBounds(10, 52, 416, 135);
-		frame.getContentPane().add(imageHolder);
-		
-		
-		lblBang2Shoot = new JLabel("Type BANG to shoot");
-		lblBang2Shoot.setFont(new Font("Tw Cen MT", Font.BOLD, 25));
-		lblBang2Shoot.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBang2Shoot.setBounds(109, 11, 218, 24);
-		frame.getContentPane().add(lblBang2Shoot);
-		
-		txtFldResponse = new JTextField();
-		txtFldResponse.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				timer.stop();
-				if (meat < 0) {meat = 0;}
-				String response = txtFldResponse.getText();
-				if (response.equalsIgnoreCase("bang")) {
-					if (meat > 0) {
-						imageHolder.setText("You got " + meat + " meat.");
-					}
-					else {imageHolder.setText("The deer ran away.");}
-				}
-				else { imageHolder.setText("You missed. :(");}
-			}
-		});
-		txtFldResponse.setHorizontalAlignment(SwingConstants.CENTER);
-		txtFldResponse.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		txtFldResponse.setBounds(170, 217, 96, 35);
-		frame.getContentPane().add(txtFldResponse);
-		txtFldResponse.setColumns(10);
-		
-		lblNewLabel = new JLabel("Time");
-		lblNewLabel.setBounds(358, 20, 49, 14);
-		frame.getContentPane().add(lblNewLabel);
-		 */
+	
 		
 	}
 	
-	
+	 private void updateDayAndDistanceLabel() {
+	        // Changes days past label
+		 String daysPassed = String.valueOf(travelDistance.daysTraveled());
+	        lblDaysPassed.setText(daysPassed);
+	        
+	        // Changes distance traveled label
+	     String distanceTraveled = String.valueOf(travelDistance.distanceTraveled());
+	     	lblDistanceTraveled.setText(distanceTraveled);
+	    }
 }
