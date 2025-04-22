@@ -27,12 +27,6 @@ import javax.swing.JTextPane;
 public class GAME {
 	//create objects of the class, including each widget
 	private JFrame frame;
-	
-	//create objects of each of our custom classes
-	private Popups popup = new Popups(); 
-	private TravelDistance travelDistance;
-	private DailyEvents daily_events;
-	
 	private JTextField txtPlayer1Name;
 	private JTextField txtPlayer2Name;
 	private JTextField txtPlayer3Name;
@@ -44,6 +38,14 @@ public class GAME {
 	JButton btnContinue;
 	JPanel GamePanel;
 	JPanel HuntingPanel;
+	JPanel StartingOptionsPanel;
+	
+	//create objects of each of our custom classes
+	private Popups popup = new Popups(); 
+	private TravelDistance travelDistance;
+	private DailyEvents daily_events;
+	
+	
 	
 	//Hunting Game
 	public JTextField txtFldResponse;
@@ -97,9 +99,6 @@ public class GAME {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-
-		
-		JPanel StartingOptionsPanel;
 			
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(0, 0, 0));
