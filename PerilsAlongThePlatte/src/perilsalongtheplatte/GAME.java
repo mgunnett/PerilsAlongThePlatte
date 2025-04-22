@@ -30,8 +30,6 @@ public class GAME {
 	private JTextField txtPlayer3Name;
 	private JTextField txtPlayer4Name;
 	private JTextField txtPlayer5Name;
-	
-
 
 	/**
 	 * Launch the application.
@@ -61,6 +59,8 @@ public class GAME {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
+		
 		JPanel StartingOptionsPanel;
 		
 		frame = new JFrame();
