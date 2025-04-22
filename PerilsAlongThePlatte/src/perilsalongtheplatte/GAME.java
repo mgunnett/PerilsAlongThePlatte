@@ -44,6 +44,7 @@ public class GAME {
 	private Popups popup = new Popups(); 
 	private TravelDistance travelDistance;
 	private DailyEvents daily_events;
+	HealthPool health; 
 	
 	
 	
@@ -57,6 +58,9 @@ public class GAME {
 	private int counter = 0;
 	public int meat = 100;
 	public boolean closeGame = false;
+	
+	//declare global variables to be used within the entire class
+	String playerName, person1Name, person2Name, person3Name, person4Name; //names of each person, including the player
 
 	/**
 	 * Launch the application.
@@ -154,8 +158,7 @@ public class GAME {
 		JButton btnRest = new JButton("Rest");
 		btnRest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int mymommy = popup.restDays(); 
- 				System.out.println(""+ mymommy);
+				
 			}
 		});
 		btnRest.setFont(new Font("Serif", Font.PLAIN, 35));
@@ -431,8 +434,7 @@ public class GAME {
 		txtPlayer1Name.setBounds(250, 30, 234, 35);
 		txtPlayer1Name.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        String input = txtPlayer1Name.getText();
-		        System.out.println("Player 1 name entered: " + input);
+		    	playerName = txtPlayer1Name.getText();
 		    }
 		});
 		StartingOptionsPanel.add(txtPlayer1Name);
@@ -441,24 +443,44 @@ public class GAME {
 		txtPlayer2Name.setFont(new Font("Serif", Font.PLAIN, 30));
 		txtPlayer2Name.setColumns(10);
 		txtPlayer2Name.setBounds(250, 80, 234, 35);
+		txtPlayer2Name.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    	person1Name = txtPlayer2Name.getText();
+		    }
+		});
 		StartingOptionsPanel.add(txtPlayer2Name);
 		
 		txtPlayer3Name = new JTextField();
 		txtPlayer3Name.setFont(new Font("Serif", Font.PLAIN, 30));
 		txtPlayer3Name.setColumns(10);
 		txtPlayer3Name.setBounds(250, 130, 234, 35);
+		txtPlayer1Name.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    	person2Name = txtPlayer3Name.getText();
+		    }
+		});
 		StartingOptionsPanel.add(txtPlayer3Name);
 		
 		txtPlayer4Name = new JTextField();
 		txtPlayer4Name.setFont(new Font("Serif", Font.PLAIN, 30));
 		txtPlayer4Name.setColumns(10);
 		txtPlayer4Name.setBounds(250, 180, 234, 35);
+		txtPlayer1Name.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    	person3Name = txtPlayer4Name.getText();
+		    }
+		});
 		StartingOptionsPanel.add(txtPlayer4Name);
 		
 		txtPlayer5Name = new JTextField();
 		txtPlayer5Name.setFont(new Font("Serif", Font.PLAIN, 30));
 		txtPlayer5Name.setColumns(10);
 		txtPlayer5Name.setBounds(250, 230, 234, 35);
+		txtPlayer1Name.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    	person4Name = txtPlayer5Name.getText();
+		    }
+		});
 		StartingOptionsPanel.add(txtPlayer5Name);
 		
 		
@@ -498,6 +520,7 @@ public class GAME {
 			public void actionPerformed(ActionEvent e) {
 				StartingOptionsPanel.setVisible(false);
 				GamePanel.setVisible(true);
+				health = new HealthPool(playerName, person1Name, person2Name, person3Name, person4Name); //initialize health with the player names
 			}
 		});
 		btnContinue.setFont(new Font("Serif", Font.PLAIN, 45));
