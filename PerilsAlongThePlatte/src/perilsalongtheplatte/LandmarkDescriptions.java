@@ -1,109 +1,168 @@
 package perilsalongtheplatte;
 
 public class LandmarkDescriptions {
-	public String kansasRiver = "";
+	public String kansasRiver = "The Kansas River begins in Kansas City and travels"
+			+ "\nwestward to Junction City. This river stretches for"
+			+ "\n170 miles and was one of the first major landmarks"
+			+ "\nthat pioneers encountered after leaving Independence."
+			+ "\nIt offered important resources for settlers, but it"
+			+ "\nalso posed a significant challenge for those attempting"
+			+ "\nto cross it.";
 	/**
-	 *  The Kansas river starts in Kansas City and flows
-	 *  west into Junction City. The river is 170 miles
-	 *  long and was one of the first main landmarks that
-	 *  pioneers saw after leaving Independence. It provided
-	 *  significant resources but also was a big obstacle for
-	 *  those trying to cross it.
+	 *  The Kansas River begins in Kansas City and travels
+	 *  westward to Junction City. This river stretches for
+	 *  170 miles and was one of the first major landmarks
+	 *  that pioneers encountered after leaving Independence.
+	 *  It offered important resources for settlers, but it
+	 *  also posed a significant challenge for those attempting
+	 *  to cross it.
 	 */
 	
-	
-	public String bigBlueRiver = "";
+	public String bigBlueRiver = "The Big Blue River is one of the rivers that flows into"
+			+ "\nthe Kansas River. Stretching 359 miles, it runs from Kansas"
+			+ "\nto central Nebraska. This river posed a significant challenge"
+			+ "\nfor travelers on the Oregon Trail, often forcing them to wait"
+			+ "\nin the surrounding area to take a ferry, as attempting to cross"
+			+ "\nwas dangerous.";
 	/**
-	 * The Big Blue River is one of the rivers that joins
-	 * with the Kansas river. This river is 359 miles long
-	 * and runs from Kansas to central Nebraska. It was a
-	 * significant obstacle for the Oregon trail so most 
-	 * often travelers had to wait in the area surrounding
-	 * to catch a ferry as it was dangerous to try to cross.
+	 * The Big Blue River is one of the rivers that flows into
+	 * the Kansas River. Stretching 359 miles, it runs from Kansas
+	 * to central Nebraska. This river posed a significant challenge
+	 * for travelers on the Oregon Trail, often forcing them to wait
+	 * in the surrounding area to take a ferry, as attempting to cross
+	 * was dangerous.	
 	 */
 	
-	public String fortKearny = "";
+	public String fortKearny = "Fort Kearny was constructed in 1848 to protect travelers on"
+			+ "\ntheir journey. It also served as a base for \"Pony Riders,\""
+			+ "\nwho were men tasked with delivering messages along the trail."
+			+ "\nThe fort was dismantled after 1871 and now the area is a"
+			+ "\nstate historical park";
 	/**
-	 * Fort Kearny was built and established in 1848 to protect
-	 * travelers trying to make the journey. This fort also 
-	 * served as a home station for "Pony Riders" who were men
-	 * sent back and forth to deliver messages along the trail.
-	 * This post was torn down after 1871 and is now a state
-	 * historical park.
+	 * Fort Kearny was constructed in 1848 to protect travelers on
+	 * their journey. It also served as a base for "Pony Riders,"
+	 * who were men tasked with delivering messages along the trail.
+	 * The fort was dismantled after 1871 and now the area is a
+	 * state historical park
 	 */
 
-	public String chimneyRock = "";
+	public String chimneyRock = "Chimney Rock is a natural formation located along a trail"
+			+ "\nleading up from the base of a hill. This landmark became a"
+			+ "\nsymbol of progress for pioneers journeying along the Oregon"
+			+ "\nTrail. Many travelers admired its beauty, and it became one"
+			+ "\nof the most frequently mentioned spots in their diaries from"
+			+ "\nthat time.";
 	/**
-	 * Chimney Rock is a natural feature on the trail of a rock
-	 * that stretched from the base of a hill landmark. It served
-	 * as a symbol of progress for pioneers traveling on the Oregon
-	 * trail. Travelers of the trail saw this landmark as elegant
-	 * and it was the most popular location that they wrote about
-	 * in their diaries to date.
+	 * Chimney Rock is a natural formation located along a trail
+	 * leading up from the base of a hill. This landmark became a
+	 * symbol of progress for pioneers journeying along the Oregon
+	 * Trail. Many travelers admired its beauty, and it became one
+	 * of the most frequently mentioned spots in their diaries from
+	 * that time.
 	 */
 	
-	public String fortLaramie = "";
+	public String fortLaramie = "Fort Laramie served as an important stop for both Native Americans"
+			+ "\nand those traveling westward. It began as a fur trading post,"
+			+ "\ntransitioned into a haven for emigrants, and eventually became a"
+			+ "\nU.S. Army fort. Over time, it grew into a vital and well-known"
+			+ "\nlocation for trading and resting along the trail.";
 	/**
-	 * Fort Laramie was a key stopping point for both Indians and 
-	 * the emigrants. This fort was originally a fur trading post,
-	 * then a place for emigrants, then finally became a U.S. Army
-	 * fort. The fort became a crucial and popular place for trading
-	 * and resting along the trail.
+	 * Fort Laramie served as an important stop for both Native Americans
+	 * and those traveling westward. It began as a fur trading post,
+	 * transitioned into a haven for emigrants, and eventually became a
+	 * U.S. Army fort. Over time, it grew into a vital and well-known
+	 * location for trading and resting along the trail.
 	 */
 	
-	public String huntingInfo = "";
+	public String huntingInfo = "Hunting played a crucial role on the Oregon Trail since it was"
+			+ "\none of the few ways for travelers to secure additional food for"
+			+ "\ntheir group. In addition to providing meals, hunting could yield"
+			+ "\nvaluable pelts that pioneers might sell or trade for essential"
+			+ "\nsupplies. However, the success of a hunting trip depended on"
+			+ "\nseveral factors, such as whether the group had enough ammunition"
+			+ "\nor energy to hunt and enough space to store their catch.";
 	/**
-	 * Hunting was a vital task along the Oregon Trail as it was one
-	 * of the only ways to obtain more food for the party. Along with
-	 * getting food, hunting could also provide a series of pelts that
-	 * the pioneers could sell or trade for different supplies. The only
-	 * problem was that a successful hunting expedition relies on if
-	 * the group had enough ammunition or stamina to hunt, or enough 
-	 * space to hold the gains.
+	 * Hunting played a crucial role on the Oregon Trail since it was
+	 * one of the few ways for travelers to secure additional food for
+	 * their group. In addition to providing meals, hunting could yield
+	 * valuable pelts that pioneers might sell or trade for essential
+	 * supplies. However, the success of a hunting trip depended on
+	 * several factors, such as whether the group had enough ammunition
+	 * or energy to hunt and enough space to store their catch.
 	 */
 	
-	public String tradingInfo = "";
+	public String tradingInfo = "Trading played a significant role in the Oregon Trail experience."
+			+ "\nThis activity was essential for obtaining important supplies like"
+			+ "\nfood, securing services such as transportation, and receiving"
+			+ "\nassistance along the journey. While trading could take place anywhere,"
+			+ "\nit was especially common at trading posts or forts located along the"
+			+ "\ntrail. The large amount of trading that occurred helped to develop and"
+			+ "\nstrengthen the local economy in the region.";
 	/**
-	 * Trading was one of the key aspects of the Oregon Trail. This 
-	 * activity was crucial to obtain goods like food, services like
-	 * transportation, and help along the trail. Trading could be done
-	 * anywhere but was popular at trading posts or forts along the
-	 * trail. The vast amount of trading formed and grew the regional
-	 * economy.
+	 * Trading played a significant role in the Oregon Trail experience.
+	 * This activity was essential for obtaining important supplies like
+	 * food, securing services such as transportation, and receiving
+	 * assistance along the journey. While trading could take place anywhere,
+	 * it was especially common at trading posts or forts located along the
+	 * trail. The large amount of trading that occurred helped to develop and
+	 * strengthen the local economy in the region.
 	 */
 	
-	public String illnessInfo = "";
+	public String illnessInfo = "The two main reasons people died on the Oregon Trail were serious"
+			+ "\ndiseases and unfortunate accidents. Among these diseases, cholera"
+			+ "\nwas the most deadly, affecting about ten percent of the emigrants"
+			+ "\nwho undertook the journey. Cholera is a bacterial infection that"
+			+ "\nspreads through contaminated water sources, including the rivers"
+			+ "\nfrom which pioneers often collected their drinking water. This"
+			+ "\nillness caused severe dehydration, diarrhea, and vomiting, and in"
+			+ "\nsome cases, could result in death within just hours or days."
+			+ "\nUnfortunately, the pioneers had very few medical resources to fight"
+			+ "\nthis disease, making it feel like a certain death sentence if"
+			+ "\nsomeone got sick.";
 	/**
-	 * The two biggest causes of death on the Oregon trail were deadly
-	 * diseases and unfortunate accidents. The most dangerous disease
-	 * on the trail was cholera, taking around ten percent of emigrants
-	 * that attempted the journey. Cholera is a bacterial infection that
-	 * was spread through contaminated water sources, which could include
-	 * the rivers that pioneers so often got their water from. The disease
-	 * caused severe dehydration, diarrhea, and vomiting, which could lead
-	 * to death within hours or days. Along with the severity of the illness
-	 * there was little that the pioneers had in medicine to combat this,
-	 * so contracting the illness was seen as a death sentence.
+	 * The two main reasons people died on the Oregon Trail were serious
+	 * diseases and unfortunate accidents. Among these diseases, cholera
+	 * was the most deadly, affecting about ten percent of the emigrants
+	 * who undertook the journey. Cholera is a bacterial infection that
+	 * spreads through contaminated water sources, including the rivers
+	 * from which pioneers often collected their drinking water. This
+	 * illness caused severe dehydration, diarrhea, and vomiting, and in
+	 * some cases, could result in death within just hours or days.
+	 * Unfortunately, the pioneers had very few medical resources to fight
+	 * this disease, making it feel like a certain death sentence if
+	 * someone got sick.
 	 */
 	
-	public String beginningInfo = "";
+	public String beginningInfo = "Welcome to Perils Along the Platte! Did you know that the Platte"
+			+ "\nRiver played a crucial role in the journey of pioneers along the"
+			+ "\niconic Oregon Trail? Spanning 310 miles of the trail's total of"
+			+ "\nover 2000 miles, this picturesque river valley was a favorite among"
+			+ "\nthose traveling westward. With its gently flowing waters and fertile"
+			+ "\ngrazing lands, it offered a perfect path for wagons and provided"
+			+ "\nessential resources for livestock. The ambitious pioneers relied on"
+			+ "\nthe Oregon Trail as their gateway to new opportunities and land out west.";
 	/**
-	 * Welcome to Perils Along the Platte. The Platte River was the main 
-	 * river that the Oregon trail followed along and stretched for 310
-	 * miles of the 2000 plus miles on the full trail. The Platte River 
-	 * valley provided a nice route for wagons to travel along. The 
-	 * valley also had a good source of water and a good amount of grazing
-	 * land for any live stock. Pioneers used the Oregon trail to travel
-	 * and settle out west for new land.
+	 * Welcome to Perils Along the Platte! Did you know that the Platte
+	 * River played a crucial role in the journey of pioneers along the
+	 * iconic Oregon Trail? Spanning 310 miles of the trail's total of
+	 * over 2000 miles, this picturesque river valley was a favorite among
+	 * those traveling westward. With its gently flowing waters and fertile
+	 * grazing lands, it offered a perfect path for wagons and provided
+	 * essential resources for livestock. The ambitious pioneers relied on
+	 * the Oregon Trail as their gateway to new opportunities and land out west. 
 	 */
 	
-	public String endingInfo = "";
+	public String endingInfo = "Congratulations on successfully navigating the Platte River! It's"
+			+ "\nnoteworthy that only around 90% of travelers managed to get past"
+			+ "\nthis point on the Oregon Trail. The estimated mortality rate along"
+			+ "\nthe trail ranged from 4% to 10%, with disease and accidents being"
+			+ "\nthe primary causes of loss.";
 	/** 
-	 * Congratulations! You have successfully traveled along the Platte
-	 * River. Only roughly 90% of travelers made it past the Platte river
-	 * while traveling along the Oregon trail. The estimated mortality
-	 * rate along the trail was about 4% to 10%, with the most common causes
-	 * being diseases or accidents.
+	 * Congratulations on successfully navigating the Platte River! It's
+	 * noteworthy that only around 90% of travelers managed to get past
+	 * this point on the Oregon Trail. The estimated mortality rate along
+	 * the trail ranged from 4% to 10%, with disease and accidents being
+	 * the primary causes of loss.
 	 */
 
 }

@@ -27,8 +27,8 @@ public class HealthPool {
 //    //Create a constructor to update the health pool based off the the timer from TravelDistance
 //    HealthPool (Timer dayTimer, boolean isStopped)    {
 //		Timer Task:
-//    	healthIncrease();
-//		healthDecrease();
+//    	healthIncrease(dayOfRest);
+//		healthDecrease(dayOfRest);
 //		healthPoolCondition(); [ FOR GUI ]
 //		checkIfSick();
 //		checkIfDead();
