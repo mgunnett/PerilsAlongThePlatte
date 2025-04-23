@@ -36,7 +36,9 @@ public class HealthPool {
 	    	personHealth.add(100);
     	}
 	}
-	
+	/**
+	 * Checks to see the condition of the overall health of the group
+	 */
 	public String healthPoolCondition() {
 		int healthPool = 0;
 		for (int i = 0; i < numOfPeople; i++) {
