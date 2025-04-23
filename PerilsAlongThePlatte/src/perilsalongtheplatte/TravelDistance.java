@@ -15,6 +15,7 @@ public class TravelDistance {
 		private Timer dayTimer;
 		private Random random = new Random();
 		private Popups popup = new Popups(); 
+		private GAME game;
 		
 	/**
 	 * A constructor that creates a Timer object with the amount of REAL time an in-game day will take. 

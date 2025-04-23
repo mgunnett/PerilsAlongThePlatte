@@ -206,7 +206,7 @@ public class GAME {
 				
 				txtFldResponse = new JTextField();
 				txtFldResponse.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
+					public void actionPerformed(ActionEvent e) {					
 						timer.stop();
 						if (meat < 0) {
 							meat = 0;
@@ -222,6 +222,7 @@ public class GAME {
 							lblResult.setText("You missed. :(");
 						}
 						closeGame = true;
+						timer.stop();
 
 						//  Delay panel closing by 2 seconds (5000 milliseconds)
 						new Timer(2000, new ActionListener() {
@@ -230,6 +231,12 @@ public class GAME {
 								HuntingPanel.setVisible(false);
 								GamePanel.setVisible(true);
 								((Timer) evt.getSource()).stop(); // Stop the 5-second timer after it fires
+								closeGame = false;
+								txtFldResponse.setText("");
+								lblResult.setText("");
+								timer.restart();
+								lblNewLabel1.setText("");
+								meat = 0;
 							}
 						}).start();
 					}
