@@ -24,6 +24,17 @@ public class HealthPool {
     	personName.add(person4); 
     }
     
+//    //Create a constructor to update the health pool based off the the timer from TravelDistance
+//    HealthPool (Timer dayTimer, boolean isStopped)    {
+//		Timer Task:
+//    	healthIncrease();
+//		healthDecrease();
+//		healthPoolCondition(); [ FOR GUI ]
+//		checkIfSick();
+//		checkIfDead();
+//		
+//		Outside of timer task: initializeHealth(5);
+//    }
     
 	/**
 	 * Initializes the health for any and all pioneers
