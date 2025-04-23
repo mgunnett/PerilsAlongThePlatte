@@ -23,6 +23,7 @@ public class TravelDistance {
 		
 	public TravelDistance(Runnable updateCallback) {
 		int delay = 3000; // This is 3 seconds for each in-game day
+		int speed = 2;
 
 		dayTimer = new Timer(delay, null);
 		dayTimer.setRepeats(false); // this makes sure the timer resets
@@ -35,7 +36,15 @@ public class TravelDistance {
 		    	 if (!isStopped) {
 		               day++;
 		               // will update with pace later on
-		               distance += random.nextInt(11) + 5; // Adds 5–15 miles
+		               if (pace == 1) {
+		            	   distance += random.nextInt(5) + 2; // Adds 2-5 miles
+		               }
+		               if (pace == 2) {
+		            	   distance += random.nextInt(10) + 5; // Adds 5-13
+		               }
+		               if (pace == 3) {
+		            	   distance += random.nextInt(7) + 14; // Adds 14-20 miles
+		               }
 
 		         if (updateCallback != null) {
 		        	 	updateCallback.run(); // UI update
