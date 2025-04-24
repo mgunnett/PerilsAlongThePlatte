@@ -30,6 +30,8 @@ public class DailyEvents {
     // GAME object to use labels
     private GAME game;
  
+    // List of weather events
+	public String[] weatherEvents = {"Sunny", "Rainy", "Windy", "Thunderstorms", "Snowy"};
 
     // Constructor to set player gender and health
     public DailyEvents(String gender, int health) {
@@ -76,8 +78,6 @@ public class DailyEvents {
 
     // Handle weather event
     public String handleWeatherEvent() {
-    	// List of weather events
-    	String[] weatherEvents = {"Sunny", "Rainy", "Windy", "Thunderstorms", "Snowy"};
 
     	// Determines if a weather event will happen
         if (random.nextDouble() < WEATHER_EVENT_PROBABILITY) {
