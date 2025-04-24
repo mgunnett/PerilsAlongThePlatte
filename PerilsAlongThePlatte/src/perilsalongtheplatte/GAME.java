@@ -153,8 +153,7 @@ public class GAME {
 		JButton btnRest = new JButton("Rest");
 		btnRest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int mymommy = popup.restDays(); 
- 				System.out.println(""+ mymommy);
+				int daysToRest = popup.restDays(); 
 			}
 		});
 		btnRest.setFont(new Font("Serif", Font.PLAIN, 35));
