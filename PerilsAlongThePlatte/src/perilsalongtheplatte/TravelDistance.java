@@ -64,6 +64,11 @@ public class TravelDistance {
 
 
 	}
+	
+	// For the date code
+	public void date() {
+		
+	}
 
 	public void startTimer() {
 		dayTimer.start();

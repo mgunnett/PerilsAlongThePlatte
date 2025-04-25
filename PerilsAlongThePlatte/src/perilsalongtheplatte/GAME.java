@@ -105,12 +105,17 @@ public class GAME {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		HuntingPanel = new JPanel();
-		HuntingPanel.setBackground(new Color(154, 128, 71));
-		HuntingPanel.setBounds(100, 100, 450, 300);
-		frame.getContentPane().add(HuntingPanel);
-		HuntingPanel.setLayout(null);
-		HuntingPanel.setVisible(false);
+		JPanel ShopPanel = new JPanel();
+		ShopPanel.setBackground(new Color(156, 123, 82));
+		ShopPanel.setBounds(0, -3, 1283, 702);
+		frame.getContentPane().add(ShopPanel);
+		ShopPanel.setLayout(null);
+		
+		JLabel lblShop = new JLabel("Shop");
+		lblShop.setHorizontalAlignment(SwingConstants.CENTER);
+		lblShop.setFont(new Font("Serif", Font.BOLD, 60));
+		lblShop.setBounds(522, -20, 256, 150);
+		ShopPanel.add(lblShop);
 		
 		
 		GamePanel = new JPanel();
@@ -118,7 +123,7 @@ public class GAME {
 		GamePanel.setBounds(0, 0, 1283, 699);
 		frame.getContentPane().add(GamePanel);
 		GamePanel.setLayout(null);
-		GamePanel.setVisible(false);		
+		GamePanel.setVisible(false);
 		
 		JPanel OptionsPanel = new JPanel();
 		OptionsPanel.setLayout(null);
@@ -423,6 +428,13 @@ public class GAME {
 		lblDaysPassed.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblDaysPassed.setBounds(200, -3, 153, 39);
 		GamePanel.add(lblDaysPassed);
+		
+		HuntingPanel = new JPanel();
+		HuntingPanel.setBackground(new Color(154, 128, 71));
+		HuntingPanel.setBounds(100, 100, 450, 300);
+		frame.getContentPane().add(HuntingPanel);
+		HuntingPanel.setLayout(null);
+		HuntingPanel.setVisible(false);
 		
 		StartingOptionsPanel = new JPanel();
 		StartingOptionsPanel.setBounds(0, 0, 1283, 688);
