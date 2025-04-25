@@ -5,7 +5,7 @@ package perilsalongtheplatte;
  * @see https://historicoregoncity.org/2019/04/03/outfitting-for-the-journey/ for list and prices. 
  */
 public enum SupplyType {
-	//declaration of each kind of supply, with the usage amount (in lbs/day)  and price attached to each supply type (in $/lb)
+	//declaration of each kind of supply, with the usage amount (in lbs/day) and price attached to each supply type (in $/lb)
 	//usage amount may become random in the future
 	FLOUR       (0.02, 1.00), //cost $0.02 per unit, 1lb per day used
     BACON       (0.05, 0.50),
