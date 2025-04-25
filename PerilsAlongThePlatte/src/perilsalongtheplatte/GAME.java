@@ -111,7 +111,7 @@ public class GAME {
 		ShopPanel.setBounds(0, -3, 1283, 702);
 		frame.getContentPane().add(ShopPanel);
 		ShopPanel.setLayout(null);
-		ShopPanel.setVisible(true);
+		ShopPanel.setVisible(false);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(200, 186, 162));
