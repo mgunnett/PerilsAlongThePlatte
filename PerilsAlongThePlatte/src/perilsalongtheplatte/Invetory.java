@@ -8,7 +8,7 @@ import javax.swing.*;
  * relies on the enum SupplyType to store the construct for each supply type and its corresponding price. This class needs help from 
  * an additional one to handle the graphics associated with the shop; these methods can only generate JOptionPanes. 
  * @author Parker R. West
- * @version 1.0
+ * @version 2.0
  */
 public class Invetory {
 	
@@ -83,31 +83,32 @@ public class Invetory {
 	 * maps to change the value of each lost supply based on different events, such as weather, etc. 
 	 * @param supply The supply to be changed daily. 
 	 */
-	public void loseSupply(Map<SupplyType, Double> supplies) {
+	public void loseSupply() {
 		//using other class methods
 		Perils perils = new Perils(); 
 		DailyEvents event = new DailyEvents("Gender", 100); //NOT FINAL, NEEDS CHANGED
 		HealthPool health = new HealthPool("bob", "jerry", "enrique", "kowalski", "barney"); 
 		//initialize each usage amount
 		supplyCalculator(); 
-		
-		/*steps for personal reference: 
-		 * 1. use an if statement to check if certain conditions are met
-		 * - if someone is dead
-		 * - if someone is sick
-		 * - dead & sick
-		 * - if none of the above, then default
-		 * 2. Call to initialize map: 
-		 * for (....)
-		 * 	supplies.put(supply, supplies.getUsageAmount() * death); 
-		
-		*/
-		boolean isSomeoneDead = health.whoIsDead.isEmpty();
-		if (!isSomeoneDead ) {//checks if the dead person list is NOT empty and if soneone is sick
-			
-			
+	
+		boolean isSomeoneDead = !health.whoIsDead.isEmpty();
+		boolean isSomeoneSick = perils.isSick;
+		if (isSomeoneDead && isSomeoneSick) { //check if the dead person list has an entry and if someone is sick
+			for (SupplyType supply : SupplyType.values()) 
+				defaultUsage.put(supply, supplies.get(supply) - (death.get(supply) + sicknessInjury.get(supply)));
 		}
-			
+		else if (isSomeoneDead && !isSomeoneSick) { //check if someone is dead and if someone is NOT sick
+			for (SupplyType supply : SupplyType.values()) 
+				defaultUsage.put(supply, supplies.get(supply) - death.get(supply));
+		}
+		else if (!isSomeoneDead && isSomeoneSick) { //check if someone is NOT dead and if someone is sick
+			for (SupplyType supply : SupplyType.values()) 
+				defaultUsage.put(supply, supplies.get(supply) - sicknessInjury.get(supply));
+		}
+		else { //default usage
+			for (SupplyType supply : SupplyType.values()) 
+				defaultUsage.put(supply, defaultUsage.get(supply));
+		}
 	}
 	
 	//helper method to declare and contain all Maps associated with different weather events
