@@ -8,6 +8,7 @@ public class TravelDistance {
 	//declare public variables
 		public int day = 0;
 		public int pace = 0;
+		public String date = "";
 		private int dayTime = 0;
 		private int distance = 0;
 		private boolean isStopped = false;
@@ -66,8 +67,56 @@ public class TravelDistance {
 	}
 	
 	// For the date code
-	public void date() {
+	public String date() {
+		String month = "";
+		int dayDate = 0;
 		
+		if(day == 0) {
+			month = "February";
+			dayDate = 28;}
+		
+		if (day >= 1 && day < 32) {
+			month = "March";
+			dayDate = day;}
+		
+		if (day >= 32 && day < 62) {
+			month = "April";
+			dayDate = day - 31;}
+		
+		if (day >= 62 && day < 93) {
+			month = "May";
+			dayDate = day - 61;}
+		
+		if (day >= 93 && day < 123) {
+			month = "June";
+			dayDate = day - 92;}
+		
+		if (day >= 123 && day < 154) {
+			month = "July";
+			dayDate = day - 122;}
+		
+		if (day >= 154 && day < 185) {
+			month = "August";
+			dayDate = day - 153;}
+		
+		if (day >= 185 && day < 215) {
+			month = "September";
+			dayDate = day - 184;}
+		
+		if (day >= 215 && day < 246) {
+			month = "October";
+			dayDate = day - 214;}
+		
+		if (day >= 246 && day < 276) {
+			month = "November";
+			dayDate = day - 245;}
+		
+		if (day >= 276 && day < 307) {
+			month = "December";
+			dayDate = day - 275;}
+	
+		date = month + " " + dayDate + ", 1872";
+		return date;
 	}
 
 	public void startTimer() {
