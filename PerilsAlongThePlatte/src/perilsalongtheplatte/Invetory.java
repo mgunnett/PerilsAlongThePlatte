@@ -20,11 +20,19 @@ public class Invetory {
 	public Invetory() {
 		//utilizing a for each loop...
 		for (SupplyType supply : SupplyType.values()) { 
-			supplies.put(supply, 0.0); 
+			supplies.put(supply, 0.0); //initialize 
 			//special case for the player's cash
 			if (supply.equals(SupplyType.CASH))
 				supplies.put(supply, 1000.0); 
 		}
+	}
+	/**
+	 * Getter method to retrieve the current amount of supplies corresponding to an enum. 
+	 * @param supply The The map key to check; type of supply to get amount of. 
+	 * @return The amount of the specified supply type. 
+	 */
+	public double getSupply(SupplyType supply) {
+		return supplies.get(supply);
 	}
 	
 	/**
@@ -72,18 +80,23 @@ public class Invetory {
 	 * @param supply The supply to be changed daily. 
 	 */
 	public void loseSupply(Map<SupplyType, Double> modifiers) {
+		//using other class methods
+		Perils perils = new Perils(); 
+		DailyEvents event = new DailyEvents("Gender", 100); //NOT FINAL, NEEDS CHANGED
+		HealthPool health = new HealthPool("bob", "jerry", "enrique", "kowalski", "barney"); 
+		SupplyCalculator calculator = new SupplyCalculator(); 
 		
 		
-		
-	
 		
 	}
 	
 	//helper class to declare and contain all Maps associated with different weather events
 	private static class SupplyCalculator {
+		SupplyCalculator() {
 		//using other class methods
 		Perils perils = new Perils(); 
 		DailyEvents event = new DailyEvents("Gender", 100); //NOT FINAL, NEEDS CHANGED
+		HealthPool health = new HealthPool("bob", "jerry", "enrique", "kowalski", "barney"); 
 		
 		//creating several enum maps for different perils
 		Map<SupplyType, Double> defaultUsage = new EnumMap<>(SupplyType.class); 
@@ -91,7 +104,7 @@ public class Invetory {
 		Map<SupplyType, Double> death = new EnumMap<>(SupplyType.class);
 		
 		//below is an initializer block
-		{
+		
 			//initializes the default usage map
 			for (SupplyType supply : SupplyType.values()) 
 				defaultUsage.put(supply, supply.getUsageAmount());
@@ -112,8 +125,26 @@ public class Invetory {
 			}
 			
 			//death map initialization
-			
-			
+			if (health.personName.size() <= 4 ) { //checking the array of living people to see if one has died...
+				switch (health.personName.size()) {
+					case 4: //4 people are alive
+						for (SupplyType supply : SupplyType.values())
+							death.put(supply, supply.getUsageAmount() * 0.80); //uses 20% less supplies
+					case 3:
+						for (SupplyType supply : SupplyType.values())
+							death.put(supply, supply.getUsageAmount() * 0.60);
+					case 2: 
+						for (SupplyType supply : SupplyType.values())
+							death.put(supply, supply.getUsageAmount() * 0.400);
+					case 1:
+						for (SupplyType supply : SupplyType.values())
+							death.put(supply, supply.getUsageAmount() * 0.20);
+					default: 
+						for (SupplyType supply : SupplyType.values())
+							death.put(supply, supply.getUsageAmount()); //just set it to the default usage amount
+			}
+				
+		}
 		}
 		//special cases for different perils
 		
