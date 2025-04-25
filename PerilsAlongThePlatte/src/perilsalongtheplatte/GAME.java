@@ -22,6 +22,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
+import javax.swing.JSeparator;
 
 
 public class GAME {
@@ -116,6 +117,216 @@ public class GAME {
 		lblShop.setFont(new Font("Serif", Font.BOLD, 60));
 		lblShop.setBounds(522, -20, 256, 150);
 		ShopPanel.add(lblShop);
+		
+		JButton btnNewButton = new JButton("Flour");
+		btnNewButton.setFont(new Font("Serif", Font.PLAIN, 20));
+		btnNewButton.setBackground(new Color(203, 182, 156));
+		btnNewButton.setBounds(81, 158, 104, 52);
+		ShopPanel.add(btnNewButton);
+		
+		JLabel lblFood = new JLabel("Food:");
+		lblFood.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFood.setFont(new Font("Serif", Font.PLAIN, 35));
+		lblFood.setBounds(148, 95, 89, 52);
+		ShopPanel.add(lblFood);
+		
+		JButton lblBacon = new JButton("Bacon");
+		lblBacon.setFont(new Font("Serif", Font.PLAIN, 20));
+		lblBacon.setBackground(new Color(203, 182, 156));
+		lblBacon.setBounds(81, 224, 104, 52);
+		ShopPanel.add(lblBacon);
+		
+		JButton btnNewButton_2 = new JButton("Fruit");
+		btnNewButton_2.setFont(new Font("Serif", Font.PLAIN, 20));
+		btnNewButton_2.setBackground(new Color(203, 182, 156));
+		btnNewButton_2.setBounds(81, 288, 104, 52);
+		ShopPanel.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("Veggies");
+		btnNewButton_3.setFont(new Font("Serif", Font.PLAIN, 20));
+		btnNewButton_3.setBackground(new Color(203, 182, 156));
+		btnNewButton_3.setBounds(81, 351, 104, 52);
+		ShopPanel.add(btnNewButton_3);
+		
+		JButton btnNewButton_4 = new JButton("Meat");
+		btnNewButton_4.setFont(new Font("Serif", Font.PLAIN, 20));
+		btnNewButton_4.setBackground(new Color(203, 182, 156));
+		btnNewButton_4.setBounds(81, 414, 104, 52);
+		ShopPanel.add(btnNewButton_4);
+		
+		JButton btnNewButton_5 = new JButton("Coffee");
+		btnNewButton_5.setFont(new Font("Serif", Font.PLAIN, 20));
+		btnNewButton_5.setBackground(new Color(203, 182, 156));
+		btnNewButton_5.setBounds(81, 477, 104, 52);
+		ShopPanel.add(btnNewButton_5);
+		
+		JButton btnNewButton_6 = new JButton("Tea");
+		btnNewButton_6.setFont(new Font("Serif", Font.PLAIN, 20));
+		btnNewButton_6.setBackground(new Color(203, 182, 156));
+		btnNewButton_6.setBounds(81, 540, 104, 52);
+		ShopPanel.add(btnNewButton_6);
+		
+		JButton btnNewButton_7 = new JButton("Lard");
+		btnNewButton_7.setFont(new Font("Serif", Font.PLAIN, 20));
+		btnNewButton_7.setBackground(new Color(203, 182, 156));
+		btnNewButton_7.setBounds(81, 605, 104, 52);
+		ShopPanel.add(btnNewButton_7);
+		
+		JLabel lblNewLabel_1 = new JLabel("$0.02");
+		lblNewLabel_1.setFont(new Font("Serif", Font.PLAIN, 20));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setBounds(195, 169, 62, 30);
+		ShopPanel.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("New label");
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_1.setFont(new Font("Serif", Font.PLAIN, 20));
+		lblNewLabel_1_1.setBounds(195, 234, 104, 30);
+		ShopPanel.add(lblNewLabel_1_1);
+		
+		JLabel lblNewLabel_1_2 = new JLabel("New label");
+		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_2.setFont(new Font("Serif", Font.PLAIN, 20));
+		lblNewLabel_1_2.setBounds(195, 299, 104, 30);
+		ShopPanel.add(lblNewLabel_1_2);
+		
+		JLabel lblNewLabel_1_3 = new JLabel("New label");
+		lblNewLabel_1_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_3.setFont(new Font("Serif", Font.PLAIN, 20));
+		lblNewLabel_1_3.setBounds(195, 362, 104, 30);
+		ShopPanel.add(lblNewLabel_1_3);
+		
+		JLabel lblNewLabel_1_4 = new JLabel("New label");
+		lblNewLabel_1_4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_4.setFont(new Font("Serif", Font.PLAIN, 20));
+		lblNewLabel_1_4.setBounds(195, 423, 104, 30);
+		ShopPanel.add(lblNewLabel_1_4);
+		
+		JLabel lblNewLabel_1_5 = new JLabel("New label");
+		lblNewLabel_1_5.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_5.setFont(new Font("Serif", Font.PLAIN, 20));
+		lblNewLabel_1_5.setBounds(195, 489, 104, 30);
+		ShopPanel.add(lblNewLabel_1_5);
+		
+		JLabel lblNewLabel_1_6 = new JLabel("New label");
+		lblNewLabel_1_6.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_6.setFont(new Font("Serif", Font.PLAIN, 20));
+		lblNewLabel_1_6.setBounds(195, 551, 104, 30);
+		ShopPanel.add(lblNewLabel_1_6);
+		
+		JLabel lblNewLabel_1_7 = new JLabel("New label");
+		lblNewLabel_1_7.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_7.setFont(new Font("Serif", Font.PLAIN, 20));
+		lblNewLabel_1_7.setBounds(195, 613, 104, 30);
+		ShopPanel.add(lblNewLabel_1_7);
+		
+		JLabel lblParts = new JLabel("Wagon Parts:");
+		lblParts.setHorizontalAlignment(SwingConstants.CENTER);
+		lblParts.setFont(new Font("Serif", Font.PLAIN, 35));
+		lblParts.setBounds(381, 95, 218, 52);
+		ShopPanel.add(lblParts);
+		
+		JButton btnWheels = new JButton("Wheels");
+		btnWheels.setFont(new Font("Serif", Font.PLAIN, 20));
+		btnWheels.setBackground(new Color(203, 182, 156));
+		btnWheels.setBounds(381, 158, 104, 52);
+		ShopPanel.add(btnWheels);
+		
+		JLabel lblNewLabel_1_8 = new JLabel("New label");
+		lblNewLabel_1_8.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_8.setFont(new Font("Serif", Font.PLAIN, 20));
+		lblNewLabel_1_8.setBounds(495, 169, 104, 30);
+		ShopPanel.add(lblNewLabel_1_8);
+		
+		JButton btnAxels = new JButton("Axels");
+		btnAxels.setFont(new Font("Serif", Font.PLAIN, 20));
+		btnAxels.setBackground(new Color(203, 182, 156));
+		btnAxels.setBounds(381, 224, 104, 52);
+		ShopPanel.add(btnAxels);
+		
+		JLabel lblNewLabel_1_1_1 = new JLabel("New label");
+		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_1_1.setFont(new Font("Serif", Font.PLAIN, 20));
+		lblNewLabel_1_1_1.setBounds(495, 234, 104, 30);
+		ShopPanel.add(lblNewLabel_1_1_1);
+		
+		JButton btnNewButton_2_1 = new JButton("Toungues");
+		btnNewButton_2_1.setFont(new Font("Serif", Font.PLAIN, 18));
+		btnNewButton_2_1.setBackground(new Color(203, 182, 156));
+		btnNewButton_2_1.setBounds(381, 288, 104, 52);
+		ShopPanel.add(btnNewButton_2_1);
+		
+		JLabel lblNewLabel_1_2_1 = new JLabel("New label");
+		lblNewLabel_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_2_1.setFont(new Font("Serif", Font.PLAIN, 20));
+		lblNewLabel_1_2_1.setBounds(495, 299, 104, 30);
+		ShopPanel.add(lblNewLabel_1_2_1);
+		
+		JLabel lblMisc = new JLabel("Misc:");
+		lblMisc.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMisc.setFont(new Font("Serif", Font.PLAIN, 35));
+		lblMisc.setBounds(723, 95, 89, 52);
+		ShopPanel.add(lblMisc);
+		
+		JButton btnAmmo = new JButton("Ammo");
+		btnAmmo.setFont(new Font("Serif", Font.PLAIN, 20));
+		btnAmmo.setBackground(new Color(203, 182, 156));
+		btnAmmo.setBounds(656, 158, 104, 52);
+		ShopPanel.add(btnAmmo);
+		
+		JLabel lblNewLabel_1_9 = new JLabel("New label");
+		lblNewLabel_1_9.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_9.setFont(new Font("Serif", Font.PLAIN, 20));
+		lblNewLabel_1_9.setBounds(770, 169, 104, 30);
+		ShopPanel.add(lblNewLabel_1_9);
+		
+		JButton btnOxen = new JButton("Oxen");
+		btnOxen.setFont(new Font("Serif", Font.PLAIN, 20));
+		btnOxen.setBackground(new Color(203, 182, 156));
+		btnOxen.setBounds(656, 224, 104, 52);
+		ShopPanel.add(btnOxen);
+		
+		JLabel lblNewLabel_1_1_2 = new JLabel("New label");
+		lblNewLabel_1_1_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_1_2.setFont(new Font("Serif", Font.PLAIN, 20));
+		lblNewLabel_1_1_2.setBounds(770, 234, 104, 30);
+		ShopPanel.add(lblNewLabel_1_1_2);
+		
+		JButton btnNewButton_2_2 = new JButton("Medicine");
+		btnNewButton_2_2.setFont(new Font("Serif", Font.PLAIN, 18));
+		btnNewButton_2_2.setBackground(new Color(203, 182, 156));
+		btnNewButton_2_2.setBounds(656, 288, 104, 52);
+		ShopPanel.add(btnNewButton_2_2);
+		
+		JLabel lblNewLabel_1_2_2 = new JLabel("New label");
+		lblNewLabel_1_2_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_2_2.setFont(new Font("Serif", Font.PLAIN, 20));
+		lblNewLabel_1_2_2.setBounds(770, 299, 104, 30);
+		ShopPanel.add(lblNewLabel_1_2_2);
+		
+		JButton btnNewButton_3_1 = new JButton("Clothes");
+		btnNewButton_3_1.setFont(new Font("Serif", Font.PLAIN, 20));
+		btnNewButton_3_1.setBackground(new Color(203, 182, 156));
+		btnNewButton_3_1.setBounds(656, 351, 104, 52);
+		ShopPanel.add(btnNewButton_3_1);
+		
+		JLabel lblNewLabel_1_3_1 = new JLabel("New label");
+		lblNewLabel_1_3_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_3_1.setFont(new Font("Serif", Font.PLAIN, 20));
+		lblNewLabel_1_3_1.setBounds(770, 362, 104, 30);
+		ShopPanel.add(lblNewLabel_1_3_1);
+		
+		JButton btnNewButton_4_1 = new JButton("Soap");
+		btnNewButton_4_1.setFont(new Font("Serif", Font.PLAIN, 20));
+		btnNewButton_4_1.setBackground(new Color(203, 182, 156));
+		btnNewButton_4_1.setBounds(656, 414, 104, 52);
+		ShopPanel.add(btnNewButton_4_1);
+		
+		JLabel lblNewLabel_1_4_1 = new JLabel("New label");
+		lblNewLabel_1_4_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_4_1.setFont(new Font("Serif", Font.PLAIN, 20));
+		lblNewLabel_1_4_1.setBounds(770, 423, 104, 30);
+		ShopPanel.add(lblNewLabel_1_4_1);
 		
 		
 		GamePanel = new JPanel();
