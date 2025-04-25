@@ -47,6 +47,7 @@ public class Perils {
 			
 			if (chance < betterChance) {return true;}
 			else { return false;}
+ 
 		}
 		else{ return false; }
 	}

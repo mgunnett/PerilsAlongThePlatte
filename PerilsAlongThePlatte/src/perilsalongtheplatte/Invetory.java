@@ -71,26 +71,56 @@ public class Invetory {
 	 * maps to change the value of each lost supply based on different events, such as weather, etc. 
 	 * @param supply The supply to be changed daily. 
 	 */
-	public void loseSupply(int supply) {
-		//create objects of other classes to access public objects
-		Perils perils = new Perils(); 
-		DailyEvents event = new DailyEvents("Gender", 100); //NOT FINAL, NEEDS MODIFIED
+	public void loseSupply(Map<SupplyType, Double> modifiers) {
 		
-		//create a MAP to associate 
+		
+		
+	
 		
 	}
 	
 	//helper class to declare and contain all Maps associated with different weather events
 	private static class SupplyCalculator {
-		//declare each map and associate the enums with an amount lost 
-		Map<SupplyType, Double> stormLoss; 
+		//using other class methods
+		Perils perils = new Perils(); 
+		DailyEvents event = new DailyEvents("Gender", 100); //NOT FINAL, NEEDS CHANGED
+		
+		//creating several enum maps for different perils
+		Map<SupplyType, Double> defaultUsage = new EnumMap<>(SupplyType.class); 
+		Map<SupplyType, Double> sicknessInjury = new EnumMap<>(SupplyType.class);
+		Map<SupplyType, Double> death = new EnumMap<>(SupplyType.class);
+		
+		//below is an initializer block
+		{
+			//initializes the default usage map
+			for (SupplyType supply : SupplyType.values()) 
+				defaultUsage.put(supply, supply.getUsageAmount());
+			
+			//initialization of the sicknessInjury map
+			for (SupplyType supply : SupplyType.values()) {
+				//switch statement on supply to change certain values from the defaults
+				switch (supply) {
+				case MEDICINE:
+					sicknessInjury.put(supply, 0.5); //uses 0.5 per day, compared to the default of 0
+				case  SOAP:
+					sicknessInjury.put(supply, 0.5); //sick people want to clean bodily fluids/injuries
+				case WATER:
+					sicknessInjury.put(supply, 15.0); 
+				default: 
+					sicknessInjury.put(supply, supply.getUsageAmount());
+				}
+			}
+			
+			//death map initialization
+			
+			
+		}
+		//special cases for different perils
+		
+		
+		
 	}
 
-	    public static void main(String[] args) {
-	        Invetory i = new Invetory(); 
-	       i.buySupply(SupplyType.BACON);
-	       System.out.println(""+ i.supplies.get(SupplyType.BACON));
-	    }
 
 }
 
