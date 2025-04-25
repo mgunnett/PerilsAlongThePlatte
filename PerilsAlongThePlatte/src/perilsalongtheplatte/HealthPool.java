@@ -103,7 +103,6 @@ public class HealthPool {
 	/**
 	 * Checks if the pioneer is dead
 	 * @param health is checked to see if it is equal to or below 0
-	 * @return true or false depending on if the pioneer has died
 	 */
 	public void checkIfDead() {
 		for(int i = 0; i < numOfPeople; i++) {
