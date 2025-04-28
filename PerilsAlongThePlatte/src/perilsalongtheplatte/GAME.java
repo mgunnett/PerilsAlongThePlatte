@@ -95,6 +95,7 @@ public class GAME {
 		});
 	}
 
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -486,11 +487,6 @@ public class GAME {
 				HuntingPanel.setVisible(true);
 				GamePanel.setVisible(false);
 
-				timer = new Timer(1000, new ActionListener() {
-					public void actionPerformed(ActionEvent evt) {
-						timerActionPerformed();
-					}
-				});
 				timer.start();
 
 				imageHolder = new JLabel("                                  \\      . .(");
@@ -513,6 +509,7 @@ public class GAME {
 				HuntingPanel.add(lblResult);
 				
 				txtFldResponse = new JTextField();
+				//txtFldResponse.setText("");
 				txtFldResponse.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {					
 						timer.stop();
@@ -520,22 +517,32 @@ public class GAME {
 							meat = 0;
 						}
 						String response = txtFldResponse.getText();
-						if (response.equalsIgnoreCase("bang")) {
+						String response1 = response.trim();
+						if (response1.equalsIgnoreCase("bang")) {
 							if (meat > 0) {
 								lblResult.setText("You got " + meat + " meat.");
+								txtFldResponse.setText("");
 							} else {
 								lblResult.setText("The deer ran away.");
+								txtFldResponse.setText("");
 							}
 						} else {
 							lblResult.setText("You missed. :(");
+							txtFldResponse.setText("");
 						}
 						closeGame = true;
+						txtFldResponse.setText("");
+						txtFldResponse = new JTextField();
+						counter=0;
 						timer.stop();
+						
+						
 
 						//  Delay panel closing by 2 seconds (5000 milliseconds)
 						new Timer(2000, new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent evt) {
+								txtFldResponse.setText("");
 								HuntingPanel.setVisible(false);
 								GamePanel.setVisible(true);
 								((Timer) evt.getSource()).stop(); // Stop the 5-second timer after it fires
@@ -873,8 +880,14 @@ public class GAME {
 		lblGender.setBounds(739, 30, 108, 39);
 		StartingOptionsPanel.add(lblGender);
 		
-		
+		timer = new Timer(1000, new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				timerActionPerformed();
+			}
+		});
 	}
+	
+	
 	
 	private void timerActionPerformed() {
 		counter++;
@@ -883,6 +896,7 @@ public class GAME {
 
 		if (closeGame == true) {
 			timer.stop();
+			
 			GamePanel.setVisible(true);
 			HuntingPanel.setVisible(false);
 		}
