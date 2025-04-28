@@ -11,7 +11,7 @@ import javax.swing.*;
 public class Popups {
 	//create an object of the perils classes to get the 
 	private Perils perils = new Perils(); 
-	
+	private LandmarkDescriptions landDesc = new LandmarkDescriptions();
 	
 	/*******************
 	 *OPTION MENU ITEMS*
@@ -81,5 +81,29 @@ public class Popups {
 				JOptionPane.INFORMATION_MESSAGE);
 	}
 	
+	public void educationalDescription(String landmark) {
+		if (landmark.equals("Kansas River")) { JOptionPane.showMessageDialog(null, landDesc.kansasRiver, "Kansas River Information:", JOptionPane.INFORMATION_MESSAGE); }
+		else if(landmark.equals("Big Blue River")){ JOptionPane.showMessageDialog(null, landDesc.bigBlueRiver, "Big Blue River Information:", JOptionPane.INFORMATION_MESSAGE); }
+		else if(landmark.equals("Fort Kearny")){ JOptionPane.showMessageDialog(null, landDesc.fortKearny, "Fort Kearny Information:", JOptionPane.INFORMATION_MESSAGE); }
+		else if(landmark.equals("Chimney Rock")){ JOptionPane.showMessageDialog(null, landDesc.chimneyRock, "Chimney Rock Information:", JOptionPane.INFORMATION_MESSAGE); }
+		else if(landmark.equals("Fort Loramie")){ JOptionPane.showMessageDialog(null, landDesc.fortLaramie, "Fort Laramie Information:", JOptionPane.INFORMATION_MESSAGE); 
+		JOptionPane.showMessageDialog(null, landDesc.endingInfo, "The End:", JOptionPane.INFORMATION_MESSAGE);}
+	}
+
+	public void descriptionHuntingInfo() {
+		JOptionPane.showMessageDialog(null, landDesc.huntingInfo, "Hunting Information:", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public void descriptionTradingInfo() {
+		JOptionPane.showMessageDialog(null, landDesc.tradingInfo, "Trading Information:", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public void descriptionIllnessInfo() {
+		JOptionPane.showMessageDialog(null, landDesc.illnessInfo, "Illness Information:", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public void descriptionBeginningInfo() {
+		JOptionPane.showMessageDialog(null, landDesc.beginningInfo, "Beginning Introduction:", JOptionPane.INFORMATION_MESSAGE);
+	}
 	
 }
