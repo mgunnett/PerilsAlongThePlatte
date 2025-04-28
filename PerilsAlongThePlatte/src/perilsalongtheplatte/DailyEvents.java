@@ -3,6 +3,9 @@ package perilsalongtheplatte;
 import perilsalongtheplatte.Perils;
 import perilsalongtheplatte.GAME;
 import java.util.Random;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JFrame;
 
 /**
  * As the player travels the trail, events can randomly happen to stimulate daily life along the Platte River. 
