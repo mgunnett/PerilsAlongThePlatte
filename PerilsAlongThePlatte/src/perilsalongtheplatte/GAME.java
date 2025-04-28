@@ -43,6 +43,7 @@ public class GAME {
 	JPanel StartingOptionsPanel;
 	JLabel lblRations;
 	JSpinner spinnerRations;
+	public JSpinner spinnerSpeed;
 	
 	//Hunting Game widgets
 	public JTextField txtFldResponse;
@@ -59,7 +60,7 @@ public class GAME {
 	private Popups popup = new Popups(); 
 	private TravelDistance travelDistance;
 	private DailyEvents daily_events;
-	
+	private TravelDistance pace;	
 	//declare global variables to be stored within the class
 	 public int rations; //stores the rations value, a number ranged [1-10]
 	
@@ -95,6 +96,10 @@ public class GAME {
 		        
 		        //variables to be updated
 		        rations = (int) spinnerRations.getValue();
+		        spinnerSpeed.addChangeListener(e -> {
+		            int speed = (Integer) spinnerSpeed.getValue();
+		            travelDistance.setPace(speed);
+		        });
 	        });
 		
 		initialize();
@@ -445,11 +450,12 @@ public class GAME {
 		OptionsPanel.setBounds(38, 198, 1212, 490);
 		GamePanel.add(OptionsPanel);
 		
-		JSpinner spinnerSpeed = new JSpinner();
+		spinnerSpeed = new JSpinner(new SpinnerNumberModel(1,1,3,1));
 		spinnerSpeed.setFont(new Font("Serif", Font.PLAIN, 20));
 		spinnerSpeed.setBackground(Color.WHITE);
 		spinnerSpeed.setBounds(115, 35, 172, 32);
 		OptionsPanel.add(spinnerSpeed);
+		
 		
 		JLabel lblSpeed = new JLabel("Speed:");
 		lblSpeed.setForeground(Color.BLACK);
@@ -835,6 +841,9 @@ public class GAME {
 		btnContinue.setBackground(new Color(220, 207, 180));
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				 int currentPace = (Integer) spinnerSpeed.getValue();
+				    travelDistance.setPace(currentPace);
+				    travelDistance.startTimer();
 				StartingOptionsPanel.setVisible(false);
 				GamePanel.setVisible(true);
 			}
