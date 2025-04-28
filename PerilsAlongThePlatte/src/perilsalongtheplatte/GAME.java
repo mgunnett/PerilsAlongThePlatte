@@ -44,6 +44,8 @@ public class GAME {
 	JLabel lblRations;
 	JSpinner spinnerRations;
 	public JSpinner spinnerSpeed;
+	JLabel lblDistanceUntilNextLandmark;
+	private JLabel lblDate;
 	
 	//Hunting Game widgets
 	public JTextField txtFldResponse;
@@ -95,6 +97,8 @@ public class GAME {
 		        lblWeather.setText(todayWeather); // update label
 		        
 		        //variables to be updated
+		        updateMilesLeftLabel();
+		        updateDateLabel();
 		        rations = (int) spinnerRations.getValue();
 		        spinnerSpeed.addChangeListener(e -> {
 		            int speed = (Integer) spinnerSpeed.getValue();
@@ -120,6 +124,468 @@ public class GAME {
 		frame.setBounds(100, 100, 1300, 726);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		
+		GamePanel = new JPanel();
+		GamePanel.setBackground(new Color(0, 0, 0));
+		GamePanel.setBounds(0, 0, 1283, 699);
+		frame.getContentPane().add(GamePanel);
+		GamePanel.setLayout(null);
+		GamePanel.setVisible(false);
+		
+		JPanel OptionsPanel = new JPanel();
+		OptionsPanel.setLayout(null);
+		OptionsPanel.setBackground(new Color(154, 128, 71));
+		OptionsPanel.setBounds(38, 198, 1212, 490);
+		GamePanel.add(OptionsPanel);
+		
+		spinnerSpeed = new JSpinner(new SpinnerNumberModel(1,1,3,1));
+		spinnerSpeed.setFont(new Font("Serif", Font.PLAIN, 20));
+		spinnerSpeed.setBackground(Color.WHITE);
+		spinnerSpeed.setBounds(115, 35, 172, 32);
+		OptionsPanel.add(spinnerSpeed);
+		
+		
+		JLabel lblSpeed = new JLabel("Speed:");
+		lblSpeed.setForeground(Color.BLACK);
+		lblSpeed.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblSpeed.setBounds(12, 31, 93, 32);
+		OptionsPanel.add(lblSpeed);
+		
+		lblRations = new JLabel("Rations:");
+		lblRations.setForeground(Color.BLACK);
+		lblRations.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblRations.setBounds(12, 78, 104, 32);
+		OptionsPanel.add(lblRations);
+		
+		//create a SpinnerNumberModel with bounds
+		SpinnerNumberModel rationsModel = new SpinnerNumberModel(1, 1, 10, 1);
+	    spinnerRations = new JSpinner(rationsModel);
+		spinnerRations.setFont(new Font("Serif", Font.PLAIN, 20));
+		spinnerRations.setBackground(new Color(224, 213, 188));
+		spinnerRations.setBounds(115, 82, 172, 32);
+		OptionsPanel.add(spinnerRations);
+		
+		JButton btnRest = new JButton("Rest");
+		btnRest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 int daysToRest = popup.restDays(); 
+			}
+		});
+		btnRest.setFont(new Font("Serif", Font.PLAIN, 35));
+		btnRest.setBackground(new Color(220, 207, 180));
+		btnRest.setBounds(16, 369, 145, 110);
+		OptionsPanel.add(btnRest);
+		
+		JButton btnTrade = new JButton("Trade");
+		btnTrade.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnTrade.setFont(new Font("Serif", Font.PLAIN, 35));
+		btnTrade.setBackground(new Color(220, 207, 180));
+		btnTrade.setBounds(215, 369, 145, 110);
+		OptionsPanel.add(btnTrade);
+		
+		JButton btnHunt = new JButton("Hunt");
+		btnHunt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HuntingPanel.setVisible(true);
+				GamePanel.setVisible(false);
+
+				timer.start();
+
+				imageHolder = new JLabel("                                  \\      . .(");
+				imageHolder.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder.setBounds(95, 65, 246, 24);
+				HuntingPanel.add(imageHolder);
+				
+				
+				lblBang2Shoot = new JLabel("Type BANG to shoot");
+				lblBang2Shoot.setFont(new Font("Tw Cen MT", Font.BOLD, 25));
+				lblBang2Shoot.setHorizontalAlignment(SwingConstants.CENTER);
+				lblBang2Shoot.setBounds(109, 11, 218, 24);
+				HuntingPanel.add(lblBang2Shoot);
+				
+
+				JLabel lblResult = new JLabel("");
+				lblResult.setHorizontalAlignment(SwingConstants.CENTER);
+				lblResult.setFont(new Font("Tahoma", Font.PLAIN, 15));
+				lblResult.setBounds(217, 159, 209, 35);
+				HuntingPanel.add(lblResult);
+				
+				txtFldResponse = new JTextField();
+				//txtFldResponse.setText("");
+				txtFldResponse.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {					
+						timer.stop();
+						if (meat < 0) {
+							meat = 0;
+						}
+						String response = txtFldResponse.getText();
+						String response1 = response.trim();
+						if (response1.equalsIgnoreCase("bang")) {
+							if (meat > 0) {
+								lblResult.setText("You got " + meat + " meat.");
+							} else {
+								lblResult.setText("The deer ran away.");
+								//txtFldResponse.setText("");
+							}
+						} else {
+							lblResult.setText("You missed. :(");
+							//txtFldResponse.setText("");
+						}
+						closeGame = true;
+						txtFldResponse.setText("");
+						counter=0;
+						timer.stop();
+						
+						
+
+						//  Delay panel closing by 2 seconds (5000 milliseconds)
+						new Timer(2000, new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent evt) {
+								txtFldResponse.setText("");
+								HuntingPanel.setVisible(false);
+								GamePanel.setVisible(true);
+								((Timer) evt.getSource()).stop(); // Stop the 5-second timer after it fires
+								closeGame = false;
+								txtFldResponse.setText("");
+								lblResult.setText("");
+								timer.restart();
+								lblNewLabel1.setText("");
+								meat = 0;
+							}
+						}).start();
+					}
+				});
+				txtFldResponse.setHorizontalAlignment(SwingConstants.CENTER);
+				txtFldResponse.setFont(new Font("Tahoma", Font.PLAIN, 30));
+				txtFldResponse.setBounds(170, 224, 96, 35);
+				HuntingPanel.add(txtFldResponse);
+				txtFldResponse.setColumns(10);
+				
+				lblNewLabel1 = new JLabel("Time");
+				lblNewLabel1.setBounds(338, 122, 49, 14);
+				HuntingPanel.add(lblNewLabel1);
+				
+				JLabel lblt = new JLabel("                                   |  __T |");
+				lblt.setHorizontalAlignment(SwingConstants.LEFT);
+				lblt.setBounds(95, 77, 246, 24);
+				HuntingPanel.add(lblt);
+				
+				JLabel imageHolder_2 = new JLabel("                                  /       |");
+				imageHolder_2.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_2.setBounds(95, 89, 246, 24);
+				HuntingPanel.add(imageHolder_2);
+				
+				JLabel imageHolder_3 = new JLabel("         _.---======='          |");
+				imageHolder_3.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_3.setBounds(95, 100, 246, 24);
+				HuntingPanel.add(imageHolder_3);
+				
+				JLabel imageHolder_4 = new JLabel("     //                                 {}");
+				imageHolder_4.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_4.setBounds(95, 112, 246, 24);
+				HuntingPanel.add(imageHolder_4);
+				
+				JLabel imageHolder_5 = new JLabel("   `|             ,       ,            {}");
+				imageHolder_5.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_5.setBounds(95, 124, 246, 24);
+				HuntingPanel.add(imageHolder_5);
+				
+				JLabel imageHolder_6 = new JLabel("      \\            /___;          ,'");
+				imageHolder_6.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_6.setBounds(95, 135, 246, 24);
+				HuntingPanel.add(imageHolder_6);
+				
+				JLabel imageHolder_7 = new JLabel("                                  |`\\__/ /");
+				imageHolder_7.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_7.setBounds(95, 53, 246, 24);
+				HuntingPanel.add(imageHolder_7);
+				
+				JLabel imageHolder_1 = new JLabel("       )      ,-;`       `\\      / /");
+				imageHolder_1.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_1.setBounds(95, 147, 246, 24);
+				HuntingPanel.add(imageHolder_1);
+				
+				JLabel imageHolder_7_1 = new JLabel("       |     /   (          ;|   | |");
+				imageHolder_7_1.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_7_1.setBounds(95, 159, 246, 24);
+				HuntingPanel.add(imageHolder_7_1);
+				
+				JLabel imageHolder_7_2 = new JLabel("       |    |`\\  \\            |  | |");
+				imageHolder_7_2.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_7_2.setBounds(95, 170, 246, 24);
+				HuntingPanel.add(imageHolder_7_2);
+				
+				JLabel imageHolder_7_3 = new JLabel("       |   |    \\  \\          |  | |");
+				imageHolder_7_3.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_7_3.setBounds(95, 182, 246, 24);
+				HuntingPanel.add(imageHolder_7_3);
+				
+				JLabel imageHolder_7_4 = new JLabel("        )  \\     )  \\        )  | |");
+				imageHolder_7_4.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_7_4.setBounds(95, 194, 246, 24);
+				HuntingPanel.add(imageHolder_7_4);
+				
+				JLabel imageHolder_7_5 = new JLabel("         `\"      `\"         `\"\"");
+				imageHolder_7_5.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder_7_5.setBounds(95, 205, 246, 24);
+				HuntingPanel.add(imageHolder_7_5);
+				
+				
+			}
+		});
+		btnHunt.setFont(new Font("Serif", Font.PLAIN, 35));
+		btnHunt.setBackground(new Color(220, 207, 180));
+		btnHunt.setBounds(421, 369, 145, 110);
+		OptionsPanel.add(btnHunt);
+		
+		JPanel InventoryPanel = new JPanel();
+		InventoryPanel.setLayout(null);
+		InventoryPanel.setBackground(new Color(220, 207, 180));
+		InventoryPanel.setBounds(894, 11, 308, 468);
+		OptionsPanel.add(InventoryPanel);
+		
+		JLabel lblInventory = new JLabel("<html><u>Inventory</u>");
+		lblInventory.setHorizontalAlignment(SwingConstants.CENTER);
+		lblInventory.setForeground(Color.BLACK);
+		lblInventory.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblInventory.setBounds(10, 11, 288, 39);
+		InventoryPanel.add(lblInventory);
+		
+		JPanel EventLogPanel = new JPanel();
+		EventLogPanel.setLayout(null);
+		EventLogPanel.setBackground(new Color(220, 207, 180));
+		EventLogPanel.setBounds(576, 11, 308, 468);
+		OptionsPanel.add(EventLogPanel);
+		
+		JLabel lblEventLog = new JLabel("<html><u>Event Log</u>");
+		lblEventLog.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEventLog.setForeground(Color.BLACK);
+		lblEventLog.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblEventLog.setBounds(10, 11, 288, 39);
+		EventLogPanel.add(lblEventLog);
+		
+		JLabel lblConstOverallGroupHealth = new JLabel("Overall Group Health:");
+		lblConstOverallGroupHealth.setHorizontalAlignment(SwingConstants.LEFT);
+		lblConstOverallGroupHealth.setForeground(Color.BLACK);
+		lblConstOverallGroupHealth.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblConstOverallGroupHealth.setBounds(12, 156, 267, 32);
+		OptionsPanel.add(lblConstOverallGroupHealth);
+		
+		JLabel lblOverallGroupHealth = new JLabel("");
+		lblOverallGroupHealth.setForeground(Color.BLACK);
+		lblOverallGroupHealth.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblOverallGroupHealth.setBounds(281, 156, 153, 32);
+		OptionsPanel.add(lblOverallGroupHealth);
+		
+		JLabel lblConstDistanceUntilNext = new JLabel("Distance Until Next Landmark:");
+		lblConstDistanceUntilNext.setForeground(Color.WHITE);
+		lblConstDistanceUntilNext.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblConstDistanceUntilNext.setBounds(38, 146, 406, 32);
+		GamePanel.add(lblConstDistanceUntilNext);
+		
+		lblDistanceUntilNextLandmark = new JLabel("");
+		lblDistanceUntilNextLandmark.setForeground(Color.WHITE);
+		lblDistanceUntilNextLandmark.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblDistanceUntilNextLandmark.setBounds(417, 154, 153, 24);
+		GamePanel.add(lblDistanceUntilNextLandmark);
+		
+		JLabel lblConstDistanceTraveled = new JLabel("Distance Traveled:");
+		lblConstDistanceTraveled.setForeground(Color.WHITE);
+		lblConstDistanceTraveled.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblConstDistanceTraveled.setBounds(38, 105, 256, 39);
+		GamePanel.add(lblConstDistanceTraveled);
+		
+		lblDistanceTraveled = new JLabel("");
+		lblDistanceTraveled.setForeground(Color.WHITE);
+		lblDistanceTraveled.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblDistanceTraveled.setBounds(271, 111, 153, 24);
+		GamePanel.add(lblDistanceTraveled);
+		
+		lblWeather = new JLabel("Clear");
+		lblWeather.setForeground(Color.WHITE);
+		lblWeather.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblWeather.setBounds(151, 70, 256, 32);
+		GamePanel.add(lblWeather);
+		lblWeather.setText(daily_events.handleWeatherEvent());
+		
+		
+		JLabel lblConstWeather = new JLabel("Weather:");
+		lblConstWeather.setForeground(Color.WHITE);
+		lblConstWeather.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblConstWeather.setBounds(38, 67, 142, 39);
+		GamePanel.add(lblConstWeather);
+		
+		JLabel lblNewLabel = new JLabel("Date:");
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblNewLabel.setBounds(38, 32, 83, 39);
+		GamePanel.add(lblNewLabel);
+		
+		lblDate = new JLabel("");
+		lblDate.setForeground(Color.WHITE);
+		lblDate.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblDate.setBounds(111, 39, 313, 32);
+		GamePanel.add(lblDate);
+		
+		JLabel lblCDaysPassed = new JLabel("Days Passed:");
+		lblCDaysPassed.setForeground(Color.WHITE);
+		lblCDaysPassed.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblCDaysPassed.setBounds(38, -3, 171, 39);
+		GamePanel.add(lblCDaysPassed);
+		
+		lblDaysPassed = new JLabel("");
+		lblDaysPassed.setForeground(Color.WHITE);
+		lblDaysPassed.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblDaysPassed.setBounds(200, -3, 153, 39);
+		GamePanel.add(lblDaysPassed);
+		
+		HuntingPanel = new JPanel();
+		HuntingPanel.setBackground(new Color(154, 128, 71));
+		HuntingPanel.setBounds(100, 100, 450, 300);
+		frame.getContentPane().add(HuntingPanel);
+		HuntingPanel.setLayout(null);
+		HuntingPanel.setVisible(false);
+		
+		StartingOptionsPanel = new JPanel();
+		StartingOptionsPanel.setBounds(0, 0, 1283, 688);
+		StartingOptionsPanel.setBackground(new Color(154, 128, 71));
+		frame.getContentPane().add(StartingOptionsPanel);
+		StartingOptionsPanel.setLayout(null);
+		StartingOptionsPanel.setVisible(false);
+		
+		txtPlayer1Name = new JTextField();
+		txtPlayer1Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		txtPlayer1Name.setBounds(250, 30, 234, 35);
+		txtPlayer1Name.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        String input = txtPlayer1Name.getText();
+		        System.out.println("Player 1 name entered: " + input);
+		    }
+		});
+		StartingOptionsPanel.add(txtPlayer1Name);
+		
+		txtPlayer2Name = new JTextField();
+		txtPlayer2Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		txtPlayer2Name.setColumns(10);
+		txtPlayer2Name.setBounds(250, 80, 234, 35);
+		StartingOptionsPanel.add(txtPlayer2Name);
+		
+		txtPlayer3Name = new JTextField();
+		txtPlayer3Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		txtPlayer3Name.setColumns(10);
+		txtPlayer3Name.setBounds(250, 130, 234, 35);
+		StartingOptionsPanel.add(txtPlayer3Name);
+		
+		txtPlayer4Name = new JTextField();
+		txtPlayer4Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		txtPlayer4Name.setColumns(10);
+		txtPlayer4Name.setBounds(250, 180, 234, 35);
+		StartingOptionsPanel.add(txtPlayer4Name);
+		
+		txtPlayer5Name = new JTextField();
+		txtPlayer5Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		txtPlayer5Name.setColumns(10);
+		txtPlayer5Name.setBounds(250, 230, 234, 35);
+		StartingOptionsPanel.add(txtPlayer5Name);
+		
+		
+		JLabel lblCPlayer1Name = new JLabel("Person 1's Name:");
+		lblCPlayer1Name.setForeground(Color.WHITE);
+		lblCPlayer1Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblCPlayer1Name.setBounds(38, 30, 226, 39);
+		StartingOptionsPanel.add(lblCPlayer1Name);
+		
+		JLabel lblCPlayer2Name = new JLabel("Person 2's Name:");
+		lblCPlayer2Name.setForeground(Color.WHITE);
+		lblCPlayer2Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblCPlayer2Name.setBounds(38, 80, 226, 39);
+		StartingOptionsPanel.add(lblCPlayer2Name);
+		
+		JLabel lblCPlayer3Name = new JLabel("Person 3's Name:");
+		lblCPlayer3Name.setForeground(Color.WHITE);
+		lblCPlayer3Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblCPlayer3Name.setBounds(38, 130, 226, 39);
+		StartingOptionsPanel.add(lblCPlayer3Name);
+		
+		JLabel lblCPlayer4Name = new JLabel("Person 4's Name:");
+		lblCPlayer4Name.setForeground(Color.WHITE);
+		lblCPlayer4Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblCPlayer4Name.setBounds(38, 180, 226, 39);
+		StartingOptionsPanel.add(lblCPlayer4Name);
+		
+		JLabel lblCPlayer5Name = new JLabel("Person 5's Name:");
+		lblCPlayer5Name.setForeground(Color.WHITE);
+		lblCPlayer5Name.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblCPlayer5Name.setBounds(38, 230, 226, 39);
+		StartingOptionsPanel.add(lblCPlayer5Name);
+		
+		btnContinue = new JButton("Continue");
+		btnContinue.setBackground(new Color(220, 207, 180));
+		btnContinue.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 int currentPace = (Integer) spinnerSpeed.getValue();
+				    travelDistance.setPace(currentPace);
+				    travelDistance.startTimer();
+				StartingOptionsPanel.setVisible(false);
+				GamePanel.setVisible(true);
+			}
+		});
+		btnContinue.setFont(new Font("Serif", Font.PLAIN, 45));
+		btnContinue.setBounds(312, 550, 572, 110);
+		StartingOptionsPanel.add(btnContinue);
+		
+		JPanel WelcomePanel = new JPanel();
+		WelcomePanel.setBackground(new Color(154, 128, 71));
+		WelcomePanel.setBounds(0, 0, 1283, 689);
+		frame.getContentPane().add(WelcomePanel);
+		WelcomePanel.setLayout(null);
+		
+		JLabel lblTitlePerils = new JLabel("Perils Along The Platte");
+		lblTitlePerils.setForeground(Color.BLACK);
+		lblTitlePerils.setFont(new Font("Serif", Font.PLAIN, 80));
+		lblTitlePerils.setBackground(new Color(220, 207, 180));
+		lblTitlePerils.setBounds(193, 5, 747, 102);
+		WelcomePanel.add(lblTitlePerils);
+		
+		JButton btnStart = new JButton("Start");
+		btnStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				WelcomePanel.setVisible(false);
+				GamePanel.setVisible(false);
+				StartingOptionsPanel.setVisible(true);
+			}
+		});
+		btnStart.setBackground(new Color(220, 207, 180));
+		btnStart.setFont(new Font("Serif", Font.BOLD, 80));
+		btnStart.setBounds(193, 156, 815, 181);
+		WelcomePanel.add(btnStart);
+		
+		JRadioButton rdbtnMale = new JRadioButton("Male");
+		rdbtnMale.setFont(new Font("Serif", Font.PLAIN, 35));
+		rdbtnMale.setBackground(new Color(220, 207, 180));
+		rdbtnMale.setBounds(853, 30, 167, 46);
+		StartingOptionsPanel.add(rdbtnMale);
+		
+		JRadioButton rdbtnFemale = new JRadioButton("Female");
+		rdbtnFemale.setFont(new Font("Serif", Font.PLAIN, 35));
+		rdbtnFemale.setBackground(new Color(220, 207, 180));
+		rdbtnFemale.setBounds(1053, 30, 167, 46);
+		StartingOptionsPanel.add(rdbtnFemale);
+		
+		 ButtonGroup group = new ButtonGroup();
+	        group.add(rdbtnMale);
+	        group.add(rdbtnFemale);
+		
+		JLabel lblGender = new JLabel("Gender:");
+		lblGender.setForeground(Color.WHITE);
+		lblGender.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblGender.setBounds(739, 30, 108, 39);
+		StartingOptionsPanel.add(lblGender);
 		
 		JPanel ShopPanel = new JPanel();
 		ShopPanel.setBackground(new Color(156, 123, 82));
@@ -436,468 +902,6 @@ public class GAME {
 		btnExitShop.setBounds(933, 446, 254, 68);
 		panel.add(btnExitShop);
 		
-		
-		GamePanel = new JPanel();
-		GamePanel.setBackground(new Color(0, 0, 0));
-		GamePanel.setBounds(0, 0, 1283, 699);
-		frame.getContentPane().add(GamePanel);
-		GamePanel.setLayout(null);
-		GamePanel.setVisible(false);
-		
-		JPanel OptionsPanel = new JPanel();
-		OptionsPanel.setLayout(null);
-		OptionsPanel.setBackground(new Color(154, 128, 71));
-		OptionsPanel.setBounds(38, 198, 1212, 490);
-		GamePanel.add(OptionsPanel);
-		
-		spinnerSpeed = new JSpinner(new SpinnerNumberModel(1,1,3,1));
-		spinnerSpeed.setFont(new Font("Serif", Font.PLAIN, 20));
-		spinnerSpeed.setBackground(Color.WHITE);
-		spinnerSpeed.setBounds(115, 35, 172, 32);
-		OptionsPanel.add(spinnerSpeed);
-		
-		
-		JLabel lblSpeed = new JLabel("Speed:");
-		lblSpeed.setForeground(Color.BLACK);
-		lblSpeed.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblSpeed.setBounds(12, 31, 93, 32);
-		OptionsPanel.add(lblSpeed);
-		
-		lblRations = new JLabel("Rations:");
-		lblRations.setForeground(Color.BLACK);
-		lblRations.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblRations.setBounds(12, 78, 104, 32);
-		OptionsPanel.add(lblRations);
-		
-		//create a SpinnerNumberModel with bounds
-		SpinnerNumberModel rationsModel = new SpinnerNumberModel(1, 1, 10, 1);
-	    spinnerRations = new JSpinner(rationsModel);
-		spinnerRations.setFont(new Font("Serif", Font.PLAIN, 20));
-		spinnerRations.setBackground(new Color(224, 213, 188));
-		spinnerRations.setBounds(115, 82, 172, 32);
-		OptionsPanel.add(spinnerRations);
-		
-		JButton btnRest = new JButton("Rest");
-		btnRest.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				 int daysToRest = popup.restDays(); 
-			}
-		});
-		btnRest.setFont(new Font("Serif", Font.PLAIN, 35));
-		btnRest.setBackground(new Color(220, 207, 180));
-		btnRest.setBounds(16, 369, 145, 110);
-		OptionsPanel.add(btnRest);
-		
-		JButton btnTrade = new JButton("Trade");
-		btnTrade.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnTrade.setFont(new Font("Serif", Font.PLAIN, 35));
-		btnTrade.setBackground(new Color(220, 207, 180));
-		btnTrade.setBounds(215, 369, 145, 110);
-		OptionsPanel.add(btnTrade);
-		
-		JButton btnHunt = new JButton("Hunt");
-		btnHunt.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				HuntingPanel.setVisible(true);
-				GamePanel.setVisible(false);
-
-				timer.start();
-
-				imageHolder = new JLabel("                                  \\      . .(");
-				imageHolder.setHorizontalAlignment(SwingConstants.LEFT);
-				imageHolder.setBounds(95, 65, 246, 24);
-				HuntingPanel.add(imageHolder);
-				
-				
-				lblBang2Shoot = new JLabel("Type BANG to shoot");
-				lblBang2Shoot.setFont(new Font("Tw Cen MT", Font.BOLD, 25));
-				lblBang2Shoot.setHorizontalAlignment(SwingConstants.CENTER);
-				lblBang2Shoot.setBounds(109, 11, 218, 24);
-				HuntingPanel.add(lblBang2Shoot);
-				
-
-				JLabel lblResult = new JLabel("");
-				lblResult.setHorizontalAlignment(SwingConstants.CENTER);
-				lblResult.setFont(new Font("Tahoma", Font.PLAIN, 15));
-				lblResult.setBounds(217, 159, 209, 35);
-				HuntingPanel.add(lblResult);
-				
-				txtFldResponse = new JTextField();
-				//txtFldResponse.setText("");
-				txtFldResponse.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {					
-						timer.stop();
-						if (meat < 0) {
-							meat = 0;
-						}
-						String response = txtFldResponse.getText();
-						String response1 = response.trim();
-						if (response1.equalsIgnoreCase("bang")) {
-							if (meat > 0) {
-								lblResult.setText("You got " + meat + " meat.");
-							} else {
-								lblResult.setText("The deer ran away.");
-								//txtFldResponse.setText("");
-							}
-						} else {
-							lblResult.setText("You missed. :(");
-							//txtFldResponse.setText("");
-						}
-						closeGame = true;
-						txtFldResponse.setText("");
-						counter=0;
-						timer.stop();
-						
-						
-
-						//  Delay panel closing by 2 seconds (5000 milliseconds)
-						new Timer(2000, new ActionListener() {
-							@Override
-							public void actionPerformed(ActionEvent evt) {
-								txtFldResponse.setText("");
-								HuntingPanel.setVisible(false);
-								GamePanel.setVisible(true);
-								((Timer) evt.getSource()).stop(); // Stop the 5-second timer after it fires
-								closeGame = false;
-								txtFldResponse.setText("");
-								lblResult.setText("");
-								timer.restart();
-								lblNewLabel1.setText("");
-								meat = 0;
-							}
-						}).start();
-					}
-				});
-				txtFldResponse.setHorizontalAlignment(SwingConstants.CENTER);
-				txtFldResponse.setFont(new Font("Tahoma", Font.PLAIN, 30));
-				txtFldResponse.setBounds(170, 224, 96, 35);
-				HuntingPanel.add(txtFldResponse);
-				txtFldResponse.setColumns(10);
-				
-				lblNewLabel1 = new JLabel("Time");
-				lblNewLabel1.setBounds(338, 122, 49, 14);
-				HuntingPanel.add(lblNewLabel1);
-				
-				JLabel lblt = new JLabel("                                   |  __T |");
-				lblt.setHorizontalAlignment(SwingConstants.LEFT);
-				lblt.setBounds(95, 77, 246, 24);
-				HuntingPanel.add(lblt);
-				
-				JLabel imageHolder_2 = new JLabel("                                  /       |");
-				imageHolder_2.setHorizontalAlignment(SwingConstants.LEFT);
-				imageHolder_2.setBounds(95, 89, 246, 24);
-				HuntingPanel.add(imageHolder_2);
-				
-				JLabel imageHolder_3 = new JLabel("         _.---======='          |");
-				imageHolder_3.setHorizontalAlignment(SwingConstants.LEFT);
-				imageHolder_3.setBounds(95, 100, 246, 24);
-				HuntingPanel.add(imageHolder_3);
-				
-				JLabel imageHolder_4 = new JLabel("     //                                 {}");
-				imageHolder_4.setHorizontalAlignment(SwingConstants.LEFT);
-				imageHolder_4.setBounds(95, 112, 246, 24);
-				HuntingPanel.add(imageHolder_4);
-				
-				JLabel imageHolder_5 = new JLabel("   `|             ,       ,            {}");
-				imageHolder_5.setHorizontalAlignment(SwingConstants.LEFT);
-				imageHolder_5.setBounds(95, 124, 246, 24);
-				HuntingPanel.add(imageHolder_5);
-				
-				JLabel imageHolder_6 = new JLabel("      \\            /___;          ,'");
-				imageHolder_6.setHorizontalAlignment(SwingConstants.LEFT);
-				imageHolder_6.setBounds(95, 135, 246, 24);
-				HuntingPanel.add(imageHolder_6);
-				
-				JLabel imageHolder_7 = new JLabel("                                  |`\\__/ /");
-				imageHolder_7.setHorizontalAlignment(SwingConstants.LEFT);
-				imageHolder_7.setBounds(95, 53, 246, 24);
-				HuntingPanel.add(imageHolder_7);
-				
-				JLabel imageHolder_1 = new JLabel("       )      ,-;`       `\\      / /");
-				imageHolder_1.setHorizontalAlignment(SwingConstants.LEFT);
-				imageHolder_1.setBounds(95, 147, 246, 24);
-				HuntingPanel.add(imageHolder_1);
-				
-				JLabel imageHolder_7_1 = new JLabel("       |     /   (          ;|   | |");
-				imageHolder_7_1.setHorizontalAlignment(SwingConstants.LEFT);
-				imageHolder_7_1.setBounds(95, 159, 246, 24);
-				HuntingPanel.add(imageHolder_7_1);
-				
-				JLabel imageHolder_7_2 = new JLabel("       |    |`\\  \\            |  | |");
-				imageHolder_7_2.setHorizontalAlignment(SwingConstants.LEFT);
-				imageHolder_7_2.setBounds(95, 170, 246, 24);
-				HuntingPanel.add(imageHolder_7_2);
-				
-				JLabel imageHolder_7_3 = new JLabel("       |   |    \\  \\          |  | |");
-				imageHolder_7_3.setHorizontalAlignment(SwingConstants.LEFT);
-				imageHolder_7_3.setBounds(95, 182, 246, 24);
-				HuntingPanel.add(imageHolder_7_3);
-				
-				JLabel imageHolder_7_4 = new JLabel("        )  \\     )  \\        )  | |");
-				imageHolder_7_4.setHorizontalAlignment(SwingConstants.LEFT);
-				imageHolder_7_4.setBounds(95, 194, 246, 24);
-				HuntingPanel.add(imageHolder_7_4);
-				
-				JLabel imageHolder_7_5 = new JLabel("         `\"      `\"         `\"\"");
-				imageHolder_7_5.setHorizontalAlignment(SwingConstants.LEFT);
-				imageHolder_7_5.setBounds(95, 205, 246, 24);
-				HuntingPanel.add(imageHolder_7_5);
-				
-				
-			}
-		});
-		btnHunt.setFont(new Font("Serif", Font.PLAIN, 35));
-		btnHunt.setBackground(new Color(220, 207, 180));
-		btnHunt.setBounds(421, 369, 145, 110);
-		OptionsPanel.add(btnHunt);
-		
-		JPanel InventoryPanel = new JPanel();
-		InventoryPanel.setLayout(null);
-		InventoryPanel.setBackground(new Color(220, 207, 180));
-		InventoryPanel.setBounds(894, 11, 308, 468);
-		OptionsPanel.add(InventoryPanel);
-		
-		JLabel lblInventory = new JLabel("<html><u>Inventory</u>");
-		lblInventory.setHorizontalAlignment(SwingConstants.CENTER);
-		lblInventory.setForeground(Color.BLACK);
-		lblInventory.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblInventory.setBounds(10, 11, 288, 39);
-		InventoryPanel.add(lblInventory);
-		
-		JPanel EventLogPanel = new JPanel();
-		EventLogPanel.setLayout(null);
-		EventLogPanel.setBackground(new Color(220, 207, 180));
-		EventLogPanel.setBounds(576, 11, 308, 468);
-		OptionsPanel.add(EventLogPanel);
-		
-		JLabel lblEventLog = new JLabel("<html><u>Event Log</u>");
-		lblEventLog.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEventLog.setForeground(Color.BLACK);
-		lblEventLog.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblEventLog.setBounds(10, 11, 288, 39);
-		EventLogPanel.add(lblEventLog);
-		
-		JLabel lblConstOverallGroupHealth = new JLabel("Overall Group Health:");
-		lblConstOverallGroupHealth.setHorizontalAlignment(SwingConstants.LEFT);
-		lblConstOverallGroupHealth.setForeground(Color.BLACK);
-		lblConstOverallGroupHealth.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblConstOverallGroupHealth.setBounds(12, 156, 267, 32);
-		OptionsPanel.add(lblConstOverallGroupHealth);
-		
-		JLabel lblOverallGroupHealth = new JLabel("");
-		lblOverallGroupHealth.setForeground(Color.BLACK);
-		lblOverallGroupHealth.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblOverallGroupHealth.setBounds(281, 156, 153, 32);
-		OptionsPanel.add(lblOverallGroupHealth);
-		
-		JLabel lblConstDistanceUntilNext = new JLabel("Distance Until Next Landmark:");
-		lblConstDistanceUntilNext.setForeground(Color.WHITE);
-		lblConstDistanceUntilNext.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblConstDistanceUntilNext.setBounds(38, 146, 406, 32);
-		GamePanel.add(lblConstDistanceUntilNext);
-		
-		JLabel lblDistanceUntilNextLandmark = new JLabel("");
-		lblDistanceUntilNextLandmark.setForeground(Color.WHITE);
-		lblDistanceUntilNextLandmark.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblDistanceUntilNextLandmark.setBounds(443, 146, 153, 24);
-		GamePanel.add(lblDistanceUntilNextLandmark);
-		
-		JLabel lblConstDistanceTraveled = new JLabel("Distance Traveled:");
-		lblConstDistanceTraveled.setForeground(Color.WHITE);
-		lblConstDistanceTraveled.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblConstDistanceTraveled.setBounds(38, 105, 256, 39);
-		GamePanel.add(lblConstDistanceTraveled);
-		
-		lblDistanceTraveled = new JLabel("");
-		lblDistanceTraveled.setForeground(Color.WHITE);
-		lblDistanceTraveled.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblDistanceTraveled.setBounds(271, 111, 153, 24);
-		GamePanel.add(lblDistanceTraveled);
-		
-		lblWeather = new JLabel("Clear");
-		lblWeather.setForeground(Color.WHITE);
-		lblWeather.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblWeather.setBounds(151, 70, 256, 32);
-		GamePanel.add(lblWeather);
-		lblWeather.setText(daily_events.handleWeatherEvent());
-		
-		
-		JLabel lblConstWeather = new JLabel("Weather:");
-		lblConstWeather.setForeground(Color.WHITE);
-		lblConstWeather.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblConstWeather.setBounds(38, 67, 142, 39);
-		GamePanel.add(lblConstWeather);
-		
-		JLabel lblNewLabel = new JLabel("Date:");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblNewLabel.setBounds(38, 32, 83, 39);
-		GamePanel.add(lblNewLabel);
-		
-		JLabel lblDate = new JLabel("");
-		lblDate.setForeground(Color.WHITE);
-		lblDate.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblDate.setBounds(111, 47, 153, 24);
-		GamePanel.add(lblDate);
-		
-		JLabel lblCDaysPassed = new JLabel("Days Passed:");
-		lblCDaysPassed.setForeground(Color.WHITE);
-		lblCDaysPassed.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblCDaysPassed.setBounds(38, -3, 171, 39);
-		GamePanel.add(lblCDaysPassed);
-		
-		lblDaysPassed = new JLabel("");
-		lblDaysPassed.setForeground(Color.WHITE);
-		lblDaysPassed.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblDaysPassed.setBounds(200, -3, 153, 39);
-		GamePanel.add(lblDaysPassed);
-		
-		HuntingPanel = new JPanel();
-		HuntingPanel.setBackground(new Color(154, 128, 71));
-		HuntingPanel.setBounds(100, 100, 450, 300);
-		frame.getContentPane().add(HuntingPanel);
-		HuntingPanel.setLayout(null);
-		HuntingPanel.setVisible(false);
-		
-		StartingOptionsPanel = new JPanel();
-		StartingOptionsPanel.setBounds(0, 0, 1283, 688);
-		StartingOptionsPanel.setBackground(new Color(154, 128, 71));
-		frame.getContentPane().add(StartingOptionsPanel);
-		StartingOptionsPanel.setLayout(null);
-		StartingOptionsPanel.setVisible(false);
-		
-		txtPlayer1Name = new JTextField();
-		txtPlayer1Name.setFont(new Font("Serif", Font.PLAIN, 30));
-		txtPlayer1Name.setBounds(250, 30, 234, 35);
-		txtPlayer1Name.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        String input = txtPlayer1Name.getText();
-		        System.out.println("Player 1 name entered: " + input);
-		    }
-		});
-		StartingOptionsPanel.add(txtPlayer1Name);
-		
-		txtPlayer2Name = new JTextField();
-		txtPlayer2Name.setFont(new Font("Serif", Font.PLAIN, 30));
-		txtPlayer2Name.setColumns(10);
-		txtPlayer2Name.setBounds(250, 80, 234, 35);
-		StartingOptionsPanel.add(txtPlayer2Name);
-		
-		txtPlayer3Name = new JTextField();
-		txtPlayer3Name.setFont(new Font("Serif", Font.PLAIN, 30));
-		txtPlayer3Name.setColumns(10);
-		txtPlayer3Name.setBounds(250, 130, 234, 35);
-		StartingOptionsPanel.add(txtPlayer3Name);
-		
-		txtPlayer4Name = new JTextField();
-		txtPlayer4Name.setFont(new Font("Serif", Font.PLAIN, 30));
-		txtPlayer4Name.setColumns(10);
-		txtPlayer4Name.setBounds(250, 180, 234, 35);
-		StartingOptionsPanel.add(txtPlayer4Name);
-		
-		txtPlayer5Name = new JTextField();
-		txtPlayer5Name.setFont(new Font("Serif", Font.PLAIN, 30));
-		txtPlayer5Name.setColumns(10);
-		txtPlayer5Name.setBounds(250, 230, 234, 35);
-		StartingOptionsPanel.add(txtPlayer5Name);
-		
-		
-		JLabel lblCPlayer1Name = new JLabel("Person 1's Name:");
-		lblCPlayer1Name.setForeground(Color.WHITE);
-		lblCPlayer1Name.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblCPlayer1Name.setBounds(38, 30, 226, 39);
-		StartingOptionsPanel.add(lblCPlayer1Name);
-		
-		JLabel lblCPlayer2Name = new JLabel("Person 2's Name:");
-		lblCPlayer2Name.setForeground(Color.WHITE);
-		lblCPlayer2Name.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblCPlayer2Name.setBounds(38, 80, 226, 39);
-		StartingOptionsPanel.add(lblCPlayer2Name);
-		
-		JLabel lblCPlayer3Name = new JLabel("Person 3's Name:");
-		lblCPlayer3Name.setForeground(Color.WHITE);
-		lblCPlayer3Name.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblCPlayer3Name.setBounds(38, 130, 226, 39);
-		StartingOptionsPanel.add(lblCPlayer3Name);
-		
-		JLabel lblCPlayer4Name = new JLabel("Person 4's Name:");
-		lblCPlayer4Name.setForeground(Color.WHITE);
-		lblCPlayer4Name.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblCPlayer4Name.setBounds(38, 180, 226, 39);
-		StartingOptionsPanel.add(lblCPlayer4Name);
-		
-		JLabel lblCPlayer5Name = new JLabel("Person 5's Name:");
-		lblCPlayer5Name.setForeground(Color.WHITE);
-		lblCPlayer5Name.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblCPlayer5Name.setBounds(38, 230, 226, 39);
-		StartingOptionsPanel.add(lblCPlayer5Name);
-		
-		btnContinue = new JButton("Continue");
-		btnContinue.setBackground(new Color(220, 207, 180));
-		btnContinue.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				 int currentPace = (Integer) spinnerSpeed.getValue();
-				    travelDistance.setPace(currentPace);
-				    travelDistance.startTimer();
-				StartingOptionsPanel.setVisible(false);
-				GamePanel.setVisible(true);
-			}
-		});
-		btnContinue.setFont(new Font("Serif", Font.PLAIN, 45));
-		btnContinue.setBounds(312, 550, 572, 110);
-		StartingOptionsPanel.add(btnContinue);
-		
-		JPanel WelcomePanel = new JPanel();
-		WelcomePanel.setBackground(new Color(154, 128, 71));
-		WelcomePanel.setBounds(0, 0, 1283, 689);
-		frame.getContentPane().add(WelcomePanel);
-		WelcomePanel.setLayout(null);
-		
-		JLabel lblTitlePerils = new JLabel("Perils Along The Platte");
-		lblTitlePerils.setForeground(Color.BLACK);
-		lblTitlePerils.setFont(new Font("Serif", Font.PLAIN, 80));
-		lblTitlePerils.setBackground(new Color(220, 207, 180));
-		lblTitlePerils.setBounds(193, 5, 747, 102);
-		WelcomePanel.add(lblTitlePerils);
-		
-		JButton btnStart = new JButton("Start");
-		btnStart.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				WelcomePanel.setVisible(false);
-				GamePanel.setVisible(false);
-				StartingOptionsPanel.setVisible(true);
-			}
-		});
-		btnStart.setBackground(new Color(220, 207, 180));
-		btnStart.setFont(new Font("Serif", Font.BOLD, 80));
-		btnStart.setBounds(193, 156, 815, 181);
-		WelcomePanel.add(btnStart);
-		
-		JRadioButton rdbtnMale = new JRadioButton("Male");
-		rdbtnMale.setFont(new Font("Serif", Font.PLAIN, 35));
-		rdbtnMale.setBackground(new Color(220, 207, 180));
-		rdbtnMale.setBounds(853, 30, 167, 46);
-		StartingOptionsPanel.add(rdbtnMale);
-		
-		JRadioButton rdbtnFemale = new JRadioButton("Female");
-		rdbtnFemale.setFont(new Font("Serif", Font.PLAIN, 35));
-		rdbtnFemale.setBackground(new Color(220, 207, 180));
-		rdbtnFemale.setBounds(1053, 30, 167, 46);
-		StartingOptionsPanel.add(rdbtnFemale);
-		
-		 ButtonGroup group = new ButtonGroup();
-	        group.add(rdbtnMale);
-	        group.add(rdbtnFemale);
-		
-		JLabel lblGender = new JLabel("Gender:");
-		lblGender.setForeground(Color.WHITE);
-		lblGender.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblGender.setBounds(739, 30, 108, 39);
-		StartingOptionsPanel.add(lblGender);
-		
 		timer = new Timer(1000, new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				timerActionPerformed();
@@ -928,5 +932,16 @@ public class GAME {
 	        // Changes distance traveled label
 	     String distanceTraveled = String.valueOf(travelDistance.distanceTraveled());
 	     	lblDistanceTraveled.setText(distanceTraveled);
-	    }
+	}
+
+
+	 public void updateMilesLeftLabel() {
+		 int milesLeft = travelDistance.getMilesLeftToNextLandmark();
+		 lblDistanceUntilNextLandmark.setText(String.valueOf(milesLeft));
+	 }
+	 
+	 public void updateDateLabel() {
+		 String currentDate = travelDistance.date();  // get formatted date string
+		    lblDate.setText(currentDate);
+	 }
 }
