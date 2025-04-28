@@ -86,7 +86,6 @@ public class Invetory {
 	public void loseSupply() {
 		//using other class methods
 		Perils perils = new Perils(); 
-		DailyEvents event = new DailyEvents("Gender", 100); //NOT FINAL, NEEDS CHANGED
 		HealthPool health = new HealthPool("bob", "jerry", "enrique", "kowalski", "barney"); 
 		GAME game = new GAME(); 
 		//initialize each usage amount
@@ -94,7 +93,8 @@ public class Invetory {
 	
 		//create variables to help with supply calculations
 		double multiplier; //a multiplier to multiply the daily supply usage with; based on rations construct
-		switch (game.rations) {
+		int rationsSwitch = game.rations; //helper integer for the switch statement
+		switch (rationsSwitch) {
 		case 2:  multiplier = 1.5; break; //if 2, use 1.5x more
 		case 3:  multiplier = 2.0; break; //if 3, use 2.0x more
 		default: multiplier = 1.0; break; //(assuming default of 1) use 1.0x supplies
@@ -122,8 +122,6 @@ public class Invetory {
 	//helper method to declare and contain all Maps associated with different weather events
 	private void supplyCalculator() {
 		//using other class methods
-		Perils perils = new Perils(); 
-		DailyEvents event = new DailyEvents("Gender", 100); //NOT FINAL, NEEDS CHANGED
 		HealthPool health = new HealthPool("bob", "jerry", "enrique", "kowalski", "barney"); 
 		
 		//initializes the default usage map
@@ -162,7 +160,15 @@ public class Invetory {
 			death.put(supply, supply.getUsageAmount() * multiplier);
 	//special cases for different perils	
 	}
-
-
+	
+	    public static void main(String[] args) {
+	        // Your starting point
+	        System.out.println("Hello, World!");
+	        Invetory i = new Invetory();
+	        i.loseSupply(); 
+	        System.out.println("Total bacon: " + i.getSupply(SupplyType.BACON));
+	        
+	    }
+	
 }
 
