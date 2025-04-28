@@ -8,7 +8,7 @@ public class Perils {
 	public String weather;
 	public String sickness = "";
 	Random rng = new Random();
-	Boolean isSick;
+	public Boolean[] isSick = {false, false, false, false, false};
 	
 	 
 	/**
@@ -64,7 +64,7 @@ public class Perils {
 			int chance = rng.nextInt(101);	
 			if (chance > 90) { sickness = "fever"; }
 			else if (chance > 85) { sickness = "dehydration"; }
-			else if (chance > 85 && rations == 1) { sickness = "malnutrition"; }
+			else if (chance > 85 && rations >= 1 && rations < 4) { sickness = "malnutrition"; }
 			else if (chance > 80 && speed == 3) { sickness = "exhaustion"; }
 			else if (chance > 75) { sickness = "food poisoning"; }
 			else if (chance > 70) { sickness = "flu"; }
