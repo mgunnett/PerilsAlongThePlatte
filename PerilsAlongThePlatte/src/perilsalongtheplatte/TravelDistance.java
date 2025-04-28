@@ -17,6 +17,11 @@ public class TravelDistance {
 		private Random random = new Random();
 		private Popups popup = new Popups(); 
 		private GAME game;
+		private final int[] landmarkRangeStarts = {70, 130, 355, 610, 680};
+		private final int[] landmarkRangeEnds = {85, 145, 370, 625, 700};
+		private final String[] landmarkNames = {
+			    "Kansas River", "Big Blue River", "Fort Kearny", "Chimney Rock", "Fort Loramie"
+			};
 		
 	/**
 	 * A constructor that creates a Timer object with the amount of REAL time an in-game day will take. 
@@ -39,14 +44,16 @@ public class TravelDistance {
 		               day++;
 		               // will update with pace later on
 		               if (pace == 1) {
-		            	   distance += random.nextInt(5) + 2; // Adds 2-5 miles
+		            	   distance += random.nextInt(4) + 3; // Adds 3-6 miles
 		               }
 		               if (pace == 2) {
-		            	   distance += random.nextInt(10) + 5; // Adds 5-13
+		            	   distance += random.nextInt(5) + 7; // Adds 7-13
 		               }
 		               if (pace == 3) {
-		            	   distance += random.nextInt(7) + 14; // Adds 14-20 miles
+		            	   distance += random.nextInt(4) + 12; // Adds 12-15 miles
 		               }
+		               System.out.println(distance);
+		              
 
 		         if (updateCallback != null) {
 		        	 	updateCallback.run(); // UI update
@@ -64,6 +71,11 @@ public class TravelDistance {
 	     });
 
 
+	}
+	
+	public void setPace(int pace) {
+	    // validate pace if needed here
+	    this.pace = pace;
 	}
 	
 	// For the date code
@@ -118,6 +130,8 @@ public class TravelDistance {
 		date = month + " " + dayDate + ", 1872";
 		return date;
 	}
+	
+	
 
 	public void startTimer() {
 		dayTimer.start();
@@ -173,6 +187,8 @@ public class TravelDistance {
 	 */
 	
 	
+	
+	
 	/**
 	 * Determines if the player has reached the next landmark.
 	 * */
@@ -208,7 +224,37 @@ public class TravelDistance {
 	               (d >= 680 && d < 700);*/
 	        
 	    }
+
+	 public int getMilesLeftToNextLandmark() {
+	     int d = distanceTraveled();
+
+	     for (int i = 0; i < landmarkRangeStarts.length; i++) {
+	         if (d < landmarkRangeStarts[i]) {
+	             return landmarkRangeStarts[i] - d;  // distance left before next landmark range
+	         }
+	         // If currently inside the range, zero miles left
+	         if (d >= landmarkRangeStarts[i] && d < landmarkRangeEnds[i]) {
+	             return 0;
+	         }
+	     }
+	     return 0; // No more landmarks => 0 miles left
+	 }
+	 
+	 public String getNextLandmarkName() {
+		    int d = distanceTraveled();
+
+		    for (int i = 0; i < landmarkRangeStarts.length; i++) {
+		        if (d < landmarkRangeStarts[i]) {
+		            return landmarkNames[i];
+		        }
+		        if (d >= landmarkRangeStarts[i] && d < landmarkRangeEnds[i]) {
+		            return landmarkNames[i]; // currently at this landmark
+		        }
+		    }
+		    return "None"; // no further landmarks
+		}
 	
+	 
 	/**
 	 * Determines if the current landmark is a river.
 	 * */

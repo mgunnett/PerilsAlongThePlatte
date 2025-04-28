@@ -86,36 +86,42 @@ public class Invetory {
 	public void loseSupply() {
 		//using other class methods
 		Perils perils = new Perils(); 
-		DailyEvents event = new DailyEvents("Gender", 100); //NOT FINAL, NEEDS CHANGED
 		HealthPool health = new HealthPool("bob", "jerry", "enrique", "kowalski", "barney"); 
+		GAME game = new GAME(); 
 		//initialize each usage amount
 		supplyCalculator(); 
 	
+		//create variables to help with supply calculations
+		double multiplier; //a multiplier to multiply the daily supply usage with; based on rations construct
+		int rationsSwitch = game.rations; //helper integer for the switch statement
+		switch (rationsSwitch) {
+		case 2:  multiplier = 1.5; break; //if 2, use 1.5x more
+		case 3:  multiplier = 2.0; break; //if 3, use 2.0x more
+		default: multiplier = 1.0; break; //(assuming default of 1) use 1.0x supplies
+		}
 		boolean isSomeoneDead = !health.whoIsDead.isEmpty();
 		boolean isSomeoneSick = perils.isSick;
 		if (isSomeoneDead && isSomeoneSick) { //check if the dead person list has an entry and if someone is sick
 			for (SupplyType supply : SupplyType.values()) 
-				defaultUsage.put(supply, supplies.get(supply) - (death.get(supply) + sicknessInjury.get(supply)));
+				defaultUsage.put(supply, supplies.get(supply) - ((death.get(supply) + sicknessInjury.get(supply) * multiplier)));
 		}
 		else if (isSomeoneDead && !isSomeoneSick) { //check if someone is dead and if someone is NOT sick
 			for (SupplyType supply : SupplyType.values()) 
-				defaultUsage.put(supply, supplies.get(supply) - death.get(supply));
+				defaultUsage.put(supply, supplies.get(supply) - (death.get(supply) *  multiplier));
 		}
 		else if (!isSomeoneDead && isSomeoneSick) { //check if someone is NOT dead and if someone is sick
 			for (SupplyType supply : SupplyType.values()) 
-				defaultUsage.put(supply, supplies.get(supply) - sicknessInjury.get(supply));
+				defaultUsage.put(supply, supplies.get(supply) - (sicknessInjury.get(supply) * multiplier));
 		}
 		else { //default usage
 			for (SupplyType supply : SupplyType.values()) 
-				defaultUsage.put(supply, defaultUsage.get(supply));
+				defaultUsage.put(supply, defaultUsage.get(supply) * multiplier);
 		}
 	}
 	
 	//helper method to declare and contain all Maps associated with different weather events
 	private void supplyCalculator() {
 		//using other class methods
-		Perils perils = new Perils(); 
-		DailyEvents event = new DailyEvents("Gender", 100); //NOT FINAL, NEEDS CHANGED
 		HealthPool health = new HealthPool("bob", "jerry", "enrique", "kowalski", "barney"); 
 		
 		//initializes the default usage map
@@ -154,7 +160,15 @@ public class Invetory {
 			death.put(supply, supply.getUsageAmount() * multiplier);
 	//special cases for different perils	
 	}
-
-
+	
+	    public static void main(String[] args) {
+	        // Your starting point
+	        System.out.println("Hello, World!");
+	        Invetory i = new Invetory();
+	        i.loseSupply(); 
+	        System.out.println("Total bacon: " + i.getSupply(SupplyType.BACON));
+	        
+	    }
+	
 }
 
