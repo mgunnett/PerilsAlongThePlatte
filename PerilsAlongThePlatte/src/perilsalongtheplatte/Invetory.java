@@ -118,43 +118,41 @@ public class Invetory {
 		DailyEvents event = new DailyEvents("Gender", 100); //NOT FINAL, NEEDS CHANGED
 		HealthPool health = new HealthPool("bob", "jerry", "enrique", "kowalski", "barney"); 
 		
-		//below is an initializer block
+		//initializes the default usage map
+		for (SupplyType supply : SupplyType.values()) 
+			defaultUsage.put(supply, supply.getUsageAmount());
 		
-			//initializes the default usage map
-			for (SupplyType supply : SupplyType.values()) 
-				defaultUsage.put(supply, supply.getUsageAmount());
-			
-			//initialization of the sicknessInjury map
-			for (SupplyType supply : SupplyType.values()) {
-				//switch statement on supply to change certain values from the defaults
-				switch (supply) {
-				case MEDICINE:
-					sicknessInjury.put(supply, 0.5); //uses 0.5 per day, compared to the default of 0
-				case  SOAP:
-					sicknessInjury.put(supply, 0.5); //sick people want to clean bodily fluids/injuries
-				case WATER:
-					sicknessInjury.put(supply, 15.0); 
-				default: 
-					sicknessInjury.put(supply, supply.getUsageAmount());
-				}
+		//initialization of the sicknessInjury map
+		for (SupplyType supply : SupplyType.values()) {
+			//switch statement on supply to change certain values from the defaults
+			switch (supply) {
+			case MEDICINE:
+				sicknessInjury.put(supply, 0.5); //uses 0.5 per day, compared to the default of 0
+			case  SOAP:
+				sicknessInjury.put(supply, 0.5); //sick people want to clean bodily fluids/injuries
+			case WATER:
+				sicknessInjury.put(supply, 15.0); 
+			default: 
+				sicknessInjury.put(supply, supply.getUsageAmount());
 			}
+		}
 			
-			//death map initialization
-			double multiplier = 1.0;
-			int alive = health.personName.size(); //uses an array to check how many are alive
-			if (alive == 4) 
-				multiplier = 0.8; //use 20% less supplies
-			else if (alive == 3) 
-				multiplier = 0.6;
-			else if (alive == 2)
-				multiplier = 0.4;
-			else if (alive == 1) 
-				multiplier = 0.2;
-			
-			//initialize map
-			for (SupplyType supply : SupplyType.values()) 
-				death.put(supply, supply.getUsageAmount() * multiplier);
-		//special cases for different perils	
+		//death map initialization
+		double multiplier = 1.0;
+		int alive = health.personName.size(); //uses an array to check how many are alive
+		if (alive == 4) 
+			multiplier = 0.8; //use 20% less supplies
+		else if (alive == 3) 
+			multiplier = 0.6;
+		else if (alive == 2)
+			multiplier = 0.4;
+		else if (alive == 1) 
+			multiplier = 0.2;
+		
+		//initialize map
+		for (SupplyType supply : SupplyType.values()) 
+			death.put(supply, supply.getUsageAmount() * multiplier);
+	//special cases for different perils	
 	}
 
 
