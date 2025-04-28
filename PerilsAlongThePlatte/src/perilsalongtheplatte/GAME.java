@@ -14,7 +14,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import perilsalongtheplatte.DailyEvents;
@@ -159,7 +158,7 @@ public class GAME {
 		OptionsPanel.add(lblRations);
 		
 		//create a SpinnerNumberModel with bounds
-		SpinnerNumberModel rationsModel = new SpinnerNumberModel(1, 1, 10, 1);
+		SpinnerNumberModel rationsModel = new SpinnerNumberModel(1, 1, 3, 1);
 	    spinnerRations = new JSpinner(rationsModel);
 		spinnerRations.setFont(new Font("Serif", Font.PLAIN, 20));
 		spinnerRations.setBackground(new Color(224, 213, 188));

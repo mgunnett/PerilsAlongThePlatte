@@ -248,15 +248,5 @@ public class Inventory {
 		}
 		return amount; 
 	}
-	
-	    public static void main(String[] args) {
-	        // Your starting point
-	        System.out.println("Hello, World!");
-	        Inventory i = new Inventory();
-	        i.loseSupply(); 
-	        System.out.println("Total bacon: " + i.getSupply(SupplyType.BACON));
-	        
-	    }
-	
 }
 
