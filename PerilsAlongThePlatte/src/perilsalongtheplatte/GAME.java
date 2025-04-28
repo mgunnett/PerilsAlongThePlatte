@@ -521,18 +521,16 @@ public class GAME {
 						if (response1.equalsIgnoreCase("bang")) {
 							if (meat > 0) {
 								lblResult.setText("You got " + meat + " meat.");
-								txtFldResponse.setText("");
 							} else {
 								lblResult.setText("The deer ran away.");
-								txtFldResponse.setText("");
+								//txtFldResponse.setText("");
 							}
 						} else {
 							lblResult.setText("You missed. :(");
-							txtFldResponse.setText("");
+							//txtFldResponse.setText("");
 						}
 						closeGame = true;
 						txtFldResponse.setText("");
-						txtFldResponse = new JTextField();
 						counter=0;
 						timer.stop();
 						
