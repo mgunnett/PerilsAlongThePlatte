@@ -23,7 +23,6 @@ public class TravelDistance {
 			    "Kansas River", "Big Blue River", "Fort Kearny", "Chimney Rock", "Fort Loramie"
 			};
 		
-		
 	/**
 	 * A constructor that creates a Timer object with the amount of REAL time an in-game day will take. 
 	 * @param updateCallback - allows you to "callback" to the function to set a label in the GUI

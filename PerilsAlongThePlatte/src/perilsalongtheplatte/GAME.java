@@ -45,6 +45,7 @@ public class GAME {
 	JSpinner spinnerRations;
 	public JSpinner spinnerSpeed;
 	JLabel lblDistanceUntilNextLandmark;
+	private JLabel lblDate;
 	
 	//Hunting Game widgets
 	public JTextField txtFldResponse;
@@ -97,6 +98,7 @@ public class GAME {
 		        
 		        //variables to be updated
 		        updateMilesLeftLabel();
+		        updateDateLabel();
 		        rations = (int) spinnerRations.getValue();
 		        spinnerSpeed.addChangeListener(e -> {
 		            int speed = (Integer) spinnerSpeed.getValue();
@@ -424,10 +426,10 @@ public class GAME {
 		lblNewLabel.setBounds(38, 32, 83, 39);
 		GamePanel.add(lblNewLabel);
 		
-		JLabel lblDate = new JLabel("");
+		lblDate = new JLabel("");
 		lblDate.setForeground(Color.WHITE);
 		lblDate.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblDate.setBounds(111, 47, 153, 24);
+		lblDate.setBounds(111, 39, 313, 32);
 		GamePanel.add(lblDate);
 		
 		JLabel lblCDaysPassed = new JLabel("Days Passed:");
@@ -936,5 +938,10 @@ public class GAME {
 	 public void updateMilesLeftLabel() {
 		 int milesLeft = travelDistance.getMilesLeftToNextLandmark();
 		 lblDistanceUntilNextLandmark.setText(String.valueOf(milesLeft));
+	 }
+	 
+	 public void updateDateLabel() {
+		 String currentDate = travelDistance.date();  // get formatted date string
+		    lblDate.setText(currentDate);
 	 }
 }
