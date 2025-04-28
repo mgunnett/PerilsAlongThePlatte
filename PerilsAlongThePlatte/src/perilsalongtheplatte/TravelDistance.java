@@ -64,7 +64,7 @@ public class TravelDistance {
 		         // Restart the timer for the next day
 		         if(reachedLandmark(distance))
 		        	 popup.landmarkPopup(landmark);
-		        	 
+		        	 popup.educationalDescription(landmark);
 		         dayTimer.restart();
 		         }
 		     }
