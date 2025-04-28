@@ -22,6 +22,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JSeparator;
 
 
@@ -40,15 +41,10 @@ public class GAME {
 	JPanel GamePanel;
 	JPanel HuntingPanel;
 	JPanel StartingOptionsPanel;
+	JLabel lblRations;
+	JSpinner spinnerRations;
 	
-	//create objects of each of our custom classes
-	private Popups popup = new Popups(); 
-	private TravelDistance travelDistance;
-	private DailyEvents daily_events;
-	
-	
-	
-	//Hunting Game
+	//Hunting Game widgets
 	public JTextField txtFldResponse;
 	public ImageIcon icon;
 	public JLabel lblBang2Shoot;
@@ -58,6 +54,16 @@ public class GAME {
 	private int counter = 0;
 	public int meat = 100;
 	public boolean closeGame = false;
+	
+	//create objects of each of our custom classes
+	private Popups popup = new Popups(); 
+	private TravelDistance travelDistance;
+	private DailyEvents daily_events;
+	
+	//declare global variables to be stored within the class
+	 public int rations; //stores the rations value, a number ranged [1-10]
+	
+	
 
 	/**
 	 * Launch the application.
@@ -79,13 +85,16 @@ public class GAME {
 	 * Create the application.
 	 */
 	public GAME() {
+		//a timer function to control all things that need to be continuously updated as the game progresses
 		daily_events = new DailyEvents("any", 100); // change for gender and health in the future. Not Final.
 		 travelDistance = new TravelDistance(() -> {             // <-- TRIGGER daily event logic
 	            updateDayAndDistanceLabel();     // updates gui
-	            
 			    daily_events.weatherEvents();
 			    String todayWeather = daily_events.handleWeatherEvent(); // get weather string
 		        lblWeather.setText(todayWeather); // update label
+		        
+		        //variables to be updated
+		        rations = (int) spinnerRations.getValue();
 	        });
 		
 		initialize();
@@ -448,13 +457,15 @@ public class GAME {
 		lblSpeed.setBounds(12, 31, 93, 32);
 		OptionsPanel.add(lblSpeed);
 		
-		JLabel lblRations = new JLabel("Rations:");
+		lblRations = new JLabel("Rations:");
 		lblRations.setForeground(Color.BLACK);
 		lblRations.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblRations.setBounds(12, 78, 104, 32);
 		OptionsPanel.add(lblRations);
 		
-		JSpinner spinnerRations = new JSpinner();
+		//create a SpinnerNumberModel with bounds
+		SpinnerNumberModel rationsModel = new SpinnerNumberModel(1, 1, 10, 1);
+	    spinnerRations = new JSpinner(rationsModel);
 		spinnerRations.setFont(new Font("Serif", Font.PLAIN, 20));
 		spinnerRations.setBackground(new Color(224, 213, 188));
 		spinnerRations.setBounds(115, 82, 172, 32);
@@ -463,7 +474,7 @@ public class GAME {
 		JButton btnRest = new JButton("Rest");
 		btnRest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int daysToRest = popup.restDays(); 
+				 int daysToRest = popup.restDays(); 
 			}
 		});
 		btnRest.setFont(new Font("Serif", Font.PLAIN, 35));
