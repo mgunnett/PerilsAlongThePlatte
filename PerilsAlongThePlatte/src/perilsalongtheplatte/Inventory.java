@@ -1,6 +1,8 @@
 package perilsalongtheplatte;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.EnumMap; 
+import java.util.Random;
 import javax.swing.*;
 
 /**
@@ -10,7 +12,7 @@ import javax.swing.*;
  * @author Parker R. West
  * @version 2.0
  */
-public class Invetory {
+public class Inventory {
 	
 	//in order to associate a value with the corresponding enum, a enumMap will be used to associate a value (the amount)
 	//with its corresponding enum
@@ -21,7 +23,7 @@ public class Invetory {
 	public Map<SupplyType, Double> death = new EnumMap<>(SupplyType.class);
 	
 	//now with each value created within a map, a constructor is needed to initialize the map
-	public Invetory() {
+	public Inventory() {
 		//utilizing a for each loop...
 		for (SupplyType supply : SupplyType.values()) { 
 			supplies.put(supply, 0.0); //initialize map with 0.00 as the current amount of item
@@ -78,6 +80,64 @@ public class Invetory {
 	}
 	//example call: buySupply(SupplyType.BACON); 
 	
+	/**
+	 * A method that allows the player to trade for different supplies along their journey. They will receive a random supply offer in exchange for a random supply. 
+	 * The amount to trade for will also be random.  
+	 */
+	public void tradeSupply() {
+		//assign a value to each enum with a Map construct and an counter variable
+		//the counter iterates through values 0-18 and assigns it to an enum
+		Map<SupplyType, Integer> supplyRandomValue = new EnumMap<>(SupplyType.class); 
+		int counter = 0; //counter to be iterated
+		for (SupplyType supply : SupplyType.values()) //for each loop checking through each enum
+			supplyRandomValue.put(supply, counter++);
+		
+		//get a value to check which supply is TO BE TRADDED 
+		Random rng = new Random(); 
+		final int MAP_MAX = 18 + 1; //maximum range of the map [0-18]
+		int offer = rng.nextInt(MAP_MAX);
+		
+		//grab the key associated to the value to be traded
+		//to do this, we need to manually search through the map, as Java doesn't like vale -> key relationships :-(
+		SupplyType offeredSupply = null; //our key, which will be traded
+		for (Entry<SupplyType, Integer> entry : supplyRandomValue.entrySet()) {
+			if (entry.getValue().equals(offer))
+				offeredSupply = entry.getKey(); //stores the key associated to the random value
+		}
+		
+		//repeat the above process for the supply the player is trading for
+		int toBeTraded = (int)(Math.random() * MAP_MAX); 
+		SupplyType tradedSupply = null; //our key, which will be traded by the player
+		for (Entry<SupplyType, Integer> entry : supplyRandomValue.entrySet()) {
+			if (entry.getValue().equals(toBeTraded))
+				tradedSupply = entry.getKey(); //stores the key associated to the random value
+		}
+		
+		//create random number of items to be traded
+		int playerAmount = rngHelper(tradedSupply); //helper method, see below
+		int traderAmount = rngHelper(offeredSupply); 
+		
+		
+		//create a JOptionPane popup to ask player to trade
+		int result = JOptionPane.showConfirmDialog(
+				null, 																				  //no parent component
+				"Would you like to trade " + playerAmount + " " + tradedSupply.toString() + " for " + //message containing amount of each supply
+				traderAmount + " " + offeredSupply.toString() + "?", 
+				"Trade Offer!", 																	  //title of the popup
+				JOptionPane.OK_CANCEL_OPTION, 			 											  //which buttons to display. This popup uses a OK/Cancel option to confirm
+				JOptionPane.WARNING_MESSAGE, 			 											  //what icon to display. This popup uses the question icon
+				null);																				  //no custom icon
+		//update amounts if the OK label is selected
+		if (result == JOptionPane.OK_OPTION) {
+			if (supplies.get(offeredSupply) >= playerAmount) { //check to make sure player doesn't trade into a negative amount
+			supplies.put(offeredSupply, supplies.get(offeredSupply) - (double) playerAmount); //update the player's inventory with the amount that they lost
+			supplies.put(tradedSupply, supplies.get(tradedSupply) + (double) traderAmount);   //add amount added
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "You don't have enough to trade for that :-("); //sad dialog message
+			}
+		}		
+	}	
 	/**
 	 * A method to control the daily deprecation of supplies from travel. Different supplies will deprecate at different amounts. This method will utilize
 	 * maps to change the value of each lost supply based on different events, such as weather, etc. 
@@ -161,10 +221,38 @@ public class Invetory {
 	//special cases for different perils	
 	}
 	
+	//helper method to calculate the number of each supply to be traded by either party in the tradeSupply method. 
+	private int rngHelper(SupplyType supply) {
+		Random rng = new Random(); //create a random number generator
+		int amount = 0; 
+		switch (supply) {
+		case FLOUR: amount =  10 + rng.nextInt(11); break;      //can trade between 10-20lbs of flour
+		case BACON: amount =  10 + rng.nextInt(11); break;     //10-20lbs
+		case FRUIT: amount =  5 + rng.nextInt(6); break;	   //5-10lbs
+		case VEGGIES: amount = 5 + rng.nextInt(6); break;	   //5-10lbs
+		case MEAT: amount = 25 + rng.nextInt(26); break;       //25-50lbs
+		case COFFEE: amount =  5 + rng.nextInt(6); break;	   //5-10lbs
+		case TEA: amount = 5 + rng.nextInt(6); break;	       //5-10lbs
+		case LARD: amount =  10 + rng.nextInt(11); break;      //10-20lbs
+		case WATER:  amount =  10 + rng.nextInt(11); break;    //10-20gal
+		case WHEELS:  amount =  1 + rng.nextInt(2); break;     //1-2 wheels
+		case AXELS:  amount =  1 + rng.nextInt(2); break;      //1-2 axels
+		case TONGUES:  amount =  10 + rng.nextInt(11); break;  //1-2 tongues 
+		case AMMO:  amount =  25 + rng.nextInt(51); break;     //50-100 bullets
+		case OXEN:  amount =  1 + rng.nextInt(2); break;       //1-2 oxen
+		case MEDICINE: amount = 5 + rng.nextInt(6); break;     //5-10lbs
+		case CLOTHES: amount = 2 + rng.nextInt(3); break;	   //2-4 sets of clothing
+		case SOAP: amount = 5 + rng.nextInt(6); break;	 	   //5-10lbs
+		case BUFFALOCHIPS: amount = 5 + rng.nextInt(6); break; //5-10lbs
+		case CASH: amount = 25 + rng.nextInt(51); break;	   //25-75 dollars
+		}
+		return amount; 
+	}
+	
 	    public static void main(String[] args) {
 	        // Your starting point
 	        System.out.println("Hello, World!");
-	        Invetory i = new Invetory();
+	        Inventory i = new Inventory();
 	        i.loseSupply(); 
 	        System.out.println("Total bacon: " + i.getSupply(SupplyType.BACON));
 	        
