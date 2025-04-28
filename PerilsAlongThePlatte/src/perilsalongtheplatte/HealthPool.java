@@ -9,10 +9,10 @@ public class HealthPool {
 	public Perils peril;
 	public int numOfPeople = 5; 
 	String weather = "";
-    ArrayList<Integer> personHealth;
-    ArrayList<String> personName;
-    ArrayList<String> whoIsDead;
-    ArrayList<Boolean> isSick; 
+    ArrayList<Integer> personHealth = new ArrayList<Integer>();
+    ArrayList<String> personName = new ArrayList<String>();
+    ArrayList<String> whoIsDead = new ArrayList<String>();
+    ArrayList<Boolean> isSick = new ArrayList<Boolean>(); 
     Boolean dayOfRest;
 	
     //create a constructor to initialize the inputed names from GAME into this class
