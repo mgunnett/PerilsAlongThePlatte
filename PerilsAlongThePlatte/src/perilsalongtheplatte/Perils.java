@@ -1,5 +1,6 @@
 package perilsalongtheplatte;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Perils {
@@ -8,7 +9,6 @@ public class Perils {
 	public String weather;
 	public String sickness = "";
 	Random rng = new Random();
-	public Boolean[] isSick = {false, false, false, false, false};
 	
 	 
 	/**
@@ -16,7 +16,7 @@ public class Perils {
 	 * @param personHealth checks the health of the pioneer
 	 * @return true or false based off of if the pioneer gets sick or not
 	 */
-	public Boolean getsSick( int personHealth ) {
+	public Boolean getsSick( int personHealth, boolean isSickORNot ) {
 		int chance = rng.nextInt(101);
 		int sickChance = 0;
 		if (personHealth > 90) { sickChance = 5; }

@@ -7,6 +7,7 @@ import perilsalongtheplatte.Perils;
 public class HealthPool {
 	
 	public Perils peril;
+	public TravelDistance travDist = new TravelDistance(null);
 	public int numOfPeople = 5; 
 	String weather = "";
     ArrayList<Integer> personHealth = new ArrayList<Integer>();
@@ -23,6 +24,7 @@ public class HealthPool {
     	personName.add(person3);
     	personName.add(person4); 
     }
+    
     
 //    //Create a constructor to update the health pool based off the the timer from TravelDistance
 //    HealthPool (Timer dayTimer, boolean isStopped)    {
@@ -45,6 +47,7 @@ public class HealthPool {
 		personHealth = new ArrayList<>();
     	for (int i = 0; i < numOfPeople; i++) {
 	    	personHealth.add(100);
+	    	isSick.add(false);
     	}
 	}
 	/**
@@ -93,7 +96,7 @@ public class HealthPool {
 	 */
 	public void checkIfSick() {
 		for(int i = 0; i < numOfPeople; i++) {
-			if (peril.getsSick(personHealth.get(i)) == true) {
+			if (peril.getsSick(personHealth.get(i), dayOfRest) == true) {			//SOMETHING
 				isSick.set(i, true);
 			//	personHealth.set(i, personHealth.get(i) - peril.sicknessPenalty(isSick.get(i), weather) - peril.injuryPenalty());
 			}
