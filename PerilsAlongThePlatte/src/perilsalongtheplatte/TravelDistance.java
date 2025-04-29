@@ -217,6 +217,7 @@ public class TravelDistance {
 	        	return true; 
 	        }
 	        
+	        landmark = "";
 	        return false; //then no landmark has been reached
 	        
 	       /* return (d >= 70 && d < 85) || (d >= 130 && d < 145) ||
