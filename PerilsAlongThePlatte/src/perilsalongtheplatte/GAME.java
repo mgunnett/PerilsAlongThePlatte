@@ -62,7 +62,7 @@ public class GAME {
 	private TravelDistance travelDistance;
 	private DailyEvents daily_events;
 	private TravelDistance pace;	
-	private Inventory inventory = new Inventory(); 
+	private Inventory inventory;
 	//declare global variables to be stored within the class
 	 public int rations; //stores the rations value, a number ranged [1-10]
 	
@@ -101,8 +101,10 @@ public class GAME {
 		        updateDateLabel();
 		        rations = (int) spinnerRations.getValue();
 		        spinnerSpeed.addChangeListener(e -> {
-		            int speed = (Integer) spinnerSpeed.getValue();
-		            travelDistance.setPace(speed);
+	            int speed = (Integer) spinnerSpeed.getValue();
+	            travelDistance.setPace(speed);
+	            
+	            //update the supply
 		        });
 	        });
 		
@@ -575,6 +577,7 @@ public class GAME {
 				    travelDistance.startTimer();
 				StartingOptionsPanel.setVisible(false);
 				GamePanel.setVisible(true);
+				inventory = new Inventory(); 
 			}
 		});
 		btnContinue.setFont(new Font("Serif", Font.PLAIN, 45));
