@@ -32,6 +32,8 @@ public class DailyEvents {
     private Perils perils;
     // GAME object to use labels
     private GAME game;
+    
+    private HealthPool hlthPool;
  
     // List of weather events
 	public String[] weatherEvents = {"Sunny", "Rainy", "Windy", "Thunderstorms", "Snowy"};
@@ -54,19 +56,36 @@ public class DailyEvents {
             handleWeatherEvent();
         }
 
-        // Check if the player gets sick
-        boolean gotSick = perils.getsSick(playerHealth);  // Pass health to getsSick method
+        // Check if any person gets sick
+        boolean gotSick = perils.getsSick(playerHealth, hlthPool.isSick.get(0));  // Pass health to getsSick method
         if (gotSick) {
             System.out.println("You got sick!");
         } else {
             System.out.println("You're healthy today.");
         }
+        for (int i = 1; i < 5; i++) {
+        	if (perils.getsSick(hlthPool.personHealth.get(i), hlthPool.isSick.get(i))) {
+        		System.out.println(hlthPool.personName.get(i) + " got sick!");
+        	} else {System.out.println(hlthPool.personName.get(i) +" is healthy today.");}
+        }
 
         // Check if sickness gets better
         if (gotSick && perils.getsBetter(isSick, playerHealth)) {
             System.out.println("You recovered from your sickness.");
-        } else if (gotSick) {
-            System.out.println("You are still sick.");
+        }
+        for ( int i = 1; i < 5; i++) {
+        	if (perils.getsBetter(hlthPool.isSick.get(i), hlthPool.personHealth.get(i))) {
+        		System.out.println(hlthPool.personName.get(i) + " recovered from their sickness.");
+        	}
+        }
+        if (perils.isAnyoneSick()) {
+        	for(int i = 0; i<5; i++) {
+        		if (hlthPool.isSick.get(i)==true) {
+        			if(i ==0) {System.out.println("You are still sick.");}
+        			else { System.out.println( hlthPool.personName.get(i) + " is still sick.");}
+        			
+        		}
+        	}
         }
 
         // Apply sickness penalty
