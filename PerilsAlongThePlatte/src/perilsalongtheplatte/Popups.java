@@ -11,7 +11,7 @@ import javax.swing.*;
 public class Popups {
 	//create an object of the perils classes to get the 
 	private Perils perils = new Perils(); 
-	private LandmarkDescriptions landDesc = new LandmarkDescriptions();
+	private static LandmarkDescriptions landDesc = new LandmarkDescriptions();
 	
 	/*******************
 	 *OPTION MENU ITEMS*
@@ -102,7 +102,7 @@ public class Popups {
 		JOptionPane.showMessageDialog(null, landDesc.illnessInfo, "Illness Information:", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
-	public void descriptionBeginningInfo() {
+	public static void descriptionBeginningInfo() {
 		JOptionPane.showMessageDialog(null, landDesc.beginningInfo, "Beginning Introduction:", JOptionPane.INFORMATION_MESSAGE);
 	}
 	

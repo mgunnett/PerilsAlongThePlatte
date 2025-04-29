@@ -556,6 +556,7 @@ public class GAME {
 		JButton btnStart = new JButton("Start");
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Popups.descriptionBeginningInfo();
 				WelcomePanel.setVisible(false);
 				GamePanel.setVisible(false);
 				StartingOptionsPanel.setVisible(true);
