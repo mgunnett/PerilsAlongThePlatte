@@ -62,6 +62,7 @@ public class GAME {
 	private TravelDistance travelDistance;
 	private DailyEvents daily_events;
 	private TravelDistance pace;	
+	private Inventory inventory = new Inventory(); 
 	//declare global variables to be stored within the class
 	 public int rations; //stores the rations value, a number ranged [1-10]
 	
@@ -179,6 +180,7 @@ public class GAME {
 		JButton btnTrade = new JButton("Trade");
 		btnTrade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Inventory.tradeSupply();
 			}
 		});
 		btnTrade.setFont(new Font("Serif", Font.PLAIN, 35));

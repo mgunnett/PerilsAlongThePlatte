@@ -2,8 +2,6 @@ package perilsalongtheplatte;
 
 import java.util.ArrayList;
 
-import perilsalongtheplatte.Perils;
-
 public class HealthPool {
 	
 	public Perils peril;
@@ -23,6 +21,7 @@ public class HealthPool {
     	personName.add(person3); 
     	personName.add(person4);
     	personName.add(person5); 
+
     }
     
     
@@ -95,7 +94,7 @@ public class HealthPool {
 	 * @return true or false depending on if the pioneer is sick
 	 */
 	public void checkIfSick() {
-		for(int i = 0; i < numOfPeople; i++) {
+		for(int i = 0; i < numOfPeople; i++) { 
 			if (peril.getsSick(personHealth.get(i), dayOfRest) == true) {			//SOMETHING
 				isSick.set(i, true);
 			//	personHealth.set(i, personHealth.get(i) - peril.sicknessPenalty(isSick.get(i), weather) - peril.injuryPenalty());

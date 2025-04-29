@@ -84,7 +84,7 @@ public class Inventory {
 	 * A method that allows the player to trade for different supplies along their journey. They will receive a random supply offer in exchange for a random supply. 
 	 * The amount to trade for will also be random.  
 	 */
-	public void tradeSupply() {
+	public static void tradeSupply() {
 		//assign a value to each enum with a Map construct and an counter variable
 		//the counter iterates through values 0-18 and assigns it to an enum
 		Map<SupplyType, Integer> supplyRandomValue = new EnumMap<>(SupplyType.class); 

@@ -33,7 +33,7 @@ public class Perils {
 	}
 	
 	public Boolean isAnyoneSick() {
-		for (int i = 0; i< hlthPool.isSick.size(); i++) {
+		for (int i = 0; i< 5; i++) {
 			if (hlthPool.isSick.get(i) == true) {return true;}
 		}
 		return false;
