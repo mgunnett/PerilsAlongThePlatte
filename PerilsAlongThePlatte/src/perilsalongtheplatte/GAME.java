@@ -47,6 +47,7 @@ public class GAME {
 	JLabel lblDistanceUntilNextLandmark;
 	private JLabel lblDate;
 	JTextArea inventoryTextArea;
+	public boolean isMale = true;
 	
 	//Hunting Game widgets
 	public JTextField txtFldResponse;
@@ -640,6 +641,9 @@ public class GAME {
 		 ButtonGroup group = new ButtonGroup();
 	        group.add(rdbtnMale);
 	        group.add(rdbtnFemale);
+	        
+	        rdbtnMale.addActionListener(e -> isMale = true);
+	        rdbtnFemale.addActionListener(e -> isMale = false);
 		
 		JLabel lblGender = new JLabel("Gender:");
 		lblGender.setForeground(Color.WHITE);
