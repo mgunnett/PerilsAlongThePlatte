@@ -13,7 +13,6 @@ import javax.swing.*;
  * @version 2.0
  */
 public class Inventory {
-	
 	//in order to associate a value with the corresponding enum, a enumMap will be used to associate a value (the amount)
 	//with its corresponding enum
 	public static Map<SupplyType, Double> supplies = new EnumMap<>(SupplyType.class); 
@@ -22,6 +21,9 @@ public class Inventory {
 	public Map<SupplyType, Double> sicknessInjury = new EnumMap<>(SupplyType.class);
 	public Map<SupplyType, Double> death = new EnumMap<>(SupplyType.class);
 	
+	//other class objects
+	GAME game = new GAME(); //access to key variables...
+	HealthPool health = new HealthPool();
 	//now with each value created within a map, a constructor is needed to initialize the map
 	public Inventory() {
 		//utilizing a for each loop...
@@ -29,7 +31,7 @@ public class Inventory {
 			supplies.put(supply, 0.0); //initialize map with 0.00 as the current amount of item
 			//special case for the player's cash
 			if (supply.equals(SupplyType.CASH))
-				supplies.put(supply, 1000.0); 
+				supplies.put(supply, 500.00); //amount of starting cash
 		}
 	}
 	/**
@@ -43,42 +45,122 @@ public class Inventory {
 	
 	/**
 	 * A polymorphic method to buy a type of supply from the store. This method needs the kind of supply to buy and the unit price. 
-	 * Once bought, the amount bought is added to the user's inventory and cash is subtracted form the inventory. 
+	 * Once bought, the amount bought is added to the user's inventory and cash is subtracted form the inventory. If the player is male, then they can access
+	 * the shop. If female, the "husband" will buy the supplies for the player, or a randomly generated value of supplies. 
 	 * @param supply Integer representation of the supply to purchase. Reference the public integers to use as parameters. 
-	 * @param price The unit price ($/lb) of the supply to buy. Again, reference public doubles in this class. 
+	 * @param isMale The current gender of the player. True if male is selected. 
 	 */
-	public void buySupply(SupplyType supply) {
-		//create a variable for the price of the item and the current amount
-		final double PRICE  = supply.getPrice(); 
-		final double CURRENT_AMOUNT = supplies.getOrDefault(supply, 0.0); //gets the current value of the supply, returns 0 if there is no value
-		
-		//create a spinner object
-		final int MAX = (int) (supplies.get(SupplyType.CASH)/ PRICE); //max amount player can purchase. Determined by the cash divided by price
-		final int MIN = 0; //useful if the user wants to exit without doing anything
-		SpinnerNumberModel model = new SpinnerNumberModel //creates the parameters of the spinner
-		(0, MIN, MAX, 1); //sets the bound/increments of the spinner. 
-	    JSpinner spinner = new JSpinner(model); //creates the actual spinner object
-		//start with asking how much the user would like to buy with a JOptionPane
-		int result = JOptionPane.showOptionDialog(
-						null, 						  			 //no parent component, centers on screen
-						spinner, 					  			 //inputs the spinner into the popup
-						"How much " + supply.name().toLowerCase()
-						+ " would you like to buy?", 		     //title
-						JOptionPane.OK_CANCEL_OPTION, 			 //which buttons to display. This popup uses a OK/Cancel option to confirm
-						JOptionPane.QUESTION_MESSAGE, 			 //what icon to display. This popup uses the question icon
-						null, 						 		     //no custom icon
-						null, 						  			 //no custom buttons
-						null);		
-		
-		//update amounts if the OK label is selected
-		if (result == JOptionPane.OK_OPTION) {
-			double amountBought = (double) (int) spinner.getValue(); //downcast to an double value
-			supplies.put(supply, CURRENT_AMOUNT + amountBought);  //adds the current amount with the amount bought and puts it into the map
-			//this looong statement subtracts the current amount of cash with the amount paid (supply price * amount bought) and put it into the map
-			supplies.put(SupplyType.CASH,  supplies.get(SupplyType.CASH) - (amountBought * supply.getPrice()));
+	public void buySupply(SupplyType supply, boolean isMale) {
+		if (isMale) {
+			//create a variable for the price of the item and the current amount
+			final double PRICE  = supply.getPrice(); 
+			final double CURRENT_AMOUNT = supplies.getOrDefault(supply, 0.0); //gets the current value of the supply, returns 0 if there is no value
+			
+			//create a spinner object
+			final int MAX = (int) (supplies.get(SupplyType.CASH)/ PRICE); //max amount player can purchase. Determined by the cash divided by price
+			final int MIN = 0; //useful if the user wants to exit without doing anything
+			SpinnerNumberModel model = new SpinnerNumberModel //creates the parameters of the spinner
+			(0, MIN, MAX, 1); //sets the bound/increments of the spinner. 
+		    JSpinner spinner = new JSpinner(model); //creates the actual spinner object
+			//start with asking how much the user would like to buy with a JOptionPane
+			int result = JOptionPane.showOptionDialog(
+							null, 						  			 //no parent component, centers on screen
+							spinner, 					  			 //inputs the spinner into the popup
+							"How much " + supply.name().toLowerCase()
+							+ " would you like to buy?", 		     //title
+							JOptionPane.OK_CANCEL_OPTION, 			 //which buttons to display. This popup uses a OK/Cancel option to confirm
+							JOptionPane.QUESTION_MESSAGE, 			 //what icon to display. This popup uses the question icon
+							null, 						 		     //no custom icon
+							null, 						  			 //no custom buttons
+							null);		
+			
+			//update amounts if the OK label is selected
+			if (result == JOptionPane.OK_OPTION) {
+				double amountBought = (double) (int) spinner.getValue(); //downcast to an double value
+				supplies.put(supply, CURRENT_AMOUNT + amountBought);  //adds the current amount with the amount bought and puts it into the map
+				//this looong statement subtracts the current amount of cash with the amount paid (supply price * amount bought) and put it into the map
+				supplies.put(SupplyType.CASH,  supplies.get(SupplyType.CASH) - (amountBought * supply.getPrice()));
+			}
 		}
+		else { //if the player gender is female, then tell them they cannot buy supplies
+			JOptionPane.showMessageDialog(null, "Sorry, since you're female, you cannot buy supplies. Your husband handles this part. ");	
+		}
+
 	}
 	//example call: buySupply(SupplyType.BACON); 
+	
+	/**
+	 * If the player gender is female, then the husband will buy supplies from her. The husband will try to buy some of each supply until the cash is depleted. 
+	 * He will try to buy less of larger items (such as oxen). 
+	 * @param isMale
+	 */
+	public void husbandBuySupplies(boolean isMale) {
+		if (!isMale) { //if the player is female, then husband buys supplies
+			//create new map to check if a supply is low
+		    Map<SupplyType, Boolean> isSupplyLow = new EnumMap<>(SupplyType.class);
+
+		    //define the default thresholds to check for
+		    double LOW_THRESHOLD = 5.0; 
+		    double MAX_AMOUNT = 20.0; //max amount husband wants to buy
+
+		    //begin by finding which supplies are low 
+		    for (SupplyType type : SupplyType.values()) {
+		        if (type != SupplyType.CASH || type != SupplyType.BUFFALOCHIPS || type != SupplyType.WATER) { //skip over cash, buffalochips, and water, unbuyable items
+		            double currentAmount = supplies.get(type); 
+		            isSupplyLow.put(type, currentAmount < LOW_THRESHOLD); //check if the current amount is lower than the threshold. If so, put true. 
+		        }
+		    }
+
+		    //now since we've determined which supplies are low, determine which ones need to be bought
+		    for (Map.Entry<SupplyType, Boolean> entry : isSupplyLow.entrySet()) { //iterate through the isSupplyLow map 
+		    	//grab the keys of each element and the boolean associated with it
+		        SupplyType type = entry.getKey();
+		        boolean low = entry.getValue();
+
+		        if (low) {
+		        	 //switch on the key type to check which values have different max ranges
+		            switch (type) {
+		            case WHEELS: 
+		            	MAX_AMOUNT = 2.0; //max of 3 wheels can be bought 
+		            	LOW_THRESHOLD = 0.0; //0 is low
+		            case AXELS: 
+		            	MAX_AMOUNT = 2.0;  
+		            	LOW_THRESHOLD = 0.0; 
+		            case TONGUES: 
+		            	MAX_AMOUNT = 2.0; 
+		            	LOW_THRESHOLD = 0.0; 
+		            case OXEN: 
+		            	MAX_AMOUNT = 2.0; 
+		            	LOW_THRESHOLD = 0.0; 
+		            case CLOTHES: 
+		            	MAX_AMOUNT = 3.0; 
+		            	LOW_THRESHOLD = 0.0; 
+		            }
+		           
+		            double currentAmount = supplies.get(type); 
+		            double amountToBuy = MAX_AMOUNT - currentAmount; //top the supplies up to the maximum threshold
+		            
+		            //variables to use in calculations
+		            double pricePerUnit = type.getPrice();
+		            double totalCost = amountToBuy * pricePerUnit;
+		            double currentCash = supplies.get(SupplyType.CASH);
+
+		            if (currentCash >= totalCost) { //check if the current cash is enough to buy the selected amount
+		            	//if so, update values
+		                supplies.put(type, currentAmount + amountToBuy);
+		                supplies.put(SupplyType.CASH, currentCash - totalCost);
+		            } 
+		            else { //then the husband cannot buy the maximum amount 
+		                ///not enough cash, buy as much as possible
+		                double maxAmount = currentCash / pricePerUnit; //max amount able to be bought
+		                supplies.put(type, currentAmount + maxAmount);
+		                supplies.put(SupplyType.CASH, 0.0); //if this point is reached, the husband spent all the cash (he is stupid)!
+		                break; //exit for loop
+		            }
+		        }
+		    }
+		}
+	}
 	
 	/**
 	 * A method that allows the player to trade for different supplies along their journey. They will receive a random supply offer in exchange for a random supply. 
@@ -144,10 +226,6 @@ public class Inventory {
 	 * @param supply The supply to be changed daily. 
 	 */
 	public void loseSupply() {
-		//using other class methods
-		Perils perils = new Perils(); 
-		HealthPool health = new HealthPool();
-		GAME game = new GAME(); 
 		//initialize each usage amount
 		supplyCalculator(); 
 	
@@ -163,27 +241,24 @@ public class Inventory {
 		boolean isSomeoneSick = health.isAnyoneSick();
 		if (isSomeoneDead && isSomeoneSick) { //check if the dead person list has an entry and if someone is sick
 			for (SupplyType supply : SupplyType.values()) 
-				defaultUsage.put(supply, supplies.get(supply) - ((death.get(supply) + sicknessInjury.get(supply) * multiplier)));
+				supplies.put(supply, supplies.get(supply) - ((death.get(supply) + sicknessInjury.get(supply) * multiplier)));
 		}
 		else if (isSomeoneDead && !isSomeoneSick) { //check if someone is dead and if someone is NOT sick
 			for (SupplyType supply : SupplyType.values()) 
-				defaultUsage.put(supply, supplies.get(supply) - (death.get(supply) *  multiplier));
+				supplies.put(supply, supplies.get(supply) - (death.get(supply) *  multiplier));
 		}
 		else if (!isSomeoneDead && isSomeoneSick) { //check if someone is NOT dead and if someone is sick
 			for (SupplyType supply : SupplyType.values()) 
-				defaultUsage.put(supply, supplies.get(supply) - (sicknessInjury.get(supply) * multiplier));
+				supplies.put(supply, supplies.get(supply) - (sicknessInjury.get(supply) * multiplier));
 		}
 		else { //default usage
 			for (SupplyType supply : SupplyType.values()) 
-				defaultUsage.put(supply, defaultUsage.get(supply) * multiplier);
+				supplies.put(supply, supplies.get(supply) - (supplies.get(supply) * multiplier));
 		}
 	}
 	
 	//helper method to declare and contain all Maps associated with different weather events
 	private void supplyCalculator() {
-		//using other class methods
-		HealthPool health = new HealthPool();
-		
 		//initializes the default usage map
 		for (SupplyType supply : SupplyType.values()) 
 			defaultUsage.put(supply, supply.getUsageAmount());
