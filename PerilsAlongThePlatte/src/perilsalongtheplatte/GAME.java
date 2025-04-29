@@ -98,7 +98,7 @@ public class GAME {
 	            inventoryTextArea.setText(""); //reset the text area
 	            //inventory.loseSupply(); 
 	            for (SupplyType supply : SupplyType.values()) {
-	                double amount = inventory.supplies.getOrDefault(supply, 0.0); //get value or 0 if missing
+	                double amount = Inventory.supplies.getOrDefault(supply, 0.0); //get value or 0 if missing
 	                inventoryTextArea.append(supply.name() + ": " + amount + "\n"); 
 	            }
 			    daily_events.weatherEvents();
