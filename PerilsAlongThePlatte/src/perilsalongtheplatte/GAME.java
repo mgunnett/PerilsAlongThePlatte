@@ -592,7 +592,6 @@ public class GAME {
 				    travelDistance.startTimer();
 				StartingOptionsPanel.setVisible(false);
 				GamePanel.setVisible(true);
-				inventory = new Inventory(); 
 			}
 		});
 		btnContinue.setFont(new Font("Serif", Font.PLAIN, 45));
@@ -619,6 +618,7 @@ public class GAME {
 				WelcomePanel.setVisible(false);
 				GamePanel.setVisible(false);
 				StartingOptionsPanel.setVisible(true);
+				inventory = new Inventory(); 
 			}
 		});
 		btnStart.setBackground(new Color(220, 207, 180));
@@ -667,7 +667,8 @@ public class GAME {
 		JButton btnFlour = new JButton("Flour");
 		btnFlour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
+				inventory.buySupply(SupplyType.FLOUR, isMale); 
+			}; 
 		});
 		btnFlour.setFont(new Font("Serif", Font.PLAIN, 20));
 		btnFlour.setBackground(new Color(203, 182, 156));
@@ -683,6 +684,7 @@ public class GAME {
 		JButton btnBacon = new JButton("Bacon");
 		btnBacon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.BACON, isMale); 
 			}
 		});
 		btnBacon.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -699,6 +701,7 @@ public class GAME {
 		JButton btnFruit = new JButton("Fruit");
 		btnFruit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.FRUIT, isMale); 
 			}
 		});
 		btnFruit.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -715,6 +718,7 @@ public class GAME {
 		JButton btnVeggies = new JButton("Veggies");
 		btnVeggies.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.VEGGIES, isMale); 
 			}
 		});
 		btnVeggies.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -731,6 +735,7 @@ public class GAME {
 		JButton btnMeat = new JButton("Meat");
 		btnMeat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.MEAT, isMale); 
 			}
 		});
 		btnMeat.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -747,6 +752,7 @@ public class GAME {
 		JButton btnCoffee = new JButton("Coffee");
 		btnCoffee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.COFFEE, isMale); 
 			}
 		});
 		btnCoffee.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -763,6 +769,7 @@ public class GAME {
 		JButton btnTea = new JButton("Tea");
 		btnTea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.TEA, isMale); 
 			}
 		});
 		btnTea.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -779,6 +786,7 @@ public class GAME {
 		JButton btnLard = new JButton("Lard");
 		btnLard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.LARD, isMale); 
 			}
 		});
 		btnLard.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -795,6 +803,7 @@ public class GAME {
 		JButton btnWheels = new JButton("Wheels");
 		btnWheels.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.WHEELS, isMale); 
 			}
 		});
 		btnWheels.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -811,6 +820,7 @@ public class GAME {
 		JButton btnAxels = new JButton("Axels");
 		btnAxels.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.AXELS, isMale); 
 			}
 		});
 		btnAxels.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -827,6 +837,7 @@ public class GAME {
 		JButton btnTongues = new JButton("Tongues");
 		btnTongues.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.TONGUES, isMale); 
 			}
 		});
 		btnTongues.setFont(new Font("Serif", Font.PLAIN, 18));
@@ -859,6 +870,7 @@ public class GAME {
 		JButton btnOxen = new JButton("Oxen");
 		btnOxen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.OXEN, isMale); 
 			}
 		});
 		btnOxen.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -875,6 +887,7 @@ public class GAME {
 		JButton btnMedicine = new JButton("Medicine");
 		btnMedicine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.MEDICINE, isMale); 
 			}
 		});
 		btnMedicine.setFont(new Font("Serif", Font.PLAIN, 18));
@@ -891,6 +904,7 @@ public class GAME {
 		JButton btnClothes = new JButton("Clothes");
 		btnClothes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.CLOTHES, isMale); 
 			}
 		});
 		btnClothes.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -907,6 +921,7 @@ public class GAME {
 		JButton btnSoap = new JButton("Soap");
 		btnSoap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.SOAP, isMale); 
 			}
 		});
 		btnSoap.setFont(new Font("Serif", Font.PLAIN, 20));
