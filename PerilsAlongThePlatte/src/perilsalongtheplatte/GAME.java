@@ -125,6 +125,21 @@ public class GAME {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		StartingOptionsPanel = new JPanel();
+		StartingOptionsPanel.setBounds(0, 0, 1283, 688);
+		StartingOptionsPanel.setBackground(new Color(154, 128, 71));
+		frame.getContentPane().add(StartingOptionsPanel);
+		StartingOptionsPanel.setLayout(null);
+		StartingOptionsPanel.setVisible(false);
+		
+		
+		JPanel ShopPanel = new JPanel();
+		ShopPanel.setBackground(new Color(156, 123, 82));
+		ShopPanel.setBounds(0, -3, 1283, 702);
+		frame.getContentPane().add(ShopPanel);
+		ShopPanel.setLayout(null);
+		ShopPanel.setVisible(false);
+		
 		
 		GamePanel = new JPanel();
 		GamePanel.setBackground(new Color(0, 0, 0));
@@ -357,6 +372,25 @@ public class GAME {
 		lblInventory.setBounds(10, 11, 288, 39);
 		InventoryPanel.add(lblInventory);
 		
+		JButton btnBuyIntroSupplies = new JButton("Shop");
+		btnBuyIntroSupplies.setBackground(new Color(220, 207, 180));
+		btnBuyIntroSupplies.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ShopPanel.setVisible(true);
+				StartingOptionsPanel.setVisible(false);
+			}
+		});
+		btnBuyIntroSupplies.setFont(new Font("Serif", Font.PLAIN, 30));
+		btnBuyIntroSupplies.setBounds(937, 357, 214, 95);
+		StartingOptionsPanel.add(btnBuyIntroSupplies);
+		
+		JLabel lblConstBuyIntroSupplies = new JLabel("Buy Starting Supplies!!!");
+		lblConstBuyIntroSupplies.setHorizontalAlignment(SwingConstants.CENTER);
+		lblConstBuyIntroSupplies.setForeground(new Color(255, 255, 255));
+		lblConstBuyIntroSupplies.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblConstBuyIntroSupplies.setBounds(896, 308, 303, 46);
+		StartingOptionsPanel.add(lblConstBuyIntroSupplies);
+		
 		JPanel EventLogPanel = new JPanel();
 		EventLogPanel.setLayout(null);
 		EventLogPanel.setBackground(new Color(220, 207, 180));
@@ -451,13 +485,6 @@ public class GAME {
 		frame.getContentPane().add(HuntingPanel);
 		HuntingPanel.setLayout(null);
 		HuntingPanel.setVisible(false);
-		
-		StartingOptionsPanel = new JPanel();
-		StartingOptionsPanel.setBounds(0, 0, 1283, 688);
-		StartingOptionsPanel.setBackground(new Color(154, 128, 71));
-		frame.getContentPane().add(StartingOptionsPanel);
-		StartingOptionsPanel.setLayout(null);
-		StartingOptionsPanel.setVisible(false);
 		
 		txtPlayer1Name = new JTextField();
 		txtPlayer1Name.setFont(new Font("Serif", Font.PLAIN, 30));
@@ -589,12 +616,6 @@ public class GAME {
 		lblGender.setBounds(739, 30, 108, 39);
 		StartingOptionsPanel.add(lblGender);
 		
-		JPanel ShopPanel = new JPanel();
-		ShopPanel.setBackground(new Color(156, 123, 82));
-		ShopPanel.setBounds(0, -3, 1283, 702);
-		frame.getContentPane().add(ShopPanel);
-		ShopPanel.setLayout(null);
-		ShopPanel.setVisible(false);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(200, 186, 162));
@@ -898,6 +919,7 @@ public class GAME {
 		btnExitShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ShopPanel.setVisible(false);
+				StartingOptionsPanel.setVisible(true);
 			}
 		});
 		btnExitShop.setFont(new Font("Serif", Font.PLAIN, 40));
