@@ -106,4 +106,15 @@ public class Popups {
 		JOptionPane.showMessageDialog(null, landDesc.beginningInfo, "Beginning Introduction:", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
+	public static void mormonTrailInfo() {
+		JOptionPane.showMessageDialog(null, landDesc.mormonTrail, "Mormon Trail Background:", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public static void californiaTrailInfo() {
+		JOptionPane.showMessageDialog(null, landDesc.californiaTrail, "California Trail Background:", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public static void oregonTrailInfo() {
+		JOptionPane.showMessageDialog(null, landDesc.oregonTrail, "Oregon Trail Background:", JOptionPane.INFORMATION_MESSAGE);
+	}
 }
