@@ -253,13 +253,16 @@ public class Inventory {
 		}
 		else { //default usage
 			for (SupplyType supply : SupplyType.values()) 
-				supplies.put(supply, supplies.get(supply) - (supplies.get(supply) * multiplier));
+				supplies.put(supply, supplies.get(supply) - (supply.getUsageAmount() * multiplier));
 		}
 	}
 	
 	//helper method to declare and contain all Maps associated with different weather events
 	private void supplyCalculator() {
 		//initializes the default usage map
+		defaultUsage.clear();
+		death.clear();
+		sicknessInjury.clear();
 		for (SupplyType supply : SupplyType.values()) 
 			defaultUsage.put(supply, supply.getUsageAmount());
 		
@@ -268,11 +271,11 @@ public class Inventory {
 			//switch statement on supply to change certain values from the defaults
 			switch (supply) {
 			case MEDICINE:
-				sicknessInjury.put(supply, 0.5); //uses 0.5 per day, compared to the default of 0
+				sicknessInjury.put(supply, 0.5); break; //uses 0.5 per day, compared to the default of 0
 			case  SOAP:
-				sicknessInjury.put(supply, 0.5); //sick people want to clean bodily fluids/injuries
+				sicknessInjury.put(supply, 0.5); break;//sick people want to clean bodily fluids/injuries
 			case WATER:
-				sicknessInjury.put(supply, 15.0); 
+				sicknessInjury.put(supply, 15.0); break;
 			default: 
 				sicknessInjury.put(supply, supply.getUsageAmount());
 			}
