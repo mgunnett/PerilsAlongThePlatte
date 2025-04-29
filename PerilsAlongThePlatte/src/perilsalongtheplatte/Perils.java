@@ -1,22 +1,23 @@
 package perilsalongtheplatte;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Perils {
+	public HealthPool hlthPool;
 	public int speed;
 	public int rations;
 	public String weather;
 	public String sickness = "";
 	Random rng = new Random();
-	Boolean isSick;
-	
+	 
 	 
 	/**
 	 * Checks to see if the pioneer gets sick based off of their health
 	 * @param personHealth checks the health of the pioneer
 	 * @return true or false based off of if the pioneer gets sick or not
 	 */
-	public Boolean getsSick( int personHealth ) {
+	public Boolean getsSick( int personHealth, boolean isSickORNot ) {
 		int chance = rng.nextInt(101);
 		int sickChance = 0;
 		if (personHealth > 90) { sickChance = 5; }
@@ -28,6 +29,7 @@ public class Perils {
 		if (chance < sickChance) {return true;}
 		return false;
 	}
+	
 	
 	/**
 	 * If a pioneer is already sick, checks to see if the pioneer gets better
@@ -64,7 +66,7 @@ public class Perils {
 			int chance = rng.nextInt(101);	
 			if (chance > 90) { sickness = "fever"; }
 			else if (chance > 85) { sickness = "dehydration"; }
-			else if (chance > 85 && rations == 1) { sickness = "malnutrition"; }
+			else if (chance > 85 && rations >= 1 && rations < 4) { sickness = "malnutrition"; }
 			else if (chance > 80 && speed == 3) { sickness = "exhaustion"; }
 			else if (chance > 75) { sickness = "food poisoning"; }
 			else if (chance > 70) { sickness = "flu"; }

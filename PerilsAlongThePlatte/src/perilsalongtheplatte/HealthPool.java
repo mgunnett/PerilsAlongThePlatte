@@ -2,11 +2,10 @@ package perilsalongtheplatte;
 
 import java.util.ArrayList;
 
-import perilsalongtheplatte.Perils;
-
 public class HealthPool {
 	
 	public Perils peril;
+	public TravelDistance travDist = new TravelDistance(null);
 	public int numOfPeople = 5; 
 	String weather = "";
     ArrayList<Integer> personHealth = new ArrayList<Integer>();
@@ -14,15 +13,8 @@ public class HealthPool {
     ArrayList<String> whoIsDead = new ArrayList<String>();
     ArrayList<Boolean> isSick = new ArrayList<Boolean>(); 
     Boolean dayOfRest;
-	
-    //create a constructor to initialize the inputed names from GAME into this class
-    HealthPool(String playerName, String person1, String person2, String person3, String person4) {
-    	personName.add(playerName); 
-    	personName.add(person1); 
-    	personName.add(person2); 
-    	personName.add(person3);
-    	personName.add(person4); 
-    }
+    String person1, person2, person3, person4, person5;
+    
     
 //    //Create a constructor to update the health pool based off the the timer from TravelDistance
 //    HealthPool (Timer dayTimer, boolean isStopped)    {
@@ -36,6 +28,9 @@ public class HealthPool {
 //		Outside of timer task: initializeHealth(5);
 //    }
     
+	public HealthPool() {
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * Initializes the health for any and all pioneers
 	 * @param numOfPeople is used to see how many health integers are needed
@@ -45,6 +40,7 @@ public class HealthPool {
 		personHealth = new ArrayList<>();
     	for (int i = 0; i < numOfPeople; i++) {
 	    	personHealth.add(100);
+	    	isSick.add(false);
     	}
 	}
 	/**
@@ -92,8 +88,8 @@ public class HealthPool {
 	 * @return true or false depending on if the pioneer is sick
 	 */
 	public void checkIfSick() {
-		for(int i = 0; i < numOfPeople; i++) {
-			if (peril.getsSick(personHealth.get(i)) == true) {
+		for(int i = 0; i < numOfPeople; i++) { 
+			if (peril.getsSick(personHealth.get(i), dayOfRest) == true) {			//SOMETHING
 				isSick.set(i, true);
 			//	personHealth.set(i, personHealth.get(i) - peril.sicknessPenalty(isSick.get(i), weather) - peril.injuryPenalty());
 			}
@@ -118,6 +114,11 @@ public class HealthPool {
 		}
 	}
 	
-
+	public Boolean isAnyoneSick() {
+		for (int i = 0; i < 6; i++) {
+			if (isSick.get(i) == true) {return true;}
+		}
+		return false;
+	}
 
 }

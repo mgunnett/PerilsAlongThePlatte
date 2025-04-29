@@ -32,6 +32,8 @@ public class DailyEvents {
     private Perils perils;
     // GAME object to use labels
     private GAME game;
+    
+    private HealthPool healthpool = new HealthPool();
  
     // List of weather events
 	public String[] weatherEvents = {"Sunny", "Rainy", "Windy", "Thunderstorms", "Snowy"};
@@ -55,7 +57,7 @@ public class DailyEvents {
         }
 
         // Check if the player gets sick
-        boolean gotSick = perils.getsSick(playerHealth);  // Pass health to getsSick method
+        boolean gotSick = perils.getsSick(playerHealth, isSick);  // Pass health to getsSick method
         if (gotSick) {
             System.out.println("You got sick!");
         } else {

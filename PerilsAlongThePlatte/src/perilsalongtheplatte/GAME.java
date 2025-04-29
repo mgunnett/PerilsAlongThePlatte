@@ -9,12 +9,12 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import perilsalongtheplatte.DailyEvents;
@@ -46,6 +46,8 @@ public class GAME {
 	public JSpinner spinnerSpeed;
 	JLabel lblDistanceUntilNextLandmark;
 	private JLabel lblDate;
+	JTextArea inventoryTextArea;
+	public boolean isMale = true;
 	
 	//Hunting Game widgets
 	public JTextField txtFldResponse;
@@ -63,6 +65,7 @@ public class GAME {
 	private TravelDistance travelDistance;
 	private DailyEvents daily_events;
 	private TravelDistance pace;	
+	private Inventory inventory;
 	//declare global variables to be stored within the class
 	 public int rations; //stores the rations value, a number ranged [1-10]
 	
@@ -92,6 +95,12 @@ public class GAME {
 		daily_events = new DailyEvents("any", 100); // change for gender and health in the future. Not Final.
 		 travelDistance = new TravelDistance(() -> {             // <-- TRIGGER daily event logic
 	            updateDayAndDistanceLabel();     // updates gui
+	            inventoryTextArea.setText(""); //reset the text area
+	            //inventory.loseSupply(); 
+	            for (SupplyType supply : SupplyType.values()) {
+	                double amount = inventory.supplies.getOrDefault(supply, 0.0); //get value or 0 if missing
+	                inventoryTextArea.append(supply.name() + ": " + amount + "\n"); 
+	            }
 			    daily_events.weatherEvents();
 			    String todayWeather = daily_events.handleWeatherEvent(); // get weather string
 		        lblWeather.setText(todayWeather); // update label
@@ -101,8 +110,9 @@ public class GAME {
 		        updateDateLabel();
 		        rations = (int) spinnerRations.getValue();
 		        spinnerSpeed.addChangeListener(e -> {
-		            int speed = (Integer) spinnerSpeed.getValue();
-		            travelDistance.setPace(speed);
+	            int speed = (Integer) spinnerSpeed.getValue();
+	            travelDistance.setPace(speed);
+	    
 		        });
 	        });
 		
@@ -125,13 +135,34 @@ public class GAME {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		
 		GamePanel = new JPanel();
 		GamePanel.setBackground(new Color(0, 0, 0));
 		GamePanel.setBounds(0, 0, 1283, 699);
 		frame.getContentPane().add(GamePanel);
 		GamePanel.setLayout(null);
 		GamePanel.setVisible(false);
+		
+		ImageIcon RainyImageIcon = new ImageIcon("PerilsAlongThePlatte/src/images/Rainy.PNG");
+		
+		JLabel lblImageHolder = new JLabel(RainyImageIcon);
+		lblImageHolder.setBounds(615, 17, 508, 161);
+		GamePanel.add(lblImageHolder);
+		
+		StartingOptionsPanel = new JPanel();
+		StartingOptionsPanel.setBounds(0, 0, 1283, 688);
+		StartingOptionsPanel.setBackground(new Color(154, 128, 71));
+		frame.getContentPane().add(StartingOptionsPanel);
+		StartingOptionsPanel.setLayout(null);
+		StartingOptionsPanel.setVisible(false);
+		
+		
+		JPanel ShopPanel = new JPanel();
+		ShopPanel.setBackground(new Color(156, 123, 82));
+		ShopPanel.setBounds(0, -3, 1283, 702);
+		frame.getContentPane().add(ShopPanel);
+		ShopPanel.setLayout(null);
+		ShopPanel.setVisible(false);
+		
 		
 		JPanel OptionsPanel = new JPanel();
 		OptionsPanel.setLayout(null);
@@ -159,7 +190,7 @@ public class GAME {
 		OptionsPanel.add(lblRations);
 		
 		//create a SpinnerNumberModel with bounds
-		SpinnerNumberModel rationsModel = new SpinnerNumberModel(1, 1, 10, 1);
+		SpinnerNumberModel rationsModel = new SpinnerNumberModel(1, 1, 3, 1);
 	    spinnerRations = new JSpinner(rationsModel);
 		spinnerRations.setFont(new Font("Serif", Font.PLAIN, 20));
 		spinnerRations.setBackground(new Color(224, 213, 188));
@@ -168,8 +199,14 @@ public class GAME {
 		
 		JButton btnRest = new JButton("Rest");
 		btnRest.addActionListener(new ActionListener() {
+			  @Override
 			public void actionPerformed(ActionEvent e) {
-				 int daysToRest = popup.restDays(); 
+				  travelDistance.pauseTimer();
+				  int restDays = popup.restDays(); // show popup and get input
+				  if (restDays > 0) {
+					    travelDistance.startRest(restDays);
+				  }
+				  travelDistance.resumeTimer();
 			}
 		});
 		btnRest.setFont(new Font("Serif", Font.PLAIN, 35));
@@ -180,6 +217,7 @@ public class GAME {
 		JButton btnTrade = new JButton("Trade");
 		btnTrade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Inventory.tradeSupply();
 			}
 		});
 		btnTrade.setFont(new Font("Serif", Font.PLAIN, 35));
@@ -356,6 +394,29 @@ public class GAME {
 		lblInventory.setBounds(10, 11, 288, 39);
 		InventoryPanel.add(lblInventory);
 		
+		inventoryTextArea = new JTextArea();
+		inventoryTextArea.setBounds(20, 61, 266, 396);
+		InventoryPanel.add(inventoryTextArea);
+		
+		JButton btnBuyIntroSupplies = new JButton("Shop");
+		btnBuyIntroSupplies.setBackground(new Color(220, 207, 180));
+		btnBuyIntroSupplies.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ShopPanel.setVisible(true);
+				StartingOptionsPanel.setVisible(false);
+			}
+		});
+		btnBuyIntroSupplies.setFont(new Font("Serif", Font.PLAIN, 30));
+		btnBuyIntroSupplies.setBounds(937, 357, 214, 95);
+		StartingOptionsPanel.add(btnBuyIntroSupplies);
+		
+		JLabel lblConstBuyIntroSupplies = new JLabel("Buy Starting Supplies!!!");
+		lblConstBuyIntroSupplies.setHorizontalAlignment(SwingConstants.CENTER);
+		lblConstBuyIntroSupplies.setForeground(new Color(255, 255, 255));
+		lblConstBuyIntroSupplies.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblConstBuyIntroSupplies.setBounds(896, 308, 303, 46);
+		StartingOptionsPanel.add(lblConstBuyIntroSupplies);
+		
 		JPanel EventLogPanel = new JPanel();
 		EventLogPanel.setLayout(null);
 		EventLogPanel.setBackground(new Color(220, 207, 180));
@@ -368,6 +429,10 @@ public class GAME {
 		lblEventLog.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblEventLog.setBounds(10, 11, 288, 39);
 		EventLogPanel.add(lblEventLog);
+		
+		JScrollPane scrollPaneEventLog = new JScrollPane();
+		scrollPaneEventLog.setBounds(20, 61, 266, 396);
+		EventLogPanel.add(scrollPaneEventLog);
 		
 		JLabel lblConstOverallGroupHealth = new JLabel("Overall Group Health:");
 		lblConstOverallGroupHealth.setHorizontalAlignment(SwingConstants.LEFT);
@@ -444,19 +509,14 @@ public class GAME {
 		lblDaysPassed.setBounds(200, -3, 153, 39);
 		GamePanel.add(lblDaysPassed);
 		
+
+		
 		HuntingPanel = new JPanel();
 		HuntingPanel.setBackground(new Color(154, 128, 71));
 		HuntingPanel.setBounds(100, 100, 450, 300);
 		frame.getContentPane().add(HuntingPanel);
 		HuntingPanel.setLayout(null);
 		HuntingPanel.setVisible(false);
-		
-		StartingOptionsPanel = new JPanel();
-		StartingOptionsPanel.setBounds(0, 0, 1283, 688);
-		StartingOptionsPanel.setBackground(new Color(154, 128, 71));
-		frame.getContentPane().add(StartingOptionsPanel);
-		StartingOptionsPanel.setLayout(null);
-		StartingOptionsPanel.setVisible(false);
 		
 		txtPlayer1Name = new JTextField();
 		txtPlayer1Name.setFont(new Font("Serif", Font.PLAIN, 30));
@@ -555,9 +615,11 @@ public class GAME {
 		JButton btnStart = new JButton("Start");
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Popups.descriptionBeginningInfo();
 				WelcomePanel.setVisible(false);
 				GamePanel.setVisible(false);
 				StartingOptionsPanel.setVisible(true);
+				inventory = new Inventory(); 
 			}
 		});
 		btnStart.setBackground(new Color(220, 207, 180));
@@ -580,6 +642,9 @@ public class GAME {
 		 ButtonGroup group = new ButtonGroup();
 	        group.add(rdbtnMale);
 	        group.add(rdbtnFemale);
+	        
+	        rdbtnMale.addActionListener(e -> isMale = true);
+	        rdbtnFemale.addActionListener(e -> isMale = false);
 		
 		JLabel lblGender = new JLabel("Gender:");
 		lblGender.setForeground(Color.WHITE);
@@ -587,12 +652,6 @@ public class GAME {
 		lblGender.setBounds(739, 30, 108, 39);
 		StartingOptionsPanel.add(lblGender);
 		
-		JPanel ShopPanel = new JPanel();
-		ShopPanel.setBackground(new Color(156, 123, 82));
-		ShopPanel.setBounds(0, -3, 1283, 702);
-		frame.getContentPane().add(ShopPanel);
-		ShopPanel.setLayout(null);
-		ShopPanel.setVisible(false);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(200, 186, 162));
@@ -609,7 +668,8 @@ public class GAME {
 		JButton btnFlour = new JButton("Flour");
 		btnFlour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
+				inventory.buySupply(SupplyType.FLOUR, isMale); 
+			}; 
 		});
 		btnFlour.setFont(new Font("Serif", Font.PLAIN, 20));
 		btnFlour.setBackground(new Color(203, 182, 156));
@@ -625,6 +685,7 @@ public class GAME {
 		JButton btnBacon = new JButton("Bacon");
 		btnBacon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.BACON, isMale); 
 			}
 		});
 		btnBacon.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -641,6 +702,7 @@ public class GAME {
 		JButton btnFruit = new JButton("Fruit");
 		btnFruit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.FRUIT, isMale); 
 			}
 		});
 		btnFruit.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -657,6 +719,7 @@ public class GAME {
 		JButton btnVeggies = new JButton("Veggies");
 		btnVeggies.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.VEGGIES, isMale); 
 			}
 		});
 		btnVeggies.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -673,6 +736,7 @@ public class GAME {
 		JButton btnMeat = new JButton("Meat");
 		btnMeat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.MEAT, isMale); 
 			}
 		});
 		btnMeat.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -689,6 +753,7 @@ public class GAME {
 		JButton btnCoffee = new JButton("Coffee");
 		btnCoffee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.COFFEE, isMale); 
 			}
 		});
 		btnCoffee.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -705,6 +770,7 @@ public class GAME {
 		JButton btnTea = new JButton("Tea");
 		btnTea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.TEA, isMale); 
 			}
 		});
 		btnTea.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -721,6 +787,7 @@ public class GAME {
 		JButton btnLard = new JButton("Lard");
 		btnLard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.LARD, isMale); 
 			}
 		});
 		btnLard.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -737,6 +804,7 @@ public class GAME {
 		JButton btnWheels = new JButton("Wheels");
 		btnWheels.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.WHEELS, isMale); 
 			}
 		});
 		btnWheels.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -753,6 +821,7 @@ public class GAME {
 		JButton btnAxels = new JButton("Axels");
 		btnAxels.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.AXELS, isMale); 
 			}
 		});
 		btnAxels.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -769,6 +838,7 @@ public class GAME {
 		JButton btnTongues = new JButton("Tongues");
 		btnTongues.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.TONGUES, isMale); 
 			}
 		});
 		btnTongues.setFont(new Font("Serif", Font.PLAIN, 18));
@@ -801,6 +871,7 @@ public class GAME {
 		JButton btnOxen = new JButton("Oxen");
 		btnOxen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.OXEN, isMale); 
 			}
 		});
 		btnOxen.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -817,6 +888,7 @@ public class GAME {
 		JButton btnMedicine = new JButton("Medicine");
 		btnMedicine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.MEDICINE, isMale); 
 			}
 		});
 		btnMedicine.setFont(new Font("Serif", Font.PLAIN, 18));
@@ -833,6 +905,7 @@ public class GAME {
 		JButton btnClothes = new JButton("Clothes");
 		btnClothes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.CLOTHES, isMale); 
 			}
 		});
 		btnClothes.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -849,6 +922,7 @@ public class GAME {
 		JButton btnSoap = new JButton("Soap");
 		btnSoap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.SOAP, isMale); 
 			}
 		});
 		btnSoap.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -896,6 +970,7 @@ public class GAME {
 		btnExitShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ShopPanel.setVisible(false);
+				StartingOptionsPanel.setVisible(true);
 			}
 		});
 		btnExitShop.setFont(new Font("Serif", Font.PLAIN, 40));

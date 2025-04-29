@@ -12,7 +12,7 @@ public class TravelDistance {
 		private int dayTime = 0;
 		private int distance = 0;
 		private boolean isStopped = false;
-		public String landmark; 
+		public String landmark = "None"; 
 		private Timer dayTimer;
 		private Random random = new Random();
 		private Popups popup = new Popups(); 
@@ -22,60 +22,82 @@ public class TravelDistance {
 		private final String[] landmarkNames = {
 			    "Kansas River", "Big Blue River", "Fort Kearny", "Chimney Rock", "Fort Loramie"
 			};
+		private boolean resting = false;
+	    private int restDaysRemaining = 0; // to track rest days left
 		
 	/**
 	 * A constructor that creates a Timer object with the amount of REAL time an in-game day will take. 
 	 * @param updateCallback - allows you to "callback" to the function to set a label in the GUI
 	 */
 		
-	public TravelDistance(Runnable updateCallback) {
-		int delay = 3000; // This is 3 seconds for each in-game day
-		int speed = 2;
+	    public TravelDistance(Runnable updateCallback) {
+	        int delay = 3000; // This is 3 seconds for each in-game day
+	        int speed = 2;
 
-		dayTimer = new Timer(delay, null);
-		dayTimer.setRepeats(false); // this makes sure the timer resets
+	        dayTimer = new Timer(delay, null);
+	        dayTimer.setRepeats(false); // this makes sure the timer resets
 
-		dayTimer.addActionListener(new ActionListener() {
-			// Overrides the current settings no matter what they are
-		     @Override
-		     public void actionPerformed(ActionEvent e) {
-		    	// if the timer is stopped, it will add a day (it stops at 10 seconds)
-		    	 if (!isStopped) {
-		               day++;
-		               // will update with pace later on
-		               if (pace == 1) {
-		            	   distance += random.nextInt(4) + 3; // Adds 3-6 miles
-		               }
-		               if (pace == 2) {
-		            	   distance += random.nextInt(5) + 7; // Adds 7-13
-		               }
-		               if (pace == 3) {
-		            	   distance += random.nextInt(4) + 12; // Adds 12-15 miles
-		               }
-		               System.out.println(distance);
-		              
+	        dayTimer.addActionListener(new ActionListener() {
+	            // Overrides the current settings no matter what they are
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                if (resting) {
+	                    if (restDaysRemaining > 0) {
+	                        restDaysRemaining--;
+	                        System.out.println("Resting... days remaining: " + restDaysRemaining);
+	                        if (restDaysRemaining <= 0) {
+	                            resting = false;
+	                            System.out.println("Rest complete! Traveling resumes.");
+	                        }
+	                        if (updateCallback != null) {
+	                            updateCallback.run(); // UI update
+	                        }
+	                        dayTimer.restart();
+	                    }
+	                } else if (!isStopped) {
+	                    day++;
+	                    // will update with pace later on
+	                    if (pace == 1) {
+	                        distance += random.nextInt(4) + 3; // Adds 3-6 miles
+	                    }
+	                    if (pace == 2) {
+	                        distance += random.nextInt(5) + 7; // Adds 7-13
+	                    }
+	                    if (pace == 3) {
+	                        distance += random.nextInt(4) + 12; // Adds 12-15 miles
+	                    }
+	                    System.out.println(distance);
 
-		         if (updateCallback != null) {
-		        	 	updateCallback.run(); // UI update
-		         }
-		         
-		         // if you want to test... print here to console - Megan c:
+	                    if (updateCallback != null) {
+	                        updateCallback.run(); // UI update
+	                    }
 
-		         // Restart the timer for the next day
-		         if(reachedLandmark(distance))
-		        	 popup.landmarkPopup(landmark);
-		        	 
-		         dayTimer.restart();
-		         }
-		     }
-	     });
+	                    // if you want to test... print here to console - Megan c:
 
-
-	}
+	                    if (reachedLandmark(distance)) {
+	                        popup.landmarkPopup(landmark);
+	                        popup.educationalDescription(landmark);
+	                    }
+	                    dayTimer.restart();
+	                }
+	            }
+	        });
+	    }
 	
 	public void setPace(int pace) {
 	    // validate pace if needed here
 	    this.pace = pace;
+	}
+	
+	public void startRest(int daysToRest) {
+	    if (daysToRest > 0) {
+	        resting = true;
+	        restDaysRemaining = daysToRest;
+	    }
+	}
+	
+	public boolean isResting() {
+	    return resting;
 	}
 	
 	// For the date code
@@ -131,7 +153,23 @@ public class TravelDistance {
 		return date;
 	}
 	
-	
+	public void pauseTimer() {
+		isStopped = true;
+	    if (dayTimer != null && dayTimer.isRunning()) {
+	        dayTimer.stop();
+	    }
+    }
+    
+    // call this to resume the timer
+    public void resumeTimer() {
+    	if (isStopped) {
+            isStopped = false;
+            if (dayTimer != null && !dayTimer.isRunning()) {
+                dayTimer.start();
+            }
+        }
+    }
+
 
 	public void startTimer() {
 		dayTimer.start();
@@ -217,6 +255,7 @@ public class TravelDistance {
 	        	return true; 
 	        }
 	        
+	        landmark = "";
 	        return false; //then no landmark has been reached
 	        
 	       /* return (d >= 70 && d < 85) || (d >= 130 && d < 145) ||
