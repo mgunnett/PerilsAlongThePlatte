@@ -13,16 +13,7 @@ public class HealthPool {
     ArrayList<String> whoIsDead = new ArrayList<String>();
     ArrayList<Boolean> isSick = new ArrayList<Boolean>(); 
     Boolean dayOfRest;
-	
-    //create a constructor to initialize the inputed names from GAME into this class
-    HealthPool(String person1, String person2, String person3, String person4, String person5) {
-    	personName.add(person1); 
-    	personName.add(person2); 
-    	personName.add(person3); 
-    	personName.add(person4);
-    	personName.add(person5); 
-
-    }
+    String person1, person2, person3, person4, person5;
     
     
 //    //Create a constructor to update the health pool based off the the timer from TravelDistance
@@ -37,6 +28,9 @@ public class HealthPool {
 //		Outside of timer task: initializeHealth(5);
 //    }
     
+	public HealthPool() {
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * Initializes the health for any and all pioneers
 	 * @param numOfPeople is used to see how many health integers are needed
@@ -120,6 +114,11 @@ public class HealthPool {
 		}
 	}
 	
-
+	public Boolean isAnyoneSick() {
+		for (int i = 0; i< 5; i++) {
+			if (isSick.get(i) == true) {return true;}
+		}
+		return false;
+	}
 
 }

@@ -16,7 +16,7 @@ public class Inventory {
 	
 	//in order to associate a value with the corresponding enum, a enumMap will be used to associate a value (the amount)
 	//with its corresponding enum
-	public Map<SupplyType, Double> supplies = new EnumMap<>(SupplyType.class); 
+	public static Map<SupplyType, Double> supplies = new EnumMap<>(SupplyType.class); 
 	//creating several enum maps for different perils
 	public Map<SupplyType, Double> defaultUsage = new EnumMap<>(SupplyType.class); 
 	public Map<SupplyType, Double> sicknessInjury = new EnumMap<>(SupplyType.class);
@@ -115,7 +115,7 @@ public class Inventory {
 		
 		//create random number of items to be traded
 		int playerAmount = rngHelper(tradedSupply); //helper method, see below
-		int traderAmount = rngHelper(offeredSupply); 
+		int traderAmount = rngHelper(offeredSupply);; 
 		
 		
 		//create a JOptionPane popup to ask player to trade
@@ -146,7 +146,7 @@ public class Inventory {
 	public void loseSupply() {
 		//using other class methods
 		Perils perils = new Perils(); 
-		HealthPool health = new HealthPool("bob", "jerry", "enrique", "kowalski", "barney"); 
+		HealthPool health = new HealthPool();
 		GAME game = new GAME(); 
 		//initialize each usage amount
 		supplyCalculator(); 
@@ -160,7 +160,7 @@ public class Inventory {
 		default: multiplier = 1.0; break; //(assuming default of 1) use 1.0x supplies
 		}
 		boolean isSomeoneDead = !health.whoIsDead.isEmpty();
-		boolean isSomeoneSick = perils.someoneSick;
+		boolean isSomeoneSick = health.isAnyoneSick();
 		if (isSomeoneDead && isSomeoneSick) { //check if the dead person list has an entry and if someone is sick
 			for (SupplyType supply : SupplyType.values()) 
 				defaultUsage.put(supply, supplies.get(supply) - ((death.get(supply) + sicknessInjury.get(supply) * multiplier)));
@@ -182,7 +182,7 @@ public class Inventory {
 	//helper method to declare and contain all Maps associated with different weather events
 	private void supplyCalculator() {
 		//using other class methods
-		HealthPool health = new HealthPool("bob", "jerry", "enrique", "kowalski", "barney"); 
+		HealthPool health = new HealthPool();
 		
 		//initializes the default usage map
 		for (SupplyType supply : SupplyType.values()) 
@@ -222,7 +222,7 @@ public class Inventory {
 	}
 	
 	//helper method to calculate the number of each supply to be traded by either party in the tradeSupply method. 
-	private int rngHelper(SupplyType supply) {
+	private static int rngHelper(SupplyType supply) {
 		Random rng = new Random(); //create a random number generator
 		int amount = 0; 
 		switch (supply) {

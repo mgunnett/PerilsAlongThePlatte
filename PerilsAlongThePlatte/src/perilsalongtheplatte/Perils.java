@@ -11,8 +11,6 @@ public class Perils {
 	public String sickness = "";
 	Random rng = new Random();
 	 
-	public boolean someoneSick = isAnyoneSick();
-	
 	 
 	/**
 	 * Checks to see if the pioneer gets sick based off of their health
@@ -32,12 +30,6 @@ public class Perils {
 		return false;
 	}
 	
-	public Boolean isAnyoneSick() {
-		for (int i = 0; i< 5; i++) {
-			if (hlthPool.isSick.get(i) == true) {return true;}
-		}
-		return false;
-	}
 	
 	/**
 	 * If a pioneer is already sick, checks to see if the pioneer gets better
