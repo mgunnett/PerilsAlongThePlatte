@@ -183,8 +183,14 @@ public class GAME {
 		
 		JButton btnRest = new JButton("Rest");
 		btnRest.addActionListener(new ActionListener() {
+			  @Override
 			public void actionPerformed(ActionEvent e) {
-				 int daysToRest = popup.restDays(); 
+				  travelDistance.pauseTimer();
+				  int restDays = popup.restDays(); // show popup and get input
+				  if (restDays > 0) {
+					    travelDistance.startRest(restDays);
+				  }
+				  travelDistance.resumeTimer();
 			}
 		});
 		btnRest.setFont(new Font("Serif", Font.PLAIN, 35));
