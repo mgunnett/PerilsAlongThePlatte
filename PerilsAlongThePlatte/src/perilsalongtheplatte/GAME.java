@@ -386,6 +386,10 @@ public class GAME {
 		lblInventory.setBounds(10, 11, 288, 39);
 		InventoryPanel.add(lblInventory);
 		
+		JScrollPane scrollPaneInventory = new JScrollPane();
+		scrollPaneInventory.setBounds(20, 61, 266, 396);
+		InventoryPanel.add(scrollPaneInventory);
+		
 		JButton btnBuyIntroSupplies = new JButton("Shop");
 		btnBuyIntroSupplies.setBackground(new Color(220, 207, 180));
 		btnBuyIntroSupplies.addActionListener(new ActionListener() {
@@ -417,6 +421,10 @@ public class GAME {
 		lblEventLog.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblEventLog.setBounds(10, 11, 288, 39);
 		EventLogPanel.add(lblEventLog);
+		
+		JScrollPane scrollPaneEventLog = new JScrollPane();
+		scrollPaneEventLog.setBounds(20, 61, 266, 396);
+		EventLogPanel.add(scrollPaneEventLog);
 		
 		JLabel lblConstOverallGroupHealth = new JLabel("Overall Group Health:");
 		lblConstOverallGroupHealth.setHorizontalAlignment(SwingConstants.LEFT);
