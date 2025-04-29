@@ -125,6 +125,19 @@ public class GAME {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		GamePanel = new JPanel();
+		GamePanel.setBackground(new Color(0, 0, 0));
+		GamePanel.setBounds(0, 0, 1283, 699);
+		frame.getContentPane().add(GamePanel);
+		GamePanel.setLayout(null);
+		GamePanel.setVisible(false);
+		
+		ImageIcon RainyImageIcon = new ImageIcon("PerilsAlongThePlatte/src/images/Rainy.PNG");
+		
+		JLabel lblImageHolder = new JLabel(RainyImageIcon);
+		lblImageHolder.setBounds(615, 17, 508, 161);
+		GamePanel.add(lblImageHolder);
+		
 		StartingOptionsPanel = new JPanel();
 		StartingOptionsPanel.setBounds(0, 0, 1283, 688);
 		StartingOptionsPanel.setBackground(new Color(154, 128, 71));
@@ -140,13 +153,6 @@ public class GAME {
 		ShopPanel.setLayout(null);
 		ShopPanel.setVisible(false);
 		
-		
-		GamePanel = new JPanel();
-		GamePanel.setBackground(new Color(0, 0, 0));
-		GamePanel.setBounds(0, 0, 1283, 699);
-		frame.getContentPane().add(GamePanel);
-		GamePanel.setLayout(null);
-		GamePanel.setVisible(false);
 		
 		JPanel OptionsPanel = new JPanel();
 		OptionsPanel.setLayout(null);
@@ -484,6 +490,8 @@ public class GAME {
 		lblDaysPassed.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblDaysPassed.setBounds(200, -3, 153, 39);
 		GamePanel.add(lblDaysPassed);
+		
+
 		
 		HuntingPanel = new JPanel();
 		HuntingPanel.setBackground(new Color(154, 128, 71));
