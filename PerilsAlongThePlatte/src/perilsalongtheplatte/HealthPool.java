@@ -115,7 +115,7 @@ public class HealthPool {
 	}
 	
 	public Boolean isAnyoneSick() {
-		for (int i = 0; i< 5; i++) {
+		for (int i = 0; i < 6; i++) {
 			if (isSick.get(i) == true) {return true;}
 		}
 		return false;

@@ -96,6 +96,7 @@ public class GAME {
 		 travelDistance = new TravelDistance(() -> {             // <-- TRIGGER daily event logic
 	            updateDayAndDistanceLabel();     // updates gui
 	            inventoryTextArea.setText(""); //reset the text area
+	            inventory.loseSupply(); 
 	            for (SupplyType supply : SupplyType.values()) {
 	                double amount = inventory.supplies.getOrDefault(supply, 0.0); //get value or 0 if missing
 	                inventoryTextArea.append(supply.name() + ": " + amount + "\n"); 
