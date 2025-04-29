@@ -237,7 +237,7 @@ public class Inventory {
 		case WATER:  amount =  10 + rng.nextInt(11); break;    //10-20gal
 		case WHEELS:  amount =  1 + rng.nextInt(2); break;     //1-2 wheels
 		case AXELS:  amount =  1 + rng.nextInt(2); break;      //1-2 axels
-		case TONGUES:  amount =  10 + rng.nextInt(11); break;  //1-2 tongues 
+		case TONGUES:  amount =  1 + rng.nextInt(2); break;  //1-2 tongues 
 		case AMMO:  amount =  25 + rng.nextInt(51); break;     //50-100 bullets
 		case OXEN:  amount =  1 + rng.nextInt(2); break;       //1-2 oxen
 		case MEDICINE: amount = 5 + rng.nextInt(6); break;     //5-10lbs
