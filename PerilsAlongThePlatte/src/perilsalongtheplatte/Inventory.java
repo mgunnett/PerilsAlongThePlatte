@@ -160,7 +160,7 @@ public class Inventory {
 		default: multiplier = 1.0; break; //(assuming default of 1) use 1.0x supplies
 		}
 		boolean isSomeoneDead = !health.whoIsDead.isEmpty();
-		boolean isSomeoneSick = perils.isSick;
+		boolean isSomeoneSick = perils.someoneSick;
 		if (isSomeoneDead && isSomeoneSick) { //check if the dead person list has an entry and if someone is sick
 			for (SupplyType supply : SupplyType.values()) 
 				defaultUsage.put(supply, supplies.get(supply) - ((death.get(supply) + sicknessInjury.get(supply) * multiplier)));

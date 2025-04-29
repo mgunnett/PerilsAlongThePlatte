@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Perils {
+	public HealthPool hlthPool;
 	public int speed;
 	public int rations;
 	public String weather;
 	public String sickness = "";
 	Random rng = new Random();
+	 
+	public boolean someoneSick = isAnyoneSick();
 	
 	 
 	/**
@@ -26,6 +29,13 @@ public class Perils {
 		else if (personHealth <= 30) { sickChance = 40;}
 		
 		if (chance < sickChance) {return true;}
+		return false;
+	}
+	
+	public Boolean isAnyoneSick() {
+		for (int i = 0; i< hlthPool.isSick.size(); i++) {
+			if (hlthPool.isSick.get(i) == true) {return true;}
+		}
 		return false;
 	}
 	
