@@ -9,6 +9,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -45,6 +46,7 @@ public class GAME {
 	public JSpinner spinnerSpeed;
 	JLabel lblDistanceUntilNextLandmark;
 	private JLabel lblDate;
+	JTextArea inventoryTextArea;
 	
 	//Hunting Game widgets
 	public JTextField txtFldResponse;
@@ -92,6 +94,11 @@ public class GAME {
 		daily_events = new DailyEvents("any", 100); // change for gender and health in the future. Not Final.
 		 travelDistance = new TravelDistance(() -> {             // <-- TRIGGER daily event logic
 	            updateDayAndDistanceLabel();     // updates gui
+	            inventoryTextArea.setText(""); //reset the text area
+	            for (SupplyType supply : SupplyType.values()) {
+	                double amount = inventory.supplies.getOrDefault(supply, 0.0); //get value or 0 if missing
+	                inventoryTextArea.append(supply.name() + ": " + amount + "\n"); 
+	            }
 			    daily_events.weatherEvents();
 			    String todayWeather = daily_events.handleWeatherEvent(); // get weather string
 		        lblWeather.setText(todayWeather); // update label
@@ -103,8 +110,7 @@ public class GAME {
 		        spinnerSpeed.addChangeListener(e -> {
 	            int speed = (Integer) spinnerSpeed.getValue();
 	            travelDistance.setPace(speed);
-	            
-	            //update the supply
+	    
 		        });
 	        });
 		
@@ -386,9 +392,9 @@ public class GAME {
 		lblInventory.setBounds(10, 11, 288, 39);
 		InventoryPanel.add(lblInventory);
 		
-		JScrollPane scrollPaneInventory = new JScrollPane();
-		scrollPaneInventory.setBounds(20, 61, 266, 396);
-		InventoryPanel.add(scrollPaneInventory);
+		inventoryTextArea = new JTextArea();
+		inventoryTextArea.setBounds(20, 61, 266, 396);
+		InventoryPanel.add(inventoryTextArea);
 		
 		JButton btnBuyIntroSupplies = new JButton("Shop");
 		btnBuyIntroSupplies.setBackground(new Color(220, 207, 180));
