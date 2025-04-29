@@ -62,8 +62,15 @@ public class GAME {
 	private TravelDistance travelDistance;
 	private DailyEvents daily_events;
 	private TravelDistance pace;	
+	
 	//declare global variables to be stored within the class
-	 public int rations; //stores the rations value, a number ranged [1-10]
+    public int rations; //stores the rations value, a number ranged [1-10]
+    public String person1Name;
+    public String person2Name;
+    public String person3Name;
+    public String person4Name;
+    public String person5Name;
+    
 	
 	
 
@@ -528,6 +535,13 @@ public class GAME {
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				 int currentPace = (Integer) spinnerSpeed.getValue();
+				 //get the text entered within each text field
+				 person1Name = txtPlayer1Name.getText();
+				 person2Name = txtPlayer2Name.getText();
+				 person3Name = txtPlayer3Name.getText();
+				 person4Name = txtPlayer4Name.getText();
+				 person5Name = txtPlayer5Name.getText();
+				 System.out.println("Person 5 name: " + person5Name);
 				    travelDistance.setPace(currentPace);
 				    travelDistance.startTimer();
 				StartingOptionsPanel.setVisible(false);
