@@ -17,12 +17,12 @@ public class HealthPool {
     Boolean dayOfRest;
 	
     //create a constructor to initialize the inputed names from GAME into this class
-    HealthPool(String playerName, String person1, String person2, String person3, String person4) {
-    	personName.add(playerName); 
+    HealthPool(String person1, String person2, String person3, String person4, String person5) {
     	personName.add(person1); 
     	personName.add(person2); 
-    	personName.add(person3);
-    	personName.add(person4); 
+    	personName.add(person3); 
+    	personName.add(person4);
+    	personName.add(person5); 
     }
     
     

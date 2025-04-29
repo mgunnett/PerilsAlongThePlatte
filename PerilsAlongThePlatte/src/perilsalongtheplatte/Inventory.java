@@ -18,7 +18,7 @@ public class Inventory {
 	//with its corresponding enum
 	public Map<SupplyType, Double> supplies = new EnumMap<>(SupplyType.class); 
 	//creating several enum maps for different perils
-	public Map<SupplyType, Double> defaultUsage = new EnumMap<>(SupplyType.class); 
+	private Map<SupplyType, Double> defaultUsage = new EnumMap<>(SupplyType.class); 
 	public Map<SupplyType, Double> sicknessInjury = new EnumMap<>(SupplyType.class);
 	public Map<SupplyType, Double> death = new EnumMap<>(SupplyType.class);
 	
@@ -146,8 +146,8 @@ public class Inventory {
 	public void loseSupply() {
 		//using other class methods
 		Perils perils = new Perils(); 
-		HealthPool health = new HealthPool("bob", "jerry", "enrique", "kowalski", "barney"); 
 		GAME game = new GAME(); 
+		HealthPool health = new HealthPool(game.person1Name, game.person2Name, game.person3Name, game.person4Name, game.person5Name); 
 		//initialize each usage amount
 		supplyCalculator(); 
 	
@@ -160,7 +160,10 @@ public class Inventory {
 		default: multiplier = 1.0; break; //(assuming default of 1) use 1.0x supplies
 		}
 		boolean isSomeoneDead = !health.whoIsDead.isEmpty();
-		boolean isSomeoneSick = perils.isSick;
+		boolean isSomeoneSick = true; 
+		for (int i = 0; i < 5; i++) {
+			
+		}
 		if (isSomeoneDead && isSomeoneSick) { //check if the dead person list has an entry and if someone is sick
 			for (SupplyType supply : SupplyType.values()) 
 				defaultUsage.put(supply, supplies.get(supply) - ((death.get(supply) + sicknessInjury.get(supply) * multiplier)));
