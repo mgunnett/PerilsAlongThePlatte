@@ -438,7 +438,7 @@ public class GAME {
 		lblConstOverallGroupHealth.setHorizontalAlignment(SwingConstants.LEFT);
 		lblConstOverallGroupHealth.setForeground(Color.BLACK);
 		lblConstOverallGroupHealth.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblConstOverallGroupHealth.setBounds(12, 156, 267, 32);
+		lblConstOverallGroupHealth.setBounds(12, 156, 350, 32);
 		OptionsPanel.add(lblConstOverallGroupHealth);
 		
 		JLabel lblOverallGroupHealth = new JLabel("");
@@ -609,7 +609,7 @@ public class GAME {
 		lblTitlePerils.setForeground(Color.BLACK);
 		lblTitlePerils.setFont(new Font("Serif", Font.PLAIN, 80));
 		lblTitlePerils.setBackground(new Color(220, 207, 180));
-		lblTitlePerils.setBounds(193, 5, 747, 102);
+		lblTitlePerils.setBounds(193, 5, 900, 102);
 		WelcomePanel.add(lblTitlePerils);
 		
 		JButton btnStart = new JButton("Start");
