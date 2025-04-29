@@ -12,7 +12,7 @@ public class TravelDistance {
 		private int dayTime = 0;
 		private int distance = 0;
 		private boolean isStopped = false;
-		public String landmark; 
+		public String landmark = "None"; 
 		private Timer dayTimer;
 		private Random random = new Random();
 		private Popups popup = new Popups(); 
