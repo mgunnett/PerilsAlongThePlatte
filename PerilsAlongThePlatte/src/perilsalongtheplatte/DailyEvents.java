@@ -1,112 +1,74 @@
 package perilsalongtheplatte;
 
-import perilsalongtheplatte.Perils;
-import perilsalongtheplatte.GAME;
 import java.util.Random;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JFrame;
-
-/**
- * As the player travels the trail, events can randomly happen to stimulate daily life along the Platte River. 
- * These events have a set probability of happening, and multiple events can happen per day. Some events have a 
- * different chance on happening based on the gender of the player. 
- */
 
 public class DailyEvents {
 
-    // Define player gender
     private String playerGender;
-
-    // Probabilities for weather events
-    private final double WEATHER_EVENT_PROBABILITY = 0.3; // 30% chance of weather event
-
-    // Random number generator
+    private final double WEATHER_EVENT_PROBABILITY = 0.3; // 30%
     private Random random;
+    private int playerHealth;
+    private boolean isSick;
 
-    // Player health (out of 100) 
-    private int playerHealth; 
-    boolean isSick;
-
-    // Perils object to simulate sickness and events
     private Perils perils;
-    // GAME object to use labels
-    private GAME game;
-    
-    private HealthPool healthpool = new HealthPool();
- 
-    // List of weather events
-	public String[] weatherEvents = {"Sunny", "Rainy", "Windy", "Thunderstorms", "Snowy"};
 
-    // Constructor to set player gender and health
+	public String YorNSick = "healthy";
+    public String YorNRecovered = "";
+    public String Penalty = "";
+    public String Sickness = "";
+    public String currentWeather = "Clear"; // Store today's weather
+
+    private final String[] weatherEvents = {"Sunny", "Rainy", "Windy", "Thunderstorms", "Snowy"};
+
     public DailyEvents(String gender, int health) {
         this.playerGender = gender.toLowerCase();
         this.playerHealth = health;
         this.random = new Random();
-
-        // Create an instance of Perils to handle sickness and penalties
         this.perils = new Perils();
+        this.isSick = false; // default player health state
     }
 
-	public void weatherEvents() {
-    	handleWeatherEvent();
+    /**
+     * Runs all daily event updates: weather, sickness, penalties
+     */
+    public void weatherEvents() {
+        // Determine today's weather once per day
+        currentWeather = handleWeatherEvent();
 
-        // Check if a weather event happens
-        if (random.nextDouble() < WEATHER_EVENT_PROBABILITY) {
-            handleWeatherEvent();
-        }
+        // Determine sickness state for the day
+        boolean gotSick = perils.getsSick(playerHealth, isSick);
+        isSick = gotSick; // update sickness status for next day use
+        YorNSick = gotSick ? "sick" : "healthy";
 
-        // Check if the player gets sick
-        boolean gotSick = perils.getsSick(playerHealth, isSick);  // Pass health to getsSick method
-        if (gotSick) {
-            System.out.println("You got sick!");
-        } else {
-            System.out.println("You're healthy today.");
-        }
-
-        // Check if sickness gets better
+        // Sickness improvement
         if (gotSick && perils.getsBetter(isSick, playerHealth)) {
-            System.out.println("You recovered from your sickness.");
+            YorNRecovered = "healed!";
+            isSick = false; // player healed, update status
         } else if (gotSick) {
-            System.out.println("You are still sick.");
+            YorNRecovered = "still sick";
+        } else {
+            YorNRecovered = ""; // no change
         }
 
         // Apply sickness penalty
-        int sicknessPenalty = perils.sicknessPenalty(gotSick, "good"); // Pass parameters
+        int sicknessPenalty = perils.sicknessPenalty(gotSick, "good");
         if (sicknessPenalty > 0) {
-            System.out.println("You suffer a sickness penalty of: " + sicknessPenalty);
-            System.out.println("You are suffering from: " + perils.sickness); 
+            Penalty = sicknessPenalty + " Health Lost!";
+            Sickness = "You are suffering from: " + perils.sickness;
         } else {
-            System.out.println("You're not suffering from any sickness right now.");
+            Penalty = "";
+            Sickness = "You're not suffering from any sickness right now.";
         }
     }
 
-    // Handle weather event
+    /**
+     * Determines the weather string for the current day
+     */
     public String handleWeatherEvent() {
-
-    	// Determines if a weather event will happen
         if (random.nextDouble() < WEATHER_EVENT_PROBABILITY) {
-            String event = weatherEvents[random.nextInt(weatherEvents.length)];
-            return event;
-        } 
-        else {
-        	// Prints weather is clear if no weather event happens
-        	return "Clear";
+            return weatherEvents[random.nextInt(weatherEvents.length)];
+        } else {
+            return "Clear";
         }
-//        // Prints weather is clear if no weather event happens
-//        if (random.nextDouble() >= WEATHER_EVENT_PROBABILITY) {
-//            return "Clear";
-//        }
-    }
-
-    // Main method to test
-    public static void main(String[] args) {
-        // Test for male player with health 75
-        DailyEvents malePlayer = new DailyEvents("male", 75);
-        malePlayer.weatherEvents();
-
-        // Test for female player with health 60
-        DailyEvents femalePlayer = new DailyEvents("female", 60);
-        femalePlayer.weatherEvents();
     }
 }

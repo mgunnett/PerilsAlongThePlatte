@@ -24,6 +24,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JSeparator;
+import javax.swing.SwingUtilities;
 
 
 public class GAME {
@@ -48,6 +49,7 @@ public class GAME {
 	private JLabel lblDate;
 	JTextArea inventoryTextArea;
 	public boolean isMale = true;
+	JTextArea EventLogTextArea;
 	
 	//Hunting Game widgets
 	public JTextField txtFldResponse;
@@ -68,6 +70,7 @@ public class GAME {
 	private Inventory inventory;
 	//declare global variables to be stored within the class
 	 public int rations; //stores the rations value, a number ranged [1-10]
+	
 	
 	
 
@@ -104,6 +107,8 @@ public class GAME {
 			    daily_events.weatherEvents();
 			    String todayWeather = daily_events.handleWeatherEvent(); // get weather string
 		        lblWeather.setText(todayWeather); // update label
+		        EventLogTextArea.append("" + travelDistance.date());
+		        //EventLogTextArea.append("You are " + dailyEvents.YoNSick + ". You are " + YorNRecovered + ". " + sicknessPenalty);
 		        
 		        //variables to be updated
 		        updateMilesLeftLabel();
@@ -134,6 +139,14 @@ public class GAME {
 		frame.setBounds(100, 100, 1300, 726);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+	
+		JPanel ShopPanel = new JPanel();
+		ShopPanel.setBackground(new Color(156, 123, 82));
+		ShopPanel.setBounds(0, -3, 1283, 702);
+		frame.getContentPane().add(ShopPanel);
+		ShopPanel.setLayout(null);
+		ShopPanel.setVisible(false);
+		
 		
 		GamePanel = new JPanel();
 		GamePanel.setBackground(new Color(0, 0, 0));
@@ -154,15 +167,6 @@ public class GAME {
 		frame.getContentPane().add(StartingOptionsPanel);
 		StartingOptionsPanel.setLayout(null);
 		StartingOptionsPanel.setVisible(false);
-		
-		
-		JPanel ShopPanel = new JPanel();
-		ShopPanel.setBackground(new Color(156, 123, 82));
-		ShopPanel.setBounds(0, -3, 1283, 702);
-		frame.getContentPane().add(ShopPanel);
-		ShopPanel.setLayout(null);
-		ShopPanel.setVisible(false);
-		
 		
 		JPanel OptionsPanel = new JPanel();
 		OptionsPanel.setLayout(null);
@@ -418,21 +422,25 @@ public class GAME {
 		StartingOptionsPanel.add(lblConstBuyIntroSupplies);
 		
 		JPanel EventLogPanel = new JPanel();
-		EventLogPanel.setLayout(null);
 		EventLogPanel.setBackground(new Color(220, 207, 180));
 		EventLogPanel.setBounds(576, 11, 308, 468);
 		OptionsPanel.add(EventLogPanel);
+		EventLogPanel.setLayout(null);
 		
 		JLabel lblEventLog = new JLabel("<html><u>Event Log</u>");
+		lblEventLog.setBounds(10, 11, 288, 39);
 		lblEventLog.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEventLog.setForeground(Color.BLACK);
 		lblEventLog.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblEventLog.setBounds(10, 11, 288, 39);
 		EventLogPanel.add(lblEventLog);
 		
-		JScrollPane scrollPaneEventLog = new JScrollPane();
-		scrollPaneEventLog.setBounds(20, 61, 266, 396);
-		EventLogPanel.add(scrollPaneEventLog);
+		EventLogTextArea = new JTextArea();
+		EventLogTextArea.setBounds(10, 61, 288, 396);
+		EventLogPanel.add(EventLogTextArea);
+		EventLogTextArea = new JTextArea(10, 40); // 10 rows, 40 columns as example
+		EventLogTextArea.setEditable(false);       // user cannot edit the log
+		EventLogTextArea.setLineWrap(true);        // wrap lines nicely
+		EventLogTextArea.setWrapStyleWord(true);   // wrap at word boundaries
 		
 		JLabel lblConstOverallGroupHealth = new JLabel("Overall Group Health:");
 		lblConstOverallGroupHealth.setHorizontalAlignment(SwingConstants.LEFT);
@@ -960,11 +968,12 @@ public class GAME {
 		lblWallet.setBounds(947, 88, 218, 75);
 		ShopPanel.add(lblWallet);
 		
-		JLabel lblWalletAmount = new JLabel("money goes here");
+		JLabel lblWalletAmount = new JLabel("$500.00");
 		lblWalletAmount.setHorizontalAlignment(SwingConstants.CENTER);
 		lblWalletAmount.setFont(new Font("Serif", Font.PLAIN, 25));
 		lblWalletAmount.setBounds(925, 0, 218, 52);
 		panel.add(lblWalletAmount);
+//		lblWalletAmount.setText("" + inventory.getSupply(SupplyType.CASH));
 		
 		JButton btnExitShop = new JButton("Exit Shop");
 		btnExitShop.addActionListener(new ActionListener() {
