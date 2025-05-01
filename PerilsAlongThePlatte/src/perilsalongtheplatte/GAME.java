@@ -1034,8 +1034,15 @@ public class GAME {
 	 private void updateInventory() {
 		 inventoryTextArea.setText(""); //reset the text area
          inventory.loseSupply(rations); 
+         String units; //string to format the units
          for (SupplyType supply : SupplyType.values()) {
-        	 String amount = String.format(supply.name() + " : %.2f\n", Inventory.supplies.getOrDefault(supply, 0.0)); //format the string to remove tailing 0s
+        	 if(supply.equals(SupplyType.CASH))
+        		 units = "dollars";
+        	 else
+        		 units = "lbs"; 
+        	 //format the string removing tailing 0s and creating columns 
+        	 double value = Inventory.supplies.getOrDefault(supply, 0.0);
+        	 String amount = String.format("%-15s : %7.2f %s\n", supply.name(), value, units);
              inventoryTextArea.append(amount); 
          }
 	 }
