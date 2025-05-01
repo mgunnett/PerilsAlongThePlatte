@@ -66,7 +66,7 @@ public class TravelDistance {
 	                    if (pace == 3) {
 	                        distance += random.nextInt(4) + 12; // Adds 12-15 miles
 	                    }
-	                    System.out.println(distance);
+	                    //System.out.println(distance);
 
 	                    if (updateCallback != null) {
 	                        updateCallback.run(); // UI update

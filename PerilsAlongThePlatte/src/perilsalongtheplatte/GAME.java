@@ -69,7 +69,7 @@ public class GAME {
 	private TravelDistance pace;	
 	private Inventory inventory;
 	//declare global variables to be stored within the class
-	 public int rations; //stores the rations value, a number ranged [1-10]
+	 public int rations; //stores the rations value, a number ranged [1-3]
 	
 	
 	
@@ -98,12 +98,7 @@ public class GAME {
 		daily_events = new DailyEvents("any", 100); // change for gender and health in the future. Not Final.
 		 travelDistance = new TravelDistance(() -> {             // <-- TRIGGER daily event logic
 	            updateDayAndDistanceLabel();     // updates gui
-	            inventoryTextArea.setText(""); //reset the text area
-	            //inventory.loseSupply(); 
-	            for (SupplyType supply : SupplyType.values()) {
-	                double amount = Inventory.supplies.getOrDefault(supply, 0.0); //get value or 0 if missing
-	                inventoryTextArea.append(supply.name() + ": " + amount + "\n"); 
-	            }
+	            updateInventory();
 			    daily_events.weatherEvents();
 			    String todayWeather = daily_events.handleWeatherEvent(); // get weather string
 		        lblWeather.setText(todayWeather); // update label
@@ -113,11 +108,11 @@ public class GAME {
 		        //variables to be updated
 		        updateMilesLeftLabel();
 		        updateDateLabel();
-		        rations = (int) spinnerRations.getValue();
 		        spinnerSpeed.addChangeListener(e -> {
 	            int speed = (Integer) spinnerSpeed.getValue();
 	            travelDistance.setPace(speed);
-	    
+	            //rations =  (int) spinnerRations.getValue();
+	            //System.out.println(rations); 
 		        });
 	        });
 		
@@ -196,6 +191,11 @@ public class GAME {
 		//create a SpinnerNumberModel with bounds
 		SpinnerNumberModel rationsModel = new SpinnerNumberModel(1, 1, 3, 1);
 	    spinnerRations = new JSpinner(rationsModel);
+	    spinnerRations.addChangeListener(e -> {
+	        rations = (int) spinnerRations.getValue();
+	        System.out.println("Updated rations: " + rations);
+	    });
+
 		spinnerRations.setFont(new Font("Serif", Font.PLAIN, 20));
 		spinnerRations.setBackground(new Color(224, 213, 188));
 		spinnerRations.setBounds(115, 82, 172, 32);
@@ -203,7 +203,6 @@ public class GAME {
 		
 		JButton btnRest = new JButton("Rest");
 		btnRest.addActionListener(new ActionListener() {
-			  @Override
 			public void actionPerformed(ActionEvent e) {
 				  travelDistance.pauseTimer();
 				  int restDays = popup.restDays(); // show popup and get input
@@ -229,11 +228,14 @@ public class GAME {
 		btnTrade.setBounds(215, 369, 145, 110);
 		OptionsPanel.add(btnTrade);
 		
+		JLabel lblResult = new JLabel("");
 		JButton btnHunt = new JButton("Hunt");
 		btnHunt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				HuntingPanel.setVisible(true);
 				GamePanel.setVisible(false);
+				
+				travelDistance.pauseTimer();
 
 				timer.start();
 
@@ -249,8 +251,7 @@ public class GAME {
 				lblBang2Shoot.setBounds(109, 11, 218, 24);
 				HuntingPanel.add(lblBang2Shoot);
 				
-
-				JLabel lblResult = new JLabel("");
+				lblResult.setText("");
 				lblResult.setHorizontalAlignment(SwingConstants.CENTER);
 				lblResult.setFont(new Font("Tahoma", Font.PLAIN, 15));
 				lblResult.setBounds(217, 159, 209, 35);
@@ -283,6 +284,7 @@ public class GAME {
 						timer.stop();
 						
 						
+						travelDistance.resumeTimer();
 
 						//  Delay panel closing by 2 seconds (5000 milliseconds)
 						new Timer(2000, new ActionListener() {
@@ -1027,5 +1029,14 @@ public class GAME {
 	 public void updateDateLabel() {
 		 String currentDate = travelDistance.date();  // get formatted date string
 		    lblDate.setText(currentDate);
+	 }
+	 
+	 private void updateInventory() {
+		 inventoryTextArea.setText(""); //reset the text area
+         inventory.loseSupply(rations); 
+         for (SupplyType supply : SupplyType.values()) {
+        	 String amount = String.format(supply.name() + " : %.2f\n", Inventory.supplies.getOrDefault(supply, 0.0)); //format the string to remove tailing 0s
+             inventoryTextArea.append(amount); 
+         }
 	 }
 }

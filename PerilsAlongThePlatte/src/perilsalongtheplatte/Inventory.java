@@ -17,9 +17,9 @@ public class Inventory {
 	//with its corresponding enum
 	public static Map<SupplyType, Double> supplies = new EnumMap<>(SupplyType.class); 
 	//creating several enum maps for different perils
-	public Map<SupplyType, Double> defaultUsage = new EnumMap<>(SupplyType.class); 
-	public Map<SupplyType, Double> sicknessInjury = new EnumMap<>(SupplyType.class);
-	public Map<SupplyType, Double> death = new EnumMap<>(SupplyType.class);
+	private Map<SupplyType, Double> defaultUsage = new EnumMap<>(SupplyType.class); 
+	private Map<SupplyType, Double> sicknessInjury = new EnumMap<>(SupplyType.class);
+	private Map<SupplyType, Double> death = new EnumMap<>(SupplyType.class);
 	
 	//other class objects
 	GAME game = new GAME(); //access to key variables...
@@ -44,7 +44,7 @@ public class Inventory {
 	}
 	
 	/**
-	 * A polymorphic method to buy a type of supply from the store. This method needs the kind of supply to buy and the unit price. 
+	 * A method to buy a type of supply from the store. This method needs the kind of supply to buy and the unit price. 
 	 * Once bought, the amount bought is added to the user's inventory and cash is subtracted form the inventory. If the player is male, then they can access
 	 * the shop. If female, the "husband" will buy the supplies for the player, or a randomly generated value of supplies. 
 	 * @param supply Integer representation of the supply to purchase. Reference the public integers to use as parameters. 
@@ -83,9 +83,19 @@ public class Inventory {
 			}
 		}
 		else { //if the player gender is female, then tell them they cannot buy supplies
-			JOptionPane.showMessageDialog(null, "Sorry, since you're female, you cannot buy supplies. Your husband handles this part. ");	
-		}
+			int result = JOptionPane.showConfirmDialog(
+				    null,
+				    "Sorry, since you're female, you cannot buy supplies. Your husband handles this part."
+				    + "\nWould you like him to buy some for you?", 
+				    "Purchase Restriction",
+				    JOptionPane.YES_NO_OPTION,
+				    JOptionPane.QUESTION_MESSAGE);
 
+				//check what the player chose
+				if (result == JOptionPane.YES_OPTION) { //if yes is pressed
+				  husbandBuySupplies(game.isMale); 
+				} 
+		}
 	}
 	//example call: buySupply(SupplyType.BACON); 
 	
@@ -101,7 +111,7 @@ public class Inventory {
 
 		    //define the default thresholds to check for
 		    double LOW_THRESHOLD = 5.0; 
-		    double MAX_AMOUNT = 20.0; //max amount husband wants to buy
+		    double MAX_AMOUNT = 20.0;  //max amount husband wants to buy
 
 		    //begin by finding which supplies are low 
 		    for (SupplyType type : SupplyType.values()) {
@@ -123,18 +133,25 @@ public class Inventory {
 		            case WHEELS: 
 		            	MAX_AMOUNT = 2.0; //max of 3 wheels can be bought 
 		            	LOW_THRESHOLD = 0.0; //0 is low
+		            	break;
 		            case AXELS: 
 		            	MAX_AMOUNT = 2.0;  
 		            	LOW_THRESHOLD = 0.0; 
+		            	break;
 		            case TONGUES: 
 		            	MAX_AMOUNT = 2.0; 
 		            	LOW_THRESHOLD = 0.0; 
+		            	break;
 		            case OXEN: 
 		            	MAX_AMOUNT = 2.0; 
 		            	LOW_THRESHOLD = 0.0; 
+		            	break;
 		            case CLOTHES: 
 		            	MAX_AMOUNT = 3.0; 
 		            	LOW_THRESHOLD = 0.0; 
+		            	break;
+		            default:
+		            	break; //uses predefined amounts above
 		            }
 		           
 		            double currentAmount = supplies.get(type); 
@@ -151,7 +168,7 @@ public class Inventory {
 		                supplies.put(SupplyType.CASH, currentCash - totalCost);
 		            } 
 		            else { //then the husband cannot buy the maximum amount 
-		                ///not enough cash, buy as much as possible
+		                //if there is not enough cash, buy as much as possible
 		                double maxAmount = currentCash / pricePerUnit; //max amount able to be bought
 		                supplies.put(type, currentAmount + maxAmount);
 		                supplies.put(SupplyType.CASH, 0.0); //if this point is reached, the husband spent all the cash (he is stupid)!
@@ -223,16 +240,15 @@ public class Inventory {
 	/**
 	 * A method to control the daily deprecation of supplies from travel. Different supplies will deprecate at different amounts. This method will utilize
 	 * maps to change the value of each lost supply based on different events, such as weather, etc. 
-	 * @param supply The supply to be changed daily. 
+	 * @param rations The rations amount the user selects within the GUI, a range of [1-3]. 
 	 */
-	public void loseSupply() {
+	public void loseSupply(int rations) {
 		//initialize each usage amount
 		supplyCalculator(); 
 	
 		//create variables to help with supply calculations
 		double multiplier; //a multiplier to multiply the daily supply usage with; based on rations construct
-		int rationsSwitch = game.rations; //helper integer for the switch statement
-		switch (rationsSwitch) {
+		switch (rations) {
 		case 2:  multiplier = 1.5; break; //if 2, use 1.5x more
 		case 3:  multiplier = 2.0; break; //if 3, use 2.0x more
 		default: multiplier = 1.0; break; //(assuming default of 1) use 1.0x supplies
@@ -255,6 +271,13 @@ public class Inventory {
 			for (SupplyType supply : SupplyType.values()) 
 				supplies.put(supply, supplies.get(supply) - (supply.getUsageAmount() * multiplier));
 		}
+		//check to make sure supplies cannot be less than 0
+		for (SupplyType supply : SupplyType.values()) {
+			if (supplies.get(supply) <= 0.0) { //if there is a negative value (not possible)
+				supplies.put(supply, 0.0); //replace value with a 0
+			}
+		}
+		
 	}
 	
 	//helper method to declare and contain all Maps associated with different weather events
