@@ -94,34 +94,40 @@ public class GAME {
 	 * Create the application.
 	 */
 	public GAME() {
-		//a timer function to control all things that need to be continuously updated as the game progresses
-		daily_events = new DailyEvents("any", 100); // change for gender and health in the future. Not Final.
-		 travelDistance = new TravelDistance(() -> {             // <-- TRIGGER daily event logic
-	            updateDayAndDistanceLabel();     // updates gui
-	            updateInventory();
-			    daily_events.weatherEvents();
-			    String todayWeather = daily_events.handleWeatherEvent(); // get weather string
-		        lblWeather.setText(todayWeather); // update label
-		        EventLogTextArea.append("" + travelDistance.date());
-		        //EventLogTextArea.append("You are " + dailyEvents.YoNSick + ". You are " + YorNRecovered + ". " + sicknessPenalty);
-		        
-		        //variables to be updated
-		        updateMilesLeftLabel();
-		        updateDateLabel();
-		        spinnerSpeed.addChangeListener(e -> {
-	            int speed = (Integer) spinnerSpeed.getValue();
-	            travelDistance.setPace(speed);
-	            //rations =  (int) spinnerRations.getValue();
-	            //System.out.println(rations); 
-		        });
-	        });
-		
-		initialize();
-		
-		btnContinue.addActionListener(e -> {
-			travelDistance.startTimer();
-		});
+	    // Initialize core game systems
+	    daily_events = new DailyEvents("any", 100); // Gender and health may change later
+	    initialize(); // Set up the GUI components
+
+	    // Set up spinner change listener once — outside the timer logic
+	    spinnerSpeed.addChangeListener(e -> {
+	        int speed = (Integer) spinnerSpeed.getValue();
+	        travelDistance.setPace(speed);
+	        //updateEventLog();
+	    });
+
+	    // Set up the TravelDistance system with its callback logic
+	    travelDistance = new TravelDistance(() -> {
+	        updateDayAndDistanceLabel();  // Update GUI for day and distance
+	        updateInventory();            // Update supply inventory
+
+	        // Run daily events (weather, sickness, penalties)
+	        daily_events.weatherEvents();
+
+	        // Display updated weather
+	        lblWeather.setText(daily_events.getCurrentWeather());
+
+	        // Log today's events
+	        updateEventLog();
+
+	        // Refresh additional data
+	        updateMilesLeftLabel();
+	        updateDateLabel();
+	    });
+
+	    // Hook up the "Continue" button to start the game loop
+	    btnContinue.addActionListener(e -> travelDistance.startTimer());
 	}
+
 
 	
 	/**
@@ -436,10 +442,9 @@ public class GAME {
 		lblEventLog.setFont(new Font("Serif", Font.PLAIN, 30));
 		EventLogPanel.add(lblEventLog);
 		
-		EventLogTextArea = new JTextArea();
+		EventLogTextArea = new JTextArea(10, 40); // 10 rows, 40 columns as example
 		EventLogTextArea.setBounds(10, 61, 288, 396);
 		EventLogPanel.add(EventLogTextArea);
-		EventLogTextArea = new JTextArea(10, 40); // 10 rows, 40 columns as example
 		EventLogTextArea.setEditable(false);       // user cannot edit the log
 		EventLogTextArea.setLineWrap(true);        // wrap lines nicely
 		EventLogTextArea.setWrapStyleWord(true);   // wrap at word boundaries
@@ -1031,9 +1036,10 @@ public class GAME {
 		    lblDate.setText(currentDate);
 	 }
 	 
+	 //update the inventory text area daily 
 	 private void updateInventory() {
 		 inventoryTextArea.setText(""); //reset the text area
-         inventory.loseSupply(rations); 
+         inventory.loseSupply(rations); //lose the daily amount of supplies
          String units; //string to format the units
          for (SupplyType supply : SupplyType.values()) {
         	 if(supply.equals(SupplyType.CASH))
@@ -1042,8 +1048,22 @@ public class GAME {
         		 units = "lbs"; 
         	 //format the string removing tailing 0s and creating columns 
         	 double value = Inventory.supplies.getOrDefault(supply, 0.0);
-        	 String amount = String.format("%-15s : %7.2f %s\n", supply.name(), value, units);
+        	 int space =  15 - supply.name().length(); 
+        	 String amount = String.format("%-" + space + "s : %7.2f %s\n", supply.name(), value, units);
              inventoryTextArea.append(amount); 
          }
 	 }
+	 
+	 //update the event log with the many events from dailyEvents
+	 private void updateEventLog() {
+		 //display starting from top to bottom
+		 EventLogTextArea.setText(""); //clear the text area
+		 EventLogTextArea.append("\n" + travelDistance.date()); 
+		 EventLogTextArea.append("\nHealth Status:   " + daily_events.getYorNSick()); //health status
+		 EventLogTextArea.append("\nRecovery Update: " + daily_events.getYorNRecovered()); 
+		 EventLogTextArea.append("\nPenalty        : " + daily_events.getPenalty()); 
+		 EventLogTextArea.append("\nSickness       : " + daily_events.getSickness()); 
+		
+	 }
+	 
 }

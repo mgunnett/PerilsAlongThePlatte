@@ -71,4 +71,47 @@ public class DailyEvents {
             return "Clear";
         }
     }
+    /**
+     * Gets the status of the player's sickness.
+     * @return a string stating the player's sickness status. 
+     */
+    public String getYorNSick() {
+        return YorNSick;
+    }
+
+    /**
+     * Gets the string representing if the player continues to be sick. 
+     * @return a string stating if the player continues to be sick. 
+     */
+    public String getYorNRecovered() {
+        return YorNRecovered;
+    }
+    
+    /**
+     * Gets the string representing the sickness penalty the player currently suffers from.
+     * @return a string stating if the player suffers from a penalty. 
+     */
+    public String getPenalty() {
+        return Penalty;
+    }
+    
+    
+    /**
+     * Get the string representing what sickness the player suffers from. 
+     * @return a string stating if the player suffers from a particular peril. 
+     */
+    public String getSickness() {
+        return Sickness;
+    }
+    
+    /**
+     * Get the string representing the current weather status. 
+     * @return a string containing the current weather status. 
+     */
+    public String getCurrentWeather() { 
+    	return currentWeather; 
+    	}
+
+    
+    
 }
