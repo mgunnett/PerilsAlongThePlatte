@@ -50,6 +50,7 @@ public class GAME {
 	JTextArea inventoryTextArea;
 	public boolean isMale = true;
 	JTextArea EventLogTextArea;
+	JLabel lblResult;
 	
 	//Hunting Game widgets
 	public JTextField txtFldResponse;
@@ -234,7 +235,7 @@ public class GAME {
 		btnTrade.setBounds(215, 369, 145, 110);
 		OptionsPanel.add(btnTrade);
 		
-		JLabel lblResult = new JLabel("");
+		lblResult = new JLabel("");
 		JButton btnHunt = new JButton("Hunt");
 		btnHunt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -266,49 +267,37 @@ public class GAME {
 				txtFldResponse = new JTextField();
 				//txtFldResponse.setText("");
 				txtFldResponse.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {					
-						timer.stop();
-						if (meat < 0) {
-							meat = 0;
-						}
-						String response = txtFldResponse.getText();
-						String response1 = response.trim();
-						if (response1.equalsIgnoreCase("bang")) {
-							if (meat > 0) {
-								lblResult.setText("You got " + meat + " meat.");
-							} else {
-								lblResult.setText("The deer ran away.");
-								//txtFldResponse.setText("");
-							}
-						} else {
-							lblResult.setText("You missed. :(");
-							//txtFldResponse.setText("");
-						}
-						closeGame = true;
-						txtFldResponse.setText("");
-						counter=0;
-						timer.stop();
-						
-						
-						travelDistance.resumeTimer();
-
-						//  Delay panel closing by 2 seconds (5000 milliseconds)
-						new Timer(2000, new ActionListener() {
-							@Override
-							public void actionPerformed(ActionEvent evt) {
-								txtFldResponse.setText("");
-								HuntingPanel.setVisible(false);
-								GamePanel.setVisible(true);
-								((Timer) evt.getSource()).stop(); // Stop the 5-second timer after it fires
-								closeGame = false;
-								txtFldResponse.setText("");
-								lblResult.setText("");
-								timer.restart();
-								lblNewLabel1.setText("");
-								meat = 0;
-							}
-						}).start();
-					}
+				    public void actionPerformed(ActionEvent e) {
+				        timer.stop();
+				        if (meat < 0) {
+				            meat = 0;
+				        }
+				        String response1 = txtFldResponse.getText().trim();
+				        if (response1.equalsIgnoreCase("bang")) {
+				            if (meat > 0) {
+				                lblResult.setText("You got " + meat + " meat.");
+				            } else {
+				                lblResult.setText("The deer ran away.");
+				            }
+				        } else {
+				            lblResult.setText("You missed. :(");
+				        }
+				        closeGame = true;
+				        txtFldResponse.setText("");
+				        counter = 0;
+				        timer.stop();
+				        travelDistance.resumeTimer();
+				        new Timer(2000, new ActionListener() {
+				            @Override
+				            public void actionPerformed(ActionEvent evt) {
+				                txtFldResponse.setText("");
+				                HuntingPanel.setVisible(false);
+				                GamePanel.setVisible(true);
+				                ((Timer) evt.getSource()).stop();
+				                closeGame = false;
+				            }
+				        }).start();
+				    }
 				});
 				txtFldResponse.setHorizontalAlignment(SwingConstants.CENTER);
 				txtFldResponse.setFont(new Font("Tahoma", Font.PLAIN, 30));
@@ -1065,5 +1054,14 @@ public class GAME {
 		 EventLogTextArea.append("\nSickness       : " + daily_events.getSickness()); 
 		
 	 }
+	 
+	 private void resetMinigame() {
+		    meat = 100;// some initial value
+		    counter = 0;
+		    closeGame = false;
+		    txtFldResponse.setText("");
+		    lblResult.setText("");
+		    lblNewLabel1.setText(""); // or whatever default
+		}
 	 
 }
