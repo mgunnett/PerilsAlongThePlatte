@@ -170,6 +170,13 @@ public class GAME {
 		StartingOptionsPanel.setLayout(null);
 		StartingOptionsPanel.setVisible(false);
 		
+		HuntingPanel = new JPanel();
+		HuntingPanel.setBackground(new Color(154, 128, 71));
+		HuntingPanel.setBounds(100, 100, 450, 300);
+		frame.getContentPane().add(HuntingPanel);
+		HuntingPanel.setLayout(null);
+		HuntingPanel.setVisible(false);
+		
 		JPanel OptionsPanel = new JPanel();
 		OptionsPanel.setLayout(null);
 		OptionsPanel.setBackground(new Color(154, 128, 71));
@@ -512,15 +519,6 @@ public class GAME {
 		lblDaysPassed.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblDaysPassed.setBounds(200, -3, 153, 39);
 		GamePanel.add(lblDaysPassed);
-		
-
-		
-		HuntingPanel = new JPanel();
-		HuntingPanel.setBackground(new Color(154, 128, 71));
-		HuntingPanel.setBounds(100, 100, 450, 300);
-		frame.getContentPane().add(HuntingPanel);
-		HuntingPanel.setLayout(null);
-		HuntingPanel.setVisible(false);
 		
 		txtPlayer1Name = new JTextField();
 		txtPlayer1Name.setFont(new Font("Serif", Font.PLAIN, 30));
