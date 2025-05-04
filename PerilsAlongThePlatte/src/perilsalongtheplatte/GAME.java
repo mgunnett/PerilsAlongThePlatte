@@ -51,6 +51,14 @@ public class GAME {
 	public boolean isMale = true;
 	JTextArea EventLogTextArea;
 	JLabel lblResult;
+	JLabel lblImageHolder;
+	
+	//Weather Images
+	ImageIcon sunnyIcon = new ImageIcon(getClass().getResource("/Images/Sunny.PNG"));
+	ImageIcon rainyIcon = new ImageIcon(getClass().getResource("/Images/Rainy.PNG"));
+	ImageIcon snowyIcon = new ImageIcon(getClass().getResource("/Images/Snowy.PNG"));
+	ImageIcon windyIcon = new ImageIcon(getClass().getResource("/Images/Windy.PNG"));
+	ImageIcon stormyIcon = new ImageIcon(getClass().getResource("/Images/Stormy.PNG"));
 	
 	//Hunting Game widgets
 	public JTextField txtFldResponse;
@@ -116,6 +124,13 @@ public class GAME {
 
 	        // Display updated weather
 	        lblWeather.setText(daily_events.getCurrentWeather());
+	        
+	        // Variable to update weather picture
+	        String weather = daily_events.getCurrentWeather();
+	        lblWeather.setText(weather);
+	        
+	        // Update weather image
+	        updateWeatherImage(weather);
 
 	        // Log today's events
 	        updateEventLog();
@@ -141,15 +156,7 @@ public class GAME {
 		frame.setBounds(100, 100, 1300, 726);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-	
-		JPanel ShopPanel = new JPanel();
-		ShopPanel.setBackground(new Color(156, 123, 82));
-		ShopPanel.setBounds(0, -3, 1283, 702);
-		frame.getContentPane().add(ShopPanel);
-		ShopPanel.setLayout(null);
-		ShopPanel.setVisible(false);
-		
-		
+
 		GamePanel = new JPanel();
 		GamePanel.setBackground(new Color(0, 0, 0));
 		GamePanel.setBounds(0, 0, 1283, 699);
@@ -157,11 +164,17 @@ public class GAME {
 		GamePanel.setLayout(null);
 		GamePanel.setVisible(false);
 		
-		ImageIcon RainyImageIcon = new ImageIcon("PerilsAlongThePlatte/src/images/Rainy.PNG");
+		JPanel ShopPanel = new JPanel();
+		ShopPanel.setBackground(new Color(156, 123, 82));
+		ShopPanel.setBounds(0, -3, 1283, 702);
+		frame.getContentPane().add(ShopPanel);
+		ShopPanel.setLayout(null);
+		ShopPanel.setVisible(false);
 		
-		JLabel lblImageHolder = new JLabel(RainyImageIcon);
-		lblImageHolder.setBounds(615, 17, 508, 161);
+		lblImageHolder = new JLabel();
+		lblImageHolder.setBounds(684, -3, 661, 201);
 		GamePanel.add(lblImageHolder);
+		GamePanel.repaint();
 		
 		StartingOptionsPanel = new JPanel();
 		StartingOptionsPanel.setBounds(0, 0, 1283, 688);
@@ -1062,4 +1075,27 @@ public class GAME {
 		    lblNewLabel1.setText(""); // or whatever default
 		}
 	 
+	 private void updateWeatherImage(String weather) {
+		    switch (weather) {
+		        case "Sunny":
+		            lblImageHolder.setIcon(sunnyIcon);
+		            break;
+		        case "Rainy":
+		            lblImageHolder.setIcon(rainyIcon);
+		            break;
+		        case "Windy":
+		            lblImageHolder.setIcon(windyIcon);
+		            break;
+		        case "Thunderstorms":
+		            lblImageHolder.setIcon(stormyIcon);
+		            break;
+		        case "Snowy":
+		            lblImageHolder.setIcon(snowyIcon);
+		            break;
+		        default:
+		            lblImageHolder.setIcon(sunnyIcon); // I NEED A CLEAR PICTURE!!!!
+		            break;
+		    }
+		    lblImageHolder.repaint(); // Ensure it redraws
+		}
 }
