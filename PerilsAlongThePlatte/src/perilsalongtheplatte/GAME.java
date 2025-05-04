@@ -104,7 +104,7 @@ public class GAME {
 	 */
 	public GAME() {
 	    // Initialize core game systems
-	    daily_events = new DailyEvents("any", 100); // Gender and health may change later
+	    daily_events = new DailyEvents("any", 100, pace); // Gender and health may change later
 	    initialize(); // Set up the GUI components
 
 	    // Set up spinner change listener once — outside the timer logic

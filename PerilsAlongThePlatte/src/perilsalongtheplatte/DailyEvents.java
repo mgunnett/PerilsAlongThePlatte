@@ -3,6 +3,8 @@ package perilsalongtheplatte;
 import java.util.Random;
 
 public class DailyEvents {
+	
+	private TravelDistance travelDistance;
 
     private String playerGender;
     private final double WEATHER_EVENT_PROBABILITY = 0.3; // 30%
@@ -20,12 +22,13 @@ public class DailyEvents {
 
     private final String[] weatherEvents = {"Sunny", "Rainy", "Windy", "Thunderstorms", "Snowy"};
 
-    public DailyEvents(String gender, int health) {
+    public DailyEvents(String gender, int health, TravelDistance travelDistance) {
         this.playerGender = gender.toLowerCase();
         this.playerHealth = health;
         this.random = new Random();
         this.perils = new Perils();
         this.isSick = false; // default player health state
+        this.travelDistance = travelDistance;
     }
 
     /**
@@ -112,6 +115,12 @@ public class DailyEvents {
     	return currentWeather; 
     	}
 
-    
+    /**
+     * Gets just the month name from the date() method in TravelDistance
+     * @return a string containing the current month
+     * */
+//    private String extractMonth(String dateStr) {
+//        return dateStr.split(" ")[0];
+//    }
     
 }
