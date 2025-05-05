@@ -1091,7 +1091,7 @@ public class GAME {
 		 EventLogTextArea.append("\nSickness       : " + daily_events.getSickness()); 
 		
 	 }
-	 
+	 //jdajf
 	 private void resetMinigame() {
 		    meat = 100;// some initial value
 		    counter = 0;
