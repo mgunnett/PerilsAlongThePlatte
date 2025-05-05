@@ -199,7 +199,7 @@ public class GAME {
 		JPanel OptionsPanel = new JPanel();
 		OptionsPanel.setLayout(null);
 		OptionsPanel.setBackground(new Color(154, 128, 71));
-		OptionsPanel.setBounds(38, 198, 1212, 490);
+		OptionsPanel.setBounds(25, 189, 1212, 490);
 		GamePanel.add(OptionsPanel);
 		
 		spinnerSpeed = new JSpinner(new SpinnerNumberModel(1,1,3,1));
@@ -470,18 +470,70 @@ public class GAME {
 		EventLogTextArea.setLineWrap(true);        // wrap lines nicely
 		EventLogTextArea.setWrapStyleWord(true);   // wrap at word boundaries
 		
-		JLabel lblConstOverallGroupHealth = new JLabel("Overall Group Health:");
-		lblConstOverallGroupHealth.setHorizontalAlignment(SwingConstants.LEFT);
-		lblConstOverallGroupHealth.setForeground(Color.BLACK);
-		lblConstOverallGroupHealth.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblConstOverallGroupHealth.setBounds(12, 156, 350, 32);
-		OptionsPanel.add(lblConstOverallGroupHealth);
+		JLabel lblPlayer1NameHealth = new JLabel("Name1 Health:");
+		lblPlayer1NameHealth.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPlayer1NameHealth.setForeground(Color.BLACK);
+		lblPlayer1NameHealth.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblPlayer1NameHealth.setBounds(12, 143, 216, 32);
+		OptionsPanel.add(lblPlayer1NameHealth);
 		
-		JLabel lblOverallGroupHealth = new JLabel("");
-		lblOverallGroupHealth.setForeground(Color.BLACK);
-		lblOverallGroupHealth.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblOverallGroupHealth.setBounds(281, 156, 153, 32);
-		OptionsPanel.add(lblOverallGroupHealth);
+		JLabel lblName1HealthValue = new JLabel("");
+		lblName1HealthValue.setForeground(Color.BLACK);
+		lblName1HealthValue.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblName1HealthValue.setBounds(215, 143, 153, 32);
+		OptionsPanel.add(lblName1HealthValue);
+		
+		JLabel lblPlayer2NameHealth = new JLabel("Name2 Health:");
+		lblPlayer2NameHealth.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPlayer2NameHealth.setForeground(Color.BLACK);
+		lblPlayer2NameHealth.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblPlayer2NameHealth.setBounds(12, 184, 216, 32);
+		OptionsPanel.add(lblPlayer2NameHealth);
+		
+		JLabel lblPlayer3NameHealth = new JLabel("Name3 Health:");
+		lblPlayer3NameHealth.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPlayer3NameHealth.setForeground(Color.BLACK);
+		lblPlayer3NameHealth.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblPlayer3NameHealth.setBounds(12, 227, 216, 32);
+		OptionsPanel.add(lblPlayer3NameHealth);
+		
+		JLabel lblPlayer4NameHealth = new JLabel("Name4 Health:");
+		lblPlayer4NameHealth.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPlayer4NameHealth.setForeground(Color.BLACK);
+		lblPlayer4NameHealth.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblPlayer4NameHealth.setBounds(12, 270, 216, 32);
+		OptionsPanel.add(lblPlayer4NameHealth);
+		
+		JLabel lblPlayer5NameHealth = new JLabel("Name5 Health:");
+		lblPlayer5NameHealth.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPlayer5NameHealth.setForeground(Color.BLACK);
+		lblPlayer5NameHealth.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblPlayer5NameHealth.setBounds(12, 313, 216, 32);
+		OptionsPanel.add(lblPlayer5NameHealth);
+		
+		JLabel lblName2HealthValue = new JLabel("");
+		lblName2HealthValue.setForeground(Color.BLACK);
+		lblName2HealthValue.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblName2HealthValue.setBounds(215, 186, 153, 32);
+		OptionsPanel.add(lblName2HealthValue);
+		
+		JLabel lblName3HealthValue = new JLabel("");
+		lblName3HealthValue.setForeground(Color.BLACK);
+		lblName3HealthValue.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblName3HealthValue.setBounds(215, 227, 153, 32);
+		OptionsPanel.add(lblName3HealthValue);
+		
+		JLabel lblName4HealthValue = new JLabel("");
+		lblName4HealthValue.setForeground(Color.BLACK);
+		lblName4HealthValue.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblName4HealthValue.setBounds(215, 270, 153, 32);
+		OptionsPanel.add(lblName4HealthValue);
+		
+		JLabel lblName5HealthValue = new JLabel("");
+		lblName5HealthValue.setForeground(Color.BLACK);
+		lblName5HealthValue.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblName5HealthValue.setBounds(215, 313, 153, 32);
+		OptionsPanel.add(lblName5HealthValue);
 		
 		JLabel lblConstDistanceUntilNext = new JLabel("Distance Until Next Landmark:");
 		lblConstDistanceUntilNext.setForeground(Color.WHITE);
@@ -1134,6 +1186,4 @@ public class GAME {
 			        	System.out.println(p.getName() + " has died. ");
 		 }
 		}
-	 
-	 
 }
