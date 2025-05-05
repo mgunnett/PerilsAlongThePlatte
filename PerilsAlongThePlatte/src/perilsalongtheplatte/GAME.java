@@ -80,6 +80,7 @@ public class GAME {
 	private HealthPool health = new HealthPool();
 	//declare global variables to be stored within the class
 	 public int rations; //stores the rations value, a number ranged [1-3]
+	 private String weather; //stores the current weather
 	
 	
 	
@@ -127,7 +128,7 @@ public class GAME {
 	        lblWeather.setText(daily_events.getCurrentWeather());
 	        
 	        // Variable to update weather picture
-	        String weather = daily_events.getCurrentWeather();
+	        weather = daily_events.getCurrentWeather();
 	        lblWeather.setText(weather);
 	        
 	        // Update weather image
