@@ -77,10 +77,13 @@ public class GAME {
 	private DailyEvents daily_events;
 	private TravelDistance pace;	
 	private Inventory inventory;
-	private HealthPool health = new HealthPool();
+	private Party party = new Party(); 
+	
+	//private HealthPool health = new HealthPool();
 	//declare global variables to be stored within the class
 	 public int rations; //stores the rations value, a number ranged [1-3]
 	 private String weather; //stores the current weather
+	 boolean isResting = false; 
 	
 	
 	
@@ -106,7 +109,8 @@ public class GAME {
 	 */
 	public GAME() {
 	    // Initialize core game systems
-	    daily_events = new DailyEvents("any", 100, pace); // Gender and health may change later
+		 daily_events = new DailyEvents(100, pace, party); // Gender and health may change later
+
 	    initialize(); // Set up the GUI components
 
 	    // Set up spinner change listener once — outside the timer logic
@@ -122,7 +126,7 @@ public class GAME {
 	        updateInventory();            // Update supply inventory
 
 	        // Run daily events (weather, sickness, penalties)
-	        daily_events.weatherEvents();
+	        daily_events.updateEvents();
 
 	        // Display updated weather
 	        lblWeather.setText(daily_events.getCurrentWeather());
@@ -233,16 +237,18 @@ public class GAME {
 		JButton btnRest = new JButton("Rest");
 		btnRest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				  travelDistance.pauseTimer();
+				 travelDistance.pauseTimer();
 				  int restDays = popup.restDays(); // show popup and get input
-				  boolean isResting = true; //boolean status of resting 
+				  isResting = true; //boolean status of resting 
 				  if (restDays > 0) {
 					    travelDistance.startRest(restDays);
-					    health.setRestStatus(isResting);
+					   //set resting status here
+					    party.changeHealth(isResting); //make sure values update when resting
 				  }
 				  isResting = false; 
-				  health.setRestStatus(isResting);
 				  travelDistance.resumeTimer();
+
+
 			}
 		});
 		btnRest.setFont(new Font("Serif", Font.PLAIN, 35));
@@ -609,6 +615,20 @@ public class GAME {
 		btnContinue.setBackground(new Color(220, 207, 180));
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//create objects of the Party class and assign Pioneer objects a name
+				Pioneer person1 = new Pioneer(lblCPlayer1Name.getText());
+				Pioneer person2 = new Pioneer(lblCPlayer2Name.getText());
+				Pioneer person3 = new Pioneer(lblCPlayer3Name.getText());
+				Pioneer person4 = new Pioneer(lblCPlayer4Name.getText());
+				Pioneer person5 = new Pioneer(lblCPlayer5Name.getText());
+				//add each pioneer into the Party class
+				party.addPioneer(person1);
+				party.addPioneer(person2);
+				party.addPioneer(person3);
+				party.addPioneer(person4);
+				party.addPioneer(person5);
+				
+				
 				 int currentPace = (Integer) spinnerSpeed.getValue();
 				    travelDistance.setPace(currentPace);
 				    travelDistance.startTimer();
@@ -1045,7 +1065,7 @@ public class GAME {
 	 //update the inventory text area daily 
 	 private void updateInventory() {
 		 inventoryTextArea.setText(""); //reset the text area
-         inventory.loseSupply(rations); //lose the daily amount of supplies
+		 inventory.loseSupply(rations, party.isAnyoneSick(), party.isAnyoneDead(), party.getPartySize()); //lose the daily amount of supplies
          String units; //string to format the units
          for (SupplyType supply : SupplyType.values()) {
         	 if(supply.equals(SupplyType.CASH))
@@ -1105,10 +1125,15 @@ public class GAME {
 		    lblImageHolder.repaint(); // Ensure it redraws
 		}
 	 
-	 //a method to call other methods to update the health of each pioneer
-	 private void updateHealth() {
-		 
-	 }
+	//a method to call other methods to update the health of each pioneer
+		 private void updatePartyHealth() {
+			 party.changeHealth(isResting);
+			 for (Pioneer p : party.getParty()) {
+			        System.out.println(p.getName() + "Health: " + p.getHealth());
+			        if (p.getDeathStatus())
+			        	System.out.println(p.getName() + " has died. ");
+		 }
+		}
 	 
 	 
 }

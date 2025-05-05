@@ -22,8 +22,7 @@ public class Inventory {
 	private Map<SupplyType, Double> death = new EnumMap<>(SupplyType.class);
 	
 	//other class objects
-	GAME game = new GAME(); //access to key variables...
-	HealthPool health = new HealthPool();
+	//GAME game = new GAME(); //access to key variables..
 	//now with each value created within a map, a constructor is needed to initialize the map
 	public Inventory() {
 		//utilizing a for each loop...
@@ -93,7 +92,7 @@ public class Inventory {
 
 				//check what the player chose
 				if (result == JOptionPane.YES_OPTION) { //if yes is pressed
-				  husbandBuySupplies(game.isMale); 
+				  husbandBuySupplies(isMale); 
 				} 
 		}
 	}
@@ -242,9 +241,9 @@ public class Inventory {
 	 * maps to change the value of each lost supply based on different events, such as weather, etc. 
 	 * @param rations The rations amount the user selects within the GUI, a range of [1-3]. 
 	 */
-	public void loseSupply(int rations) {
+	public void loseSupply(int rations, boolean isSomeoneSick, boolean isSomeoneDead, int partySize) {
 		//initialize each usage amount
-		supplyCalculator(); 
+		supplyCalculator(partySize); 
 	
 		//create variables to help with supply calculations
 		double multiplier; //a multiplier to multiply the daily supply usage with; based on rations construct
@@ -253,8 +252,7 @@ public class Inventory {
 		case 3:  multiplier = 2.0; break; //if 3, use 2.0x more
 		default: multiplier = 1.0; break; //(assuming default of 1) use 1.0x supplies
 		}
-		boolean isSomeoneDead = !health.whoIsDead.isEmpty();
-		boolean isSomeoneSick = health.isAnyoneSick();
+		
 		if (isSomeoneDead && isSomeoneSick) { //check if the dead person list has an entry and if someone is sick
 			for (SupplyType supply : SupplyType.values()) 
 				supplies.put(supply, supplies.get(supply) - ((death.get(supply) + sicknessInjury.get(supply) * multiplier)));
@@ -281,7 +279,7 @@ public class Inventory {
 	}
 	
 	//helper method to declare and contain all Maps associated with different weather events
-	private void supplyCalculator() {
+	private void supplyCalculator(int partySize) {
 		//initializes the default usage map
 		defaultUsage.clear();
 		death.clear();
@@ -306,7 +304,7 @@ public class Inventory {
 			
 		//death map initialization
 		double multiplier = 1.0;
-		int alive = health.personName.size(); //uses an array to check how many are alive
+		int alive = partySize; //uses an array to check how many are alive
 		if (alive == 4) 
 			multiplier = 0.8; //use 20% less supplies
 		else if (alive == 3) 
