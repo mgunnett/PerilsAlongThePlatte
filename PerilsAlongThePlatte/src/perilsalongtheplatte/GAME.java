@@ -77,6 +77,7 @@ public class GAME {
 	private DailyEvents daily_events;
 	private TravelDistance pace;	
 	private Inventory inventory;
+	private HealthPool health = new HealthPool();
 	//declare global variables to be stored within the class
 	 public int rations; //stores the rations value, a number ranged [1-3]
 	
@@ -233,9 +234,13 @@ public class GAME {
 			public void actionPerformed(ActionEvent e) {
 				  travelDistance.pauseTimer();
 				  int restDays = popup.restDays(); // show popup and get input
+				  boolean isResting = true; //boolean status of resting 
 				  if (restDays > 0) {
 					    travelDistance.startRest(restDays);
+					    health.setRestStatus(isResting);
 				  }
+				  isResting = false; 
+				  health.setRestStatus(isResting);
 				  travelDistance.resumeTimer();
 			}
 		});
@@ -1047,7 +1052,7 @@ public class GAME {
         	 else
         		 units = "lbs"; 
         	 //format the string removing tailing 0s and creating columns 
-        	 double value = Inventory.supplies.getOrDefault(supply, 0.0);
+        	 double value = inventory.getSupply(supply);
         	 int space =  15 - supply.name().length(); 
         	 String amount = String.format("%-" + space + "s : %7.2f %s\n", supply.name(), value, units);
              inventoryTextArea.append(amount); 
@@ -1098,4 +1103,11 @@ public class GAME {
 		    }
 		    lblImageHolder.repaint(); // Ensure it redraws
 		}
+	 
+	 //a method to call other methods to update the health of each pioneer
+	 private void updateHealth() {
+		 
+	 }
+	 
+	 
 }

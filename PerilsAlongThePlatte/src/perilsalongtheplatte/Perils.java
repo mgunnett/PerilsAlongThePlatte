@@ -17,7 +17,7 @@ public class Perils {
 	 * @param personHealth checks the health of the pioneer
 	 * @return true or false based off of if the pioneer gets sick or not
 	 */
-	public Boolean getsSick( int personHealth, boolean isSickORNot ) {
+	public boolean getsSick( int personHealth, boolean isSickORNot ) {
 		int chance = rng.nextInt(101);
 		int sickChance = 0;
 		if (personHealth > 90) { sickChance = 5; }
@@ -59,9 +59,6 @@ public class Perils {
 	 * @return an integer that correlates to a sickness
 	 */
 	public Integer sicknessPenalty(Boolean gotSick, String weather) {
-		// TODO Auto-generated method stub
-		
-		
 		if (gotSick) {
 			int chance = rng.nextInt(101);	
 			if (chance > 90) { sickness = "fever"; }
@@ -157,22 +154,5 @@ public class Perils {
 		
 	}
 	
-	/*
-	 * 
-	
-                   |`\__/ /
-                   \  . .(
-                    | __T|
-                   /   |
-      _.---======='    |
-     //               {}
-    `|      ,   ,     {}
-     \      /___;    ,'
-      ) ,-;`    `\  //
-     | / (        ;||
-     ||`\\        |||
-     ||  \\       |||
-     )\   )\      )||
-     `"   `"      `""
-	 */
+
 }

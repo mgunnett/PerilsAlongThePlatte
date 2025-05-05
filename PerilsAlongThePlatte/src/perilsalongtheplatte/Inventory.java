@@ -15,7 +15,7 @@ import javax.swing.*;
 public class Inventory {
 	//in order to associate a value with the corresponding enum, a enumMap will be used to associate a value (the amount)
 	//with its corresponding enum
-	public static Map<SupplyType, Double> supplies = new EnumMap<>(SupplyType.class); 
+	private static Map<SupplyType, Double> supplies = new EnumMap<>(SupplyType.class); 
 	//creating several enum maps for different perils
 	private Map<SupplyType, Double> defaultUsage = new EnumMap<>(SupplyType.class); 
 	private Map<SupplyType, Double> sicknessInjury = new EnumMap<>(SupplyType.class);
