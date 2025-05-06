@@ -274,6 +274,29 @@ public class GAME {
 		frame.getContentPane().add(HuntingPanel);
 		HuntingPanel.setLayout(null);
 		HuntingPanel.setVisible(false);
+		lblNewLabel1 = new JLabel("Time");
+		lblNewLabel1.setBounds(338, 122, 49, 14);
+		HuntingPanel.add(lblNewLabel1);
+		// label to store the player's result
+		lblResult = new JLabel("");
+		lblResult.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResult.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblResult.setBounds(217, 159, 209, 35);
+		HuntingPanel.add(lblResult);
+		txtFldResponse = new JTextField();
+		txtFldResponse.setHorizontalAlignment(SwingConstants.CENTER);
+		txtFldResponse.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		txtFldResponse.setBounds(170, 224, 96, 35);
+		HuntingPanel.add(txtFldResponse);
+		txtFldResponse.setColumns(10);
+		lblBang2Shoot = new JLabel("Type BANG to shoot");
+		lblBang2Shoot.setFont(new Font("Tw Cen MT", Font.BOLD, 25));
+		lblBang2Shoot.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBang2Shoot.setBounds(109, 11, 218, 24);
+		HuntingPanel.add(lblBang2Shoot);
+		
+		
+		
 		
 		// OptionsPanel that is attached to the GamePanel. Allows for resting, trading, etc.
 		JPanel OptionsPanel = new JPanel();
@@ -363,7 +386,7 @@ public class GAME {
 		OptionsPanel.add(btnTrade);
 		
 		// Button that essentially controls the hunting minigame.
-		lblResult = new JLabel("");
+		
 		JButton btnHunt = new JButton("Hunt");
 		btnHunt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -377,20 +400,8 @@ public class GAME {
 				// starts the timer count to determine how fast user types "bang"
 				timer.start();
 				
-				lblBang2Shoot = new JLabel("Type BANG to shoot");
-				lblBang2Shoot.setFont(new Font("Tw Cen MT", Font.BOLD, 25));
-				lblBang2Shoot.setHorizontalAlignment(SwingConstants.CENTER);
-				lblBang2Shoot.setBounds(109, 11, 218, 24);
-				HuntingPanel.add(lblBang2Shoot);
 				
-				// label to store the player's result
-				lblResult.setText("");
-				lblResult.setHorizontalAlignment(SwingConstants.CENTER);
-				lblResult.setFont(new Font("Tahoma", Font.PLAIN, 15));
-				lblResult.setBounds(217, 159, 209, 35);
-				HuntingPanel.add(lblResult);
 				
-				txtFldResponse = new JTextField();
 				//txtFldResponse.setText("");
 				txtFldResponse.addActionListener(new ActionListener() {
 				    public void actionPerformed(ActionEvent e) {
@@ -410,11 +421,12 @@ public class GAME {
 				                lblResult.setText("The deer ran away.");
 				            }
 				        } else {
-				            lblResult.setText("You missed. :(");
+				            lblResult.setText("You got " + meat + " meat.");
 				        }
 				        // resetting labels and the timer so you can play again in the future
 				        closeGame = true;
 				        txtFldResponse.setText("");
+				        //lblResult.setText("");
 				        counter = 0;
 				        inventory.addSupply(SupplyType.AMMO, -5.0); //lose ammunition if you hunt
 				        timer.stop();
@@ -424,23 +436,17 @@ public class GAME {
 				            @Override
 				            public void actionPerformed(ActionEvent evt) {
 				                txtFldResponse.setText("");
+				                lblResult.setText("");
+				                
 				                HuntingPanel.setVisible(false);
 				                GamePanel.setVisible(true);
+				                meat = 100;
 				                ((Timer) evt.getSource()).stop();
 				                closeGame = false;
 				            }
 				        }).start();
 				    }
 				});
-				txtFldResponse.setHorizontalAlignment(SwingConstants.CENTER);
-				txtFldResponse.setFont(new Font("Tahoma", Font.PLAIN, 30));
-				txtFldResponse.setBounds(170, 224, 96, 35);
-				HuntingPanel.add(txtFldResponse);
-				txtFldResponse.setColumns(10);
-				
-				lblNewLabel1 = new JLabel("Time");
-				lblNewLabel1.setBounds(338, 122, 49, 14);
-				HuntingPanel.add(lblNewLabel1);
 				
 
 				// the following are for the ASCII deer display
