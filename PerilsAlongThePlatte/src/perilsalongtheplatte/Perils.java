@@ -86,7 +86,7 @@ public class Perils {
      * @param isSick Boolean status of a person's sickness status. 
      * @return The enum a person suffers from based on chance. 
      */
-    public Sickness determineIfSick(Weather weather, int rations, int speed, boolean isSick) {
+    public Sickness determineIfSick(String weather, int rations, int speed, boolean isSick) {
     	if (isSick) { //only determine what sickness a person suffers from if they are sick
 	        int roll = rng.nextInt(100); //generate the random number
 	        if (roll >= 90) 
@@ -101,9 +101,9 @@ public class Perils {
 	        	return Sickness.FOOD_POISONING; 		 //5% chance
 	        if (roll >= 60)
 	        	return Sickness.FLU; //10% chance
-	        if (roll >= 50 && weather == Weather.SUNNY)   //needs to be sunny to get hot
+	        if (roll >= 50 && weather == "Sunny")   //needs to be sunny to get hot
 	        	return Sickness.HYPERTHERMIA; 		     //10% chance
-	        if (roll >= 50 && weather == Weather.SNOWY)  //needs to be snowy to get cold
+	        if (roll >= 50 && weather == "Snowy")  //needs to be snowy to get cold
 	        	return Sickness.HYPOTHERMIA; 		     //10% chance 
 	        if (roll >= 30) 
 	        	return Sickness.CHOLERA; 				 //20% chance, most common and most deadly peril
