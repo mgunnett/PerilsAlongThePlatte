@@ -28,7 +28,7 @@ import javax.swing.SwingUtilities;
 
 
 public class GAME {
-	//create objects of the class, including each widget
+	//UI widgets
 	private JFrame frame;
 	private JTextField txtPlayer1Name;
 	private JTextField txtPlayer2Name;
@@ -44,11 +44,10 @@ public class GAME {
 	JPanel StartingOptionsPanel;
 	JLabel lblRations;
 	JSpinner spinnerRations;
-	public JSpinner spinnerSpeed;
+	JSpinner spinnerSpeed;
 	JLabel lblDistanceUntilNextLandmark;
-	private JLabel lblDate;
+	JLabel lblDate;
 	JTextArea inventoryTextArea;
-	public boolean isMale = true;
 	JTextArea EventLogTextArea;
 	JLabel lblResult;
 	JLabel lblImageHolder;
@@ -57,38 +56,39 @@ public class GAME {
 	JLabel lblName3HealthValue;
 	JLabel lblName4HealthValue;
 	JLabel lblName5HealthValue;
-	
-	//Weather Images
+	private boolean isMale = true;
+
+	//weather icons
 	ImageIcon sunnyIcon = new ImageIcon(getClass().getResource("/Images/Sunny.PNG"));
 	ImageIcon rainyIcon = new ImageIcon(getClass().getResource("/Images/Rainy.PNG"));
 	ImageIcon snowyIcon = new ImageIcon(getClass().getResource("/Images/Snowy.PNG"));
 	ImageIcon windyIcon = new ImageIcon(getClass().getResource("/Images/Windy.PNG"));
 	ImageIcon stormyIcon = new ImageIcon(getClass().getResource("/Images/Stormy.PNG"));
-	
-	//Hunting Game widgets
-	public JTextField txtFldResponse;
-	public ImageIcon icon;
-	public JLabel lblBang2Shoot;
-	public Timer timer;
-	public JLabel imageHolder;
-	public JLabel lblNewLabel1;
+
+	//hunting game widgets
+	private JTextField txtFldResponse;
+	private ImageIcon icon;
+	private JLabel lblBang2Shoot;
+	private Timer timer;
+	private JLabel imageHolder;
+	private JLabel lblNewLabel1;
 	private int counter = 0;
-	public int meat = 100;
-	public boolean closeGame = false;
-	
-	//create objects of each of our custom classes
+	private int meat = 100;
+	private boolean closeGame = false;
+
+	//custom game class instances
 	private Popups popup = new Popups(); 
 	private TravelDistance travelDistance;
 	private DailyEvents daily_events;
-	private TravelDistance pace;	
-	private Inventory inventory = new Inventory(); ;
-	private Party party = new Party(inventory); 
-	
-	//private HealthPool health = new HealthPool();
-	//declare global variables to be stored within the class
-	 public int rations; //stores the rations value, a number ranged [1-3]
-	 private String weather; //stores the current weather
-	 boolean isResting = false; 
+	private TravelDistance pace;
+	private Inventory inventory = new Inventory();
+	private Party party = new Party(inventory);
+
+	//game state variables
+	private int rations; //stores the rations value, a number ranged [1-3]
+	private String weather; //stores the current weather
+	boolean isResting = false;
+
 	
 	
 	
@@ -159,7 +159,7 @@ public class GAME {
 	        //check if the game ends
 	        checkIfGameIsDone();
 	        System.out.println("loop ran!");
-	    }, party);
+	    });
 
 	    // Hook up the "Continue" button to start the game loop
 	    btnContinue.addActionListener(e -> travelDistance.startTimer());

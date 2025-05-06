@@ -9,20 +9,16 @@ public class TravelDistance {
 		public int day = 0;
 		public int pace = 0;
 		public String date = "";
-		private int dayTime = 0;
 		private int distance = 0;
 		private boolean isStopped = false;
 		public String landmark = "None"; 
 		private Timer dayTimer;
 		private Random random = new Random();
-		private Popups popup = new Popups(); 
-		private Party party; 
-		private GAME game;
+		private Popups popup = new Popups();
 		private final int[] landmarkRangeStarts = {70, 130, 355, 610, 680};
 		private final int[] landmarkRangeEnds = {85, 145, 370, 625, 700};
 		private final String[] landmarkNames = {
-			    "Kansas River", "Big Blue River", "Fort Kearny", "Chimney Rock", "Fort Loramie"
-			};
+			    "Kansas River", "Big Blue River", "Fort Kearny", "Chimney Rock", "Fort Loramie"};
 		private boolean resting = false;
 	    private int restDaysRemaining = 0; // to track rest days left
 		
@@ -31,10 +27,9 @@ public class TravelDistance {
 	 * @param updateCallback - allows you to "callback" to the function to set a label in the GUI
 	 */
 		
-	    public TravelDistance(Runnable updateCallback, Party party) {
+	    public TravelDistance(Runnable updateCallback) {
 	        int delay = 3000; // This is 3 seconds for each in-game day
-	        int speed = 2;
-	        this.party = party; 
+	        //int speed = 2; 
 	        dayTimer = new Timer(delay, null);
 	        dayTimer.setRepeats(false); // this makes sure the timer resets
 
@@ -90,11 +85,19 @@ public class TravelDistance {
 	        });
 	    }
 	
+	/**
+	 * Sets the pace of the travel.
+	 * @param pace - the pace value (1-3)
+	 */
 	public void setPace(int pace) {
 	    // validate pace if needed here
 	    this.pace = pace;
 	}
 	
+	/**
+	 * Starts the rest period for the specified number of days.
+	 * @param daysToRest The number of days to rest
+	 */
 	public void startRest(int daysToRest) {
 	    if (daysToRest > 0) {
 	        resting = true;
@@ -103,11 +106,18 @@ public class TravelDistance {
 	    }
 	}
 	
+	/**
+	 * Returns whether the player is currently resting.
+	 * @return True if resting, false otherwise
+	 */
 	public boolean isResting() {
 	    return resting;
 	}
 	
-	// For the date code
+	/**
+	 * Gets the current date in the format "Month Day, Year".
+	 * @return a string representation of the current date
+	 */
 	public String date() {
 		String month = "";
 		int dayDate = 0;
@@ -160,6 +170,9 @@ public class TravelDistance {
 		return date;
 	}
 	
+	/**
+	 * Pauses the travel timer.
+	 */
 	public void pauseTimer() {
 		isStopped = true;
 	    if (dayTimer != null && dayTimer.isRunning()) {
@@ -167,7 +180,9 @@ public class TravelDistance {
 	    }
     }
     
-    // call this to resume the timer
+    /**
+	 * Resumes the travel timer if it was paused.
+	 */
     public void resumeTimer() {
     	if (isStopped) {
             isStopped = false;
@@ -177,31 +192,40 @@ public class TravelDistance {
         }
     }
 
-
+	/**
+	 * Starts the travel timer.
+	 */
 	public void startTimer() {
 		dayTimer.start();
 	}
 	
 	/**
 	 * Tracks the current distance traveled.
-	 * */
+	 * @return The current distance traveled
+	 */
 	public int distanceTraveled() {
 		return distance;
 	}
 	
 	/**
 	 * Tracks the number of days traveled.
-	 * */
+	 * @return the number of days traveled
+	 */
 	public int daysTraveled() {
 	   return day;
 	}
 
-	// Can later on be used to help with resting
-	public void stopTravel() { //bool?
+	/**
+	 * Stops the travel and the timer.
+	 */
+	public void stopTravel() { 
 		isStopped = true;
 		dayTimer.stop();
 	}
 	
+	/**
+	 * Resumes the travel and the timer.
+	 */
 	public void resumeTravel() {
 		if (isStopped) {
 			isStopped = false;
@@ -209,6 +233,10 @@ public class TravelDistance {
 		}
 	}
 	
+	/**
+	 * Returns whether the travel has been stopped.
+	 * @return True if travel is stopped, false otherwise
+	 */
 	public boolean isStopped() {
 		return isStopped;
 	}
@@ -231,12 +259,11 @@ public class TravelDistance {
 	 *                                V
 	 */
 	
-	
-	
-	
 	/**
 	 * Determines if the player has reached the next landmark.
-	 * */
+	 * @param n  The current distance traveled
+	 * @return True if the next landmark has been reached, false otherwise
+	 */
 	 public boolean reachedLandmark(int n) {
 	        int d = distanceTraveled(); //get the distance traveled
 	        
@@ -264,13 +291,12 @@ public class TravelDistance {
 	        
 	        landmark = "";
 	        return false; //then no landmark has been reached
-	        
-	       /* return (d >= 70 && d < 85) || (d >= 130 && d < 145) ||
-	               (d >= 355 && d < 370) || (d >= 610 && d < 625) ||
-	               (d >= 680 && d < 700);*/
-	        
 	    }
 
+	/**
+	 * Returns the miles left to the next landmark.
+	 * @return the number of miles left to the next landmark
+	 */
 	 public int getMilesLeftToNextLandmark() {
 	     int d = distanceTraveled();
 
@@ -286,6 +312,10 @@ public class TravelDistance {
 	     return 0; // No more landmarks => 0 miles left
 	 }
 	 
+	/**
+	 * Returns the name of the next landmark.
+	 * @return the name of the next landmark
+	 */
 	 public String getNextLandmarkName() {
 		    int d = distanceTraveled();
 
@@ -300,10 +330,11 @@ public class TravelDistance {
 		    return "None"; // no further landmarks
 		}
 	
-	 
 	/**
 	 * Determines if the current landmark is a river.
-	 * */
+	 * @param n The current distance traveled
+	 * @return True if the current landmark is a river, false otherwise
+	 */
 	  public boolean isRiver(int n) {
 	        int d = distanceTraveled();
 	        return d <= 78 || (d > 78 && d <= 137);
@@ -311,7 +342,9 @@ public class TravelDistance {
 	
 	/**
 	 * Determines if the current landmark is a town.
-	 * */
+	 * @param n The current distance traveled
+	 * @return true if the current landmark is a town, false otherwise
+	 */
 	  public boolean isTown(int n) {
 	        int d = distanceTraveled();
 	        return (d > 137 && d <= 359) || (d > 615 && d <= 689);
@@ -319,7 +352,9 @@ public class TravelDistance {
 	
 	/**
 	 * Determines if the current landmark is a scenic landmark.
-	 * */
+	 * @param n The current distance traveled
+	 * @return True if the current landmark is a scenic spot, false otherwise
+	 */
 	    public boolean isScenicSpot(int n) {
 	        int d = distanceTraveled();
 	        return d > 359 && d <= 615;
