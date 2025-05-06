@@ -10,7 +10,7 @@ public enum Sickness {
     TYPHOID_FEVER(-3), 
     TUBERCULOSIS(-4),
     DYSENTERY(-5),
-    CHOLERA(-25), 
+    CHOLERA(-15), 
     FOOD_POISONING(-1), 
     DEHYDRATION(-5), 
     MALNUTRITION(-5),

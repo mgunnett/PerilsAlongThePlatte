@@ -25,14 +25,19 @@ public class Perils {
         switch (health) {
             case 90:
             	sickChance = 5;
+            	break;
             case 70:
             	sickChance = 10;
+            	break;
             case 50:
             	sickChance = 20;
+            	break;
             case 30:
             	sickChance = 30;
+            	break;
             default:
             	sickChance = 40;
+            	break;
         }
         
         //now check if the randomly generated integer is less than the chance

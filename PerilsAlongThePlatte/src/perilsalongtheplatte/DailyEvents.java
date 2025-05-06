@@ -8,8 +8,6 @@ public class DailyEvents {
 
     private final double WEATHER_EVENT_PROBABILITY = 0.3; // 30%
     private Random random;
-    private int playerHealth;
-    private boolean isSick;
 
     private Perils perils;
     private Party party; 
@@ -19,14 +17,13 @@ public class DailyEvents {
     public String Penalty = "";
     public String Sickness = "";
     public String currentWeather = "Clear"; // Store today's weather
+    boolean isSick; 
 
     private final String[] weatherEvents = {"Sunny", "Rainy", "Windy", "Thunderstorms", "Snowy"};
 
-    public DailyEvents(int health, TravelDistance travelDistance, Party party) {
-        this.playerHealth = health;
+    public DailyEvents(TravelDistance travelDistance, Party party) {
         this.random = new Random();
         this.perils = new Perils();
-        this.isSick = false; // default player health state
         this.travelDistance = travelDistance;
         this.party = party; 
     }

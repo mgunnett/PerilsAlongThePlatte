@@ -12,6 +12,7 @@ public class Popups {
     private Perils peril = new Perils(); //create perils instance
     private GAME game; // create game instance
     private int tradingCounter = 0; //track how many times the user has traded
+    public static boolean openShop = false; 
     public static boolean isGameDone = false; //tracks if the game has ended  
     String[] options = {"Shop", "OK"};
     
@@ -157,7 +158,8 @@ public class Popups {
         		    "Okay"
         		);
         	if (choice == 1) {
-        		game.openShopPanel();
+        		openShop = true; 
+        		//game.openShopPanel();
         	}
         }
         else if(landmark.equals("Chimney Rock")){ 

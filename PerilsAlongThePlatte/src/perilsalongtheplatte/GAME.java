@@ -132,7 +132,7 @@ public class GAME {
 
 
 	/**
-	 * Launch the application.
+	 * Launch the application. This main method will not be touched. 
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -148,11 +148,11 @@ public class GAME {
 	}
 
 	/**
-	 * Constructor that updates various aspects of the game depending on mainly the timer in TravelDistance
+	 * Constructor that updates various aspects of the game depending on the timer in TravelDistance.
 	 */
 	public GAME() {
 	    // Initialize core game systems
-		 daily_events = new DailyEvents(100, pace, party); // Gender and health may change later
+		 daily_events = new DailyEvents(pace, party); //create the DailyEvents object with the provided pace and party object 
 
 	    initialize(); // Set up the GUI components
 
@@ -178,9 +178,8 @@ public class GAME {
 	        weather = daily_events.getCurrentWeather();
 	        lblWeather.setText(weather);
 	        
-	     // Log today's events
+	        // Log today's events
 	        updateEventLog();
-
 	        
 	        // Update the party's health
 	        updatePartyHealth();
@@ -188,7 +187,6 @@ public class GAME {
 	        
 	        // Update weather image
 	        updateWeatherImage(weather);
-
 	        
 	        // Refresh additional data
 	        updateMilesLeftLabel();
@@ -196,18 +194,15 @@ public class GAME {
 	        
 	        //check if the game ends
 	        checkIfGameIsDone();
-	        System.out.println("loop ran!");
 	        
 	        // Updates the running score every day
 	        updateScore();
 	        
 	        // Checks if game has ended and closes the game if they lost
 	        if (Popups.isGameDone == true) {
-	        	
 	        	try {
 					TimeUnit.SECONDS.sleep(1000);
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 	        	System.exit(0);
@@ -338,7 +333,7 @@ public class GAME {
 					   //set resting status here
 					    inventory.addSupply(SupplyType.WATER, 8); //adds 8lbs of water per day
 					    inventory.addSupply(SupplyType.BUFFALOCHIPS, 0.5); //ads 0.5lbs of buffalo chips per day
-					    party.changeHealth(isResting); //make sure values update when resting
+					    party.changeHealth(true); //make sure values update when resting
 				  }
 				  isResting = false; 
 				  travelDistance.resumeTimer();
@@ -406,6 +401,7 @@ public class GAME {
 				        if (response1.equalsIgnoreCase("bang")) {
 				            if (meat > 0) {
 				                lblResult.setText("You got " + meat + " meat.");
+				                inventory.addSupply(SupplyType.MEAT, meat);
 				            } else {
 				                lblResult.setText("The deer ran away.");
 				            }
@@ -416,6 +412,7 @@ public class GAME {
 				        closeGame = true;
 				        txtFldResponse.setText("");
 				        counter = 0;
+				        inventory.addSupply(SupplyType.AMMO, -5.0); //lose ammunition if you hunt
 				        timer.stop();
 				        // Resumes the travelling of the distance along the trail
 				        travelDistance.resumeTimer();
@@ -521,6 +518,7 @@ public class GAME {
 		btnHunt.setBounds(421, 369, 145, 110);
 		OptionsPanel.add(btnHunt);
 		
+		//creates a panel to store the inventory values
 		JPanel InventoryPanel = new JPanel();
 		InventoryPanel.setLayout(null);
 		InventoryPanel.setBackground(new Color(220, 207, 180));
@@ -528,6 +526,7 @@ public class GAME {
 		OptionsPanel.add(InventoryPanel);
 		// ******************************************** END OF OPTIONS PANEL OBJECTS **************************************
 		
+		//underlined label for the inventory text area
 		JLabel lblInventory = new JLabel("<html><u>Inventory</u>");
 		lblInventory.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInventory.setForeground(Color.BLACK);
@@ -535,21 +534,12 @@ public class GAME {
 		lblInventory.setBounds(10, 11, 288, 39);
 		InventoryPanel.add(lblInventory);
 		
+		//creates the text area for the inventory
 		inventoryTextArea = new JTextArea();
 		inventoryTextArea.setBounds(20, 61, 266, 396);
+		inventoryTextArea.setEditable(false); 
 		InventoryPanel.add(inventoryTextArea);
 		
-		JButton btnBuyIntroSupplies = new JButton("Shop");
-		btnBuyIntroSupplies.setBackground(new Color(220, 207, 180));
-		btnBuyIntroSupplies.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ShopPanel.setVisible(true);
-				StartingOptionsPanel.setVisible(false);
-			}
-		});
-		btnBuyIntroSupplies.setFont(new Font("Serif", Font.PLAIN, 45));
-		btnBuyIntroSupplies.setBounds(749, 187, 471, 115);
-		StartingOptionsPanel.add(btnBuyIntroSupplies);
 		
 		JLabel lblConstBuyIntroSupplies = new JLabel("Buy Starting Supplies!!!");
 		lblConstBuyIntroSupplies.setHorizontalAlignment(SwingConstants.CENTER);
@@ -910,11 +900,27 @@ public class GAME {
 		StartingOptionsPanel.add(ImageHolder3);
 		ImageHolder3.setIcon(pioneerGIF);
 		
+		//***************************************SHOP PANEL OBJECTS******************************************
+		//initial button to buy supplies
+		JButton btnBuyIntroSupplies = new JButton("Shop");
+		btnBuyIntroSupplies.setBackground(new Color(220, 207, 180));
+		btnBuyIntroSupplies.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ShopPanel.setVisible(true);
+				StartingOptionsPanel.setVisible(false);
+			}
+		});
+		btnBuyIntroSupplies.setFont(new Font("Serif", Font.PLAIN, 45));
+		btnBuyIntroSupplies.setBounds(749, 187, 471, 115);
+		StartingOptionsPanel.add(btnBuyIntroSupplies);
+		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(200, 186, 162));
 		panel.setBounds(24, 152, 1237, 525);
 		ShopPanel.add(panel);
 		panel.setLayout(null);
+		
+		//all these labels below create labels and buttons to buy each supply:
 		
 		JLabel lblFood = new JLabel("Food:");
 		lblFood.setHorizontalAlignment(SwingConstants.CENTER);
@@ -925,7 +931,7 @@ public class GAME {
 		JButton btnFlour = new JButton("Flour");
 		btnFlour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				inventory.buySupply(SupplyType.FLOUR, isMale); 
+				inventory.buySupply(SupplyType.FLOUR, isMale); //method within inventory to buy supplies
 			}; 
 		});
 		btnFlour.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -1112,6 +1118,7 @@ public class GAME {
 		JButton btnAmmo = new JButton("Ammo");
 		btnAmmo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inventory.buySupply(SupplyType.AMMO, isMale);
 			}
 		});
 		btnAmmo.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -1235,6 +1242,7 @@ public class GAME {
 		btnExitShop.setBounds(933, 446, 254, 68);
 		panel.add(btnExitShop);
 		
+		//create a timer action for the hunting minigame
 		timer = new Timer(1000, new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				timerActionPerformed();
@@ -1243,7 +1251,7 @@ public class GAME {
 	}
 	
 	
-	
+	//method to assist with the timing of the hunting minigame
 	private void timerActionPerformed() {
 		counter++;
 		lblNewLabel1.setText("" + counter);
@@ -1257,6 +1265,7 @@ public class GAME {
 		}
 	}
 	
+	//updates the day and distance labels
 	 private void updateDayAndDistanceLabel() {
 	        // Changes days past label
 		 String daysPassed = String.valueOf(travelDistance.daysTraveled());
@@ -1267,13 +1276,14 @@ public class GAME {
 	     	lblDistanceTraveled.setText(distanceTraveled);
 	}
 
-
-	 public void updateMilesLeftLabel() {
+	 //updates how many miles are left to the next landmark 
+	 private void updateMilesLeftLabel() {
 		 int milesLeft = travelDistance.getMilesLeftToNextLandmark();
 		 lblDistanceUntilNextLandmark.setText(String.valueOf(milesLeft));
 	 }
 	 
-	 public void updateDateLabel() {
+	 //updates the current date
+	 private void updateDateLabel() {
 		 String currentDate = travelDistance.date();  // get formatted date string
 		    lblDate.setText(currentDate);
 	 }
@@ -1301,6 +1311,8 @@ public class GAME {
 		 //display starting from top to bottom
 		 EventLogTextArea.setText(""); //clear the text area
 		 EventLogTextArea.append("\n" + travelDistance.date() + "\n"); 
+		 
+		 //display a fun message depending on the weather
 		 String weatherTxt; 
 		 switch (weather) {
 		 case "Sunny":
@@ -1324,12 +1336,9 @@ public class GAME {
 		 }
 		 
 		 EventLogTextArea.append(weatherTxt);
-//		 EventLogTextArea.append("\nHealth Status:   " + daily_events.getYorNSick()); //health status
-//		 EventLogTextArea.append("\nRecovery Update: " + daily_events.getYorNRecovered()); 
-//		 EventLogTextArea.append("\nPenalty        : " + daily_events.getPenalty()); 
-//		 EventLogTextArea.append("\nSickness       : " + daily_events.getSickness()); 
-		
 	 }
+	 
+	 //method to reset the hunting minigame
 	 private void resetMinigame() {
 		    meat = 100;// some initial value
 		    counter = 0;
@@ -1339,6 +1348,7 @@ public class GAME {
 		    lblNewLabel1.setText(""); // or whatever default
 		}
 	 
+	 //updates the weather icon with the current weather conditions
 	 private void updateWeatherImage(String weather) {
 		    switch (weather) {
 		        case "Sunny":
@@ -1365,7 +1375,7 @@ public class GAME {
 	 
 	//a method to call other methods to update the health of each pioneer
 		 private void updatePartyHealth() {
-			 party.changeHealth(isResting); //change the health
+			 party.changeHealth(false); //change the health
 			 //now display the updated health values to the GUI
 			 int counter = 1; //a counter to keep track of which text field to update with strings
 			 for (Pioneer p : party.getParty()) {
@@ -1411,6 +1421,10 @@ public class GAME {
 				         + injury.getPenalty() + " health penalty.\n");
 				 }
 				 
+				 if (p.getRecoveredStatus()) { 
+					 EventLogTextArea.append(p.getName() + " is now recovered!");
+				 }
+				 
 
 				 //log death (only once)
 				 if (p.getDeathStatus() && !p.hasDeathBeenLogged()) {
@@ -1442,14 +1456,17 @@ public class GAME {
 			 }
 		}
 		 
+		//updates the running score while providing essential values
 		private void updateScore() {
 			ScoreCalculation scoreCalculator = new ScoreCalculation(inventory.getTotalAmount(), party.getOverallHealth(), 
 																	party.getPartySize(), travelDistance.daysTraveled(), isMale); 
-			double totalScore = scoreCalculator.getScore();
-			lblScore.setText(totalScore + "");
+			String totalScore = String.format("%.0f", scoreCalculator.getScore());
+			lblScore.setText(totalScore);
 		}
 		 
+		//opens the shop panel
 		public void openShopPanel() {
+			if (Popups.openShop)
 			ShopPanel.setVisible(true);
 			
 		}

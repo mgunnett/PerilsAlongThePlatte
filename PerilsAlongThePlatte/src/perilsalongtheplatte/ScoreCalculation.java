@@ -39,7 +39,9 @@ public double getScore() {
 	
 	final int N = 100; //an arbitrary constant that can be modified to change the value of the score.
 				 //this constant is useful if you want to adjust the score from the 100s to the 1000s. 
-	return (supplies + health) * (members * gender) + (days * N);
+	return (health / supplies) * (members * gender) + days * N; 
+	
+	//return (supplies + health) * (members * gender) + (days * N);
 }
 	
 	
