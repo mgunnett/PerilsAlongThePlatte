@@ -22,7 +22,6 @@ public class Inventory {
 	private Map<SupplyType, Double> death = new EnumMap<>(SupplyType.class);
 	
 	//other class objects
-	//GAME game = new GAME(); //access to key variables..
 	//now with each value created within a map, a constructor is needed to initialize the map
 	public Inventory() {
 		//utilizing a for each loop...
@@ -40,6 +39,26 @@ public class Inventory {
 	 */
 	public double getSupply(SupplyType supply) {
 		return supplies.get(supply);
+	}
+	
+	/**
+	 * Getter method to return the cumulative amount of each supply for use in the score calculation. 
+	 * @return The total added amount of each supply. 
+	 */
+	public double getTotalAmount() {
+		double total = 0.0; 
+		for (SupplyType supply : SupplyType.values())
+			total += supplies.get(supply);
+		return total; 
+	}
+	
+	/**
+	 * Method for if you want to add a set amount into the supply Map. Useful if the player wants to collect water, etc. 
+	 * @param supply The SupplyType to be added. 
+	 * @param value The amount to be added into the inventory. 
+	 */
+	public void addSupply(SupplyType supply, double value) {
+		supplies.put(supply, getSupply(supply) + value); 
 	}
 	
 	/**
@@ -110,7 +129,7 @@ public class Inventory {
 
 		    //define the default thresholds to check for
 		    double LOW_THRESHOLD = 5.0; 
-		    double MAX_AMOUNT = 20.0;  //max amount husband wants to buy
+		    double MAX_AMOUNT =30.0;  //max amount husband wants to buy
 
 		    //begin by finding which supplies are low 
 		    for (SupplyType type : SupplyType.values()) {
@@ -346,6 +365,18 @@ public class Inventory {
 		case CASH: amount = 25 + rng.nextInt(51); break;	   //25-75 dollars
 		}
 		return amount; 
+	}
+	
+	/**
+	 * Getter to check if the player is out of crucial food supplies. They will lose health if they continue to be out of food. 
+	 * @return True if the user cannot eat food. 
+	 */
+	public boolean outOfFood() {
+		if (getSupply(SupplyType.FLOUR) == 0.0 && getSupply(SupplyType.BACON) == 0.0 && getSupply(SupplyType.FRUIT) == 0.0 && //checks if the player is fully out of crucial food suppleis
+			getSupply(SupplyType.VEGGIES) == 0.0 && getSupply(SupplyType.MEAT) == 0.0) {
+			return true;
+		}
+		return false; 
 	}
 }
 

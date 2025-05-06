@@ -9,9 +9,10 @@ import javax.swing.*;
  */
 
 public class Popups {
-	//create an object of the perils classes to get the 
-	private Perils perils = new Perils(); 
 	private static LandmarkDescriptions landDesc = new LandmarkDescriptions();
+	private Perils peril = new Perils(); 
+	private int tradingCounter = 0; 
+	private boolean isGameDone = false; //tracks if the game has ended  
 	
 	/*******************
 	 *OPTION MENU ITEMS*
@@ -82,12 +83,68 @@ public class Popups {
 	}
 	
 	public void educationalDescription(String landmark) {
-		if (landmark.equals("Kansas River")) { JOptionPane.showMessageDialog(null, landDesc.kansasRiver, "Kansas River Information:", JOptionPane.INFORMATION_MESSAGE); }
-		else if(landmark.equals("Big Blue River")){ JOptionPane.showMessageDialog(null, landDesc.bigBlueRiver, "Big Blue River Information:", JOptionPane.INFORMATION_MESSAGE); }
-		else if(landmark.equals("Fort Kearny")){ JOptionPane.showMessageDialog(null, landDesc.fortKearny, "Fort Kearny Information:", JOptionPane.INFORMATION_MESSAGE); }
-		else if(landmark.equals("Chimney Rock")){ JOptionPane.showMessageDialog(null, landDesc.chimneyRock, "Chimney Rock Information:", JOptionPane.INFORMATION_MESSAGE); }
-		else if(landmark.equals("Fort Loramie")){ JOptionPane.showMessageDialog(null, landDesc.fortLaramie, "Fort Laramie Information:", JOptionPane.INFORMATION_MESSAGE); 
-		JOptionPane.showMessageDialog(null, landDesc.endingInfo, "The End:", JOptionPane.INFORMATION_MESSAGE);}
+		//if the user encounters a river, prompt them to cross or ferry. 
+		if (landmark.equals("Kansas River")) { 
+			Object[] options = {"Cross", "Ferry"};
+			int choice = JOptionPane.showOptionDialog(
+			    null,
+			    landDesc.kansasRiver,
+			    "Kansas River Information:",
+			    JOptionPane.DEFAULT_OPTION,
+			    JOptionPane.INFORMATION_MESSAGE,
+			    null,
+			    options,
+			    options[0]);   // default selection is "Cross"
+			//check the response and act based on that
+			if (choice == 0) { //choosing to cross
+			    if (peril.diesInRiver()) { //if the person dies from the river, tell them with a popup
+			    	JOptionPane.showMessageDialog(null, 
+			    			"Your Party has died in the river! Better luck next time :-(",
+			    			"You Lost!", 
+			    			JOptionPane.WARNING_MESSAGE);
+			    	isGameDone = true; 
+			    }
+			} else if (choice == 1) {
+			    // User chose "Ferry"
+			    System.out.println("You chose to take the ferry.");
+			}
+		}
+		else if(landmark.equals("Big Blue River")){ //another river crossing
+			Object[] options = {"Cross", "Ferry"};
+			int choice = JOptionPane.showOptionDialog(
+			    null,
+			    landDesc.bigBlueRiver,
+			    "Big Blue River Information:",
+			    JOptionPane.DEFAULT_OPTION,
+			    JOptionPane.INFORMATION_MESSAGE,
+			    null,
+			    options,
+			    options[0]);   // default selection is "Cross"
+			//check the response and act based on that
+			if (choice == 0) { //choosing to cross
+			    if (peril.diesInRiver()) { //if the person dies from the river, tell them with a popup
+			    	JOptionPane.showMessageDialog(null, 
+			    			"Your Party has died in the river! Better luck next time :-(",
+			    			"You Lost!", 
+			    			JOptionPane.WARNING_MESSAGE);
+			    	isGameDone = true; 
+			    }
+			} else if (choice == 1) {
+			    // User chose "Ferry"
+			    System.out.println("You chose to take the ferry.");
+			}
+			}
+		else if(landmark.equals("Fort Kearny")){ 
+			JOptionPane.showMessageDialog(null, landDesc.fortKearny, "Fort Kearny Information:", JOptionPane.INFORMATION_MESSAGE); 
+			}
+		else if(landmark.equals("Chimney Rock")){ 
+			JOptionPane.showMessageDialog(null, landDesc.chimneyRock, "Chimney Rock Information:", JOptionPane.INFORMATION_MESSAGE); 
+			}
+		else if(landmark.equals("Fort Loramie")){
+		JOptionPane.showMessageDialog(null, landDesc.fortLaramie, "Fort Laramie Information:", JOptionPane.INFORMATION_MESSAGE); 
+		JOptionPane.showMessageDialog(null, landDesc.endingInfo, "The End:", JOptionPane.INFORMATION_MESSAGE);
+		isGameDone = true; 
+		}
 	}
 
 	public void descriptionHuntingInfo() {
@@ -116,5 +173,13 @@ public class Popups {
 	
 	public static void oregonTrailInfo() {
 		JOptionPane.showMessageDialog(null, landDesc.oregonTrail, "Oregon Trail Background:", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	/**
+	 * Getter to retrieve if the game has ended from reaching Fort Loramie. 
+	 * @return True if the game has ended. 
+	 */
+	public boolean isGameDone() {
+		return isGameDone; 
 	}
 }

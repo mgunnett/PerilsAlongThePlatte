@@ -10,14 +10,16 @@ public class LandmarkDescriptions {
 			+ "\nthat pioneers encountered after leaving Independence."
 			+ "\nIt offered important resources for settlers, but it"
 			+ " also \nposed a significant challenge for those attempting"
-			+ "\nto cross it.";
+			+ "\nto cross it."
+			+ "\n How would you like to cross?";
 	
 	public String bigBlueRiver = "     The Big Blue River is one of the rivers that flows into"
 			+ "\nthe Kansas River. Stretching 359 miles, it runs from Kansas"
 			+ "\nto central Nebraska. This river posed a significant challenge"
 			+ "\nfor travelers on the Oregon Trail, often forcing them to wait"
 			+ "\nin the surrounding area to take a ferry, as attempting to cross"
-			+ "\nwas dangerous.";
+			+ "\nwas dangerous."
+			+ "\nHow would you like to cross?";
 
 	public String fortKearny = "     Fort Kearny was constructed in 1848 to protect travelers \non"
 			+ " their journey. It also served as a base for \"Pony Riders,\""

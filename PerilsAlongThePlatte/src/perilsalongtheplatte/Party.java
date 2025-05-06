@@ -12,6 +12,11 @@ public class Party {
 	List<Pioneer> party = new ArrayList<>();
 	private final int MAX_SIZE = 5; 
 	private boolean isAnyoneSick = false; 
+	private Inventory inventory; 
+	
+	public Party(Inventory i) {
+		this.inventory = i; 
+	}
 	
 	/**
 	 * A method that adds a pioneer object to the party list. This method needs to be called when each name is inputed into the GUI.
@@ -70,6 +75,14 @@ public class Party {
 				change += 5; //adds 5 hp
 			}
 			
+			if (inventory.outOfFood())
+				change -= 10; //lose 10 hp if out of food
+			
+			if (inventory.getSupply(SupplyType.SOAP) > 0.0) { //if you have soap, gain some hp per day
+				change += 1; 
+			}
+			
+			
 			//if none of the above are true, then the pioneer gains 0 hp
 			//now we are good to add the penalties to the health pool of the pioneer
 			p.changeHealth(change);
@@ -126,5 +139,17 @@ public class Party {
      */
     public List<Pioneer> getParty() {
         return party;
+    }
+    
+    /**
+     * Getter method to check if everyone in the party is dead.
+     * @return True if everyone is dead, false if otherwise. 
+     */
+    public boolean isPartyDead() { 
+    	for (Pioneer p : party) {
+    		if (!p.getDeathStatus())
+    			return false; //someone is still alive, the game is not over yet!
+    	}
+    	return true; //then everyone is dead 
     }
 }

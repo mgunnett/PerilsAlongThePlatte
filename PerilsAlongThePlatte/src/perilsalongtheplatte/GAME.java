@@ -52,6 +52,11 @@ public class GAME {
 	JTextArea EventLogTextArea;
 	JLabel lblResult;
 	JLabel lblImageHolder;
+	JLabel lblName1HealthValue;
+	JLabel lblName2HealthValue;
+	JLabel lblName3HealthValue;
+	JLabel lblName4HealthValue;
+	JLabel lblName5HealthValue;
 	
 	//Weather Images
 	ImageIcon sunnyIcon = new ImageIcon(getClass().getResource("/Images/Sunny.PNG"));
@@ -76,8 +81,8 @@ public class GAME {
 	private TravelDistance travelDistance;
 	private DailyEvents daily_events;
 	private TravelDistance pace;	
-	private Inventory inventory;
-	private Party party = new Party(); 
+	private Inventory inventory = new Inventory(); ;
+	private Party party = new Party(inventory); 
 	
 	//private HealthPool health = new HealthPool();
 	//declare global variables to be stored within the class
@@ -135,16 +140,26 @@ public class GAME {
 	        weather = daily_events.getCurrentWeather();
 	        lblWeather.setText(weather);
 	        
+	     // Log today's events
+	        updateEventLog();
+
+	        
+	        // Update the party's health
+	        updatePartyHealth();
+	        
+	        
 	        // Update weather image
 	        updateWeatherImage(weather);
 
-	        // Log today's events
-	        updateEventLog();
-
+	        
 	        // Refresh additional data
 	        updateMilesLeftLabel();
 	        updateDateLabel();
-	    });
+	        
+	        //check if the game ends
+	        checkIfGameIsDone();
+	        System.out.println("loop ran!");
+	    }, party);
 
 	    // Hook up the "Continue" button to start the game loop
 	    btnContinue.addActionListener(e -> travelDistance.startTimer());
@@ -243,6 +258,8 @@ public class GAME {
 				  if (restDays > 0) {
 					    travelDistance.startRest(restDays);
 					   //set resting status here
+					    inventory.addSupply(SupplyType.WATER, 8); //adds 8lbs of water per day
+					    inventory.addSupply(SupplyType.BUFFALOCHIPS, 0.5); //ads 0.5lbs of buffalo chips per day
 					    party.changeHealth(isResting); //make sure values update when resting
 				  }
 				  isResting = false; 
@@ -477,12 +494,6 @@ public class GAME {
 		lblPlayer1NameHealth.setBounds(12, 143, 216, 32);
 		OptionsPanel.add(lblPlayer1NameHealth);
 		
-		JLabel lblName1HealthValue = new JLabel("");
-		lblName1HealthValue.setForeground(Color.BLACK);
-		lblName1HealthValue.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblName1HealthValue.setBounds(215, 143, 153, 32);
-		OptionsPanel.add(lblName1HealthValue);
-		
 		JLabel lblPlayer2NameHealth = new JLabel("Name2 Health:");
 		lblPlayer2NameHealth.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPlayer2NameHealth.setForeground(Color.BLACK);
@@ -511,25 +522,31 @@ public class GAME {
 		lblPlayer5NameHealth.setBounds(12, 313, 216, 32);
 		OptionsPanel.add(lblPlayer5NameHealth);
 		
-		JLabel lblName2HealthValue = new JLabel("");
+		lblName1HealthValue = new JLabel("");
+		lblName1HealthValue.setForeground(Color.BLACK);
+		lblName1HealthValue.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblName1HealthValue.setBounds(215, 143, 153, 32);
+		OptionsPanel.add(lblName1HealthValue);
+		
+		lblName2HealthValue = new JLabel("");
 		lblName2HealthValue.setForeground(Color.BLACK);
 		lblName2HealthValue.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblName2HealthValue.setBounds(215, 186, 153, 32);
 		OptionsPanel.add(lblName2HealthValue);
 		
-		JLabel lblName3HealthValue = new JLabel("");
+	    lblName3HealthValue = new JLabel("");
 		lblName3HealthValue.setForeground(Color.BLACK);
 		lblName3HealthValue.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblName3HealthValue.setBounds(215, 227, 153, 32);
 		OptionsPanel.add(lblName3HealthValue);
 		
-		JLabel lblName4HealthValue = new JLabel("");
+		lblName4HealthValue = new JLabel("");
 		lblName4HealthValue.setForeground(Color.BLACK);
 		lblName4HealthValue.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblName4HealthValue.setBounds(215, 270, 153, 32);
 		OptionsPanel.add(lblName4HealthValue);
 		
-		JLabel lblName5HealthValue = new JLabel("");
+		lblName5HealthValue = new JLabel("");
 		lblName5HealthValue.setForeground(Color.BLACK);
 		lblName5HealthValue.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblName5HealthValue.setBounds(215, 313, 153, 32);
@@ -668,11 +685,11 @@ public class GAME {
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//create objects of the Party class and assign Pioneer objects a name
-				Pioneer person1 = new Pioneer(lblCPlayer1Name.getText());
-				Pioneer person2 = new Pioneer(lblCPlayer2Name.getText());
-				Pioneer person3 = new Pioneer(lblCPlayer3Name.getText());
-				Pioneer person4 = new Pioneer(lblCPlayer4Name.getText());
-				Pioneer person5 = new Pioneer(lblCPlayer5Name.getText());
+				Pioneer person1 = new Pioneer(txtPlayer1Name.getText());
+				Pioneer person2 = new Pioneer(txtPlayer2Name.getText());
+				Pioneer person3 = new Pioneer(txtPlayer3Name.getText());
+				Pioneer person4 = new Pioneer(txtPlayer4Name.getText());
+				Pioneer person5 = new Pioneer(txtPlayer5Name.getText());
 				//add each pioneer into the Party class
 				party.addPioneer(person1);
 				party.addPioneer(person2);
@@ -680,6 +697,7 @@ public class GAME {
 				party.addPioneer(person4);
 				party.addPioneer(person5);
 				
+				System.out.println(person1.getName()); 
 				
 				 int currentPace = (Integer) spinnerSpeed.getValue();
 				    travelDistance.setPace(currentPace);
@@ -712,7 +730,7 @@ public class GAME {
 				WelcomePanel.setVisible(false);
 				GamePanel.setVisible(false);
 				StartingOptionsPanel.setVisible(true);
-				inventory = new Inventory(); 
+				
 			}
 		});
 		btnStart.setBackground(new Color(220, 207, 180));
@@ -1136,14 +1154,36 @@ public class GAME {
 	 private void updateEventLog() {
 		 //display starting from top to bottom
 		 EventLogTextArea.setText(""); //clear the text area
-		 EventLogTextArea.append("\n" + travelDistance.date()); 
-		 EventLogTextArea.append("\nHealth Status:   " + daily_events.getYorNSick()); //health status
-		 EventLogTextArea.append("\nRecovery Update: " + daily_events.getYorNRecovered()); 
-		 EventLogTextArea.append("\nPenalty        : " + daily_events.getPenalty()); 
-		 EventLogTextArea.append("\nSickness       : " + daily_events.getSickness()); 
+		 EventLogTextArea.append("\n" + travelDistance.date() + "\n"); 
+		 String weatherTxt; 
+		 switch (weather) {
+		 case "Sunny":
+			 weatherTxt = "It is bright and sunny today. You feel calm..."; 
+			 break;
+		 case "Thunderstorms":
+			 weatherTxt = "It's comin' down buckets!";
+			 break;
+		 case "Rainy": 
+			 weatherTxt = "Ain't no dust here, just mudpies.";
+			 break; 
+		 case "Windy":
+			 weatherTxt = "The wind blows you around. You better watch you hat!";
+			 break;
+		 case "Snowy": 
+			weatherTxt = "It's now a winter wonderland.";
+			break; 
+			default:
+				weatherTxt = "You're grateful for a calm day :-)";
+				break; 
+		 }
+		 
+		 EventLogTextArea.append(weatherTxt);
+//		 EventLogTextArea.append("\nHealth Status:   " + daily_events.getYorNSick()); //health status
+//		 EventLogTextArea.append("\nRecovery Update: " + daily_events.getYorNRecovered()); 
+//		 EventLogTextArea.append("\nPenalty        : " + daily_events.getPenalty()); 
+//		 EventLogTextArea.append("\nSickness       : " + daily_events.getSickness()); 
 		
 	 }
-	 //jdajf
 	 private void resetMinigame() {
 		    meat = 100;// some initial value
 		    counter = 0;
@@ -1179,11 +1219,88 @@ public class GAME {
 	 
 	//a method to call other methods to update the health of each pioneer
 		 private void updatePartyHealth() {
-			 party.changeHealth(isResting);
+			 party.changeHealth(isResting); //change the health
+			 //now display the updated health values to the GUI
+			 int counter = 1; //a counter to keep track of which text field to update with strings
 			 for (Pioneer p : party.getParty()) {
-			        System.out.println(p.getName() + "Health: " + p.getHealth());
-			        if (p.getDeathStatus())
-			        	System.out.println(p.getName() + " has died. ");
-		 }
+				 switch (counter) {
+				 case 1:
+					 lblName1HealthValue.setText("" + p.getHealth());
+					 break;
+				 case 2: 
+					 lblName2HealthValue.setText("" + p.getHealth());
+					 break;
+				 case 3:
+					 lblName3HealthValue.setText("" + p.getHealth());
+					 break;
+				 case 4: 
+					 lblName4HealthValue.setText("" + p.getHealth());
+					 break; 
+				 case 5: 
+					 lblName5HealthValue.setText("" + p.getHealth());
+					 break;
+				 }
+				 counter++; 
+				
+				 //update event log if the pioneer is sick
+				 EventLogTextArea.append("\n"); // space between entries
+
+				 String name = p.getName();
+
+				 //log sickness 
+				 if (p.isSick()) {
+					 if (p.getDeathStatus())
+						 continue; 
+				     Sickness sickness = p.getSicknessType();
+				     String sicknessStr = sickness.toString().toLowerCase();
+				     EventLogTextArea.append("• " + name + " is sick with " + sicknessStr + ". Suffer a " 
+				         + sickness.getPenalty() + " health penalty.\n");
+				 }
+
+				 //log injury
+				 if (p.getInjuredStatus()) {
+				     Injury injury = p.getInjuryType();
+				     String injuryStr = injury.toString().toLowerCase();
+				     EventLogTextArea.append("• " + name + " is injured with " + injuryStr + ". Suffer a " 
+				         + injury.getPenalty() + " health penalty.\n");
+				 }
+				 
+
+				 //log death (only once)
+				 if (p.getDeathStatus() && !p.hasDeathBeenLogged()) {
+				     EventLogTextArea.append("☠ " + name + " has died. May they rest in peace.\n");
+				     p.setDeathLogged(true);
+				 }
+
+			 }
+			 
+			 //log if the party is starving
+			 if (inventory.outOfFood()) {
+				 EventLogTextArea.append("You have no food! Get some now or suffer a -10 health penalty!\n");
+			 }
 		}
+		 
+		 //helper method to check if the game has ended
+		 private void checkIfGameIsDone() {
+			 if (popup.isGameDone()) {
+				 travelDistance.pauseTimer();
+				
+				frame.setVisible(false);
+				frame.dispose();
+			 }
+			 if (party.isPartyDead()) {
+				 travelDistance.pauseTimer();
+				 popup.descriptionIllnessInfo();
+				 frame.setVisible(false);
+				 frame.dispose(); 
+			 }
+		}
+		 
+		private void updateScore() {
+			ScoreCalculation scoreCalculator = new ScoreCalculation(inventory.getTotalAmount(), party.getOverallHealth(), 
+																	party.getPartySize(), travelDistance.daysTraveled(), isMale); 
+			double totalScore = scoreCalculator.getScore();
+			//update labels here
+		}
+		 
 }

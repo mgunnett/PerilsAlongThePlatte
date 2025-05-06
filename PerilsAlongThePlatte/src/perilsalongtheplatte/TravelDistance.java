@@ -16,6 +16,7 @@ public class TravelDistance {
 		private Timer dayTimer;
 		private Random random = new Random();
 		private Popups popup = new Popups(); 
+		private Party party; 
 		private GAME game;
 		private final int[] landmarkRangeStarts = {70, 130, 355, 610, 680};
 		private final int[] landmarkRangeEnds = {85, 145, 370, 625, 700};
@@ -30,10 +31,10 @@ public class TravelDistance {
 	 * @param updateCallback - allows you to "callback" to the function to set a label in the GUI
 	 */
 		
-	    public TravelDistance(Runnable updateCallback) {
+	    public TravelDistance(Runnable updateCallback, Party party) {
 	        int delay = 3000; // This is 3 seconds for each in-game day
 	        int speed = 2;
-
+	        this.party = party; 
 	        dayTimer = new Timer(delay, null);
 	        dayTimer.setRepeats(false); // this makes sure the timer resets
 
@@ -75,9 +76,14 @@ public class TravelDistance {
 	                    // if you want to test... print here to console - Megan c:
 
 	                    if (reachedLandmark(distance)) {
-	                        popup.landmarkPopup(landmark);
-	                        popup.educationalDescription(landmark);
+	                        try {
+	                            popup.landmarkPopup(landmark);
+	                            popup.educationalDescription(landmark);
+	                        } finally {
+	                            resumeTimer(); // This ensures the timer continues regardless of what happens
+	                        }
 	                    }
+
 	                    dayTimer.restart();
 	                }
 	            }
@@ -92,6 +98,7 @@ public class TravelDistance {
 	public void startRest(int daysToRest) {
 	    if (daysToRest > 0) {
 	        resting = true;
+	        //party.changeHealth(resting);
 	        restDaysRemaining = daysToRest;
 	    }
 	}

@@ -16,6 +16,7 @@ public class Pioneer {
 	private Injury injuryType; 
 	private boolean isDead;
 	private boolean isRecovered; 
+	private boolean deathLogged = false;
 	private Perils peril = new Perils(); 
 	
 	//constructor to initialize the values of each value
@@ -142,14 +143,6 @@ public class Pioneer {
 	}
 	
 	/**
-	 * Getter to retrieve if the pioneer is dead.
-	 * @return True if the pioneer is dead. 
-	 */
-	public boolean getSicknessStatus() {
-		return isSick; 
-	}
-	
-	/**
 	 * Getter to retrieve if the pioneer is injured. 
 	 * @return The injury status of the pioneer. 
 	 */
@@ -181,4 +174,21 @@ public class Pioneer {
 	public boolean getRecoveredStatus() {
 		return isRecovered; 
 	}
+	
+	/**
+	 * Getter to check if the death of this pioneer has already been logged. 
+	 * @return True if their death is logged. 
+	 */
+	public boolean hasDeathBeenLogged() {
+	    return deathLogged;
+	}
+	
+	/**
+	 * Setter to set when the death of this pioneer is logged.
+	 * @param logged True if you want to log the death of a pioneer. 
+	 */
+	public void setDeathLogged(boolean logged) {
+	    deathLogged = logged;
+	}
+	
 }

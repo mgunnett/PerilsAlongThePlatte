@@ -15,7 +15,7 @@ public enum SupplyType {
     COFFEE      (0.10, 0.25),
     TEA         (0.60, 0.25),
     LARD        (0.05, 0.10),
-    WATER       (0.00, 10.0), //assuming water is free or manually handled (yes people get thirsty)
+    WATER       (0.00, 5.0), //assuming water is free or manually handled (yes people get thirsty)
     WHEELS      (15.0, 0.00), //used on certain events 
     AXELS       (15.0, 0.00),
     TONGUES     (15.0, 0.00),

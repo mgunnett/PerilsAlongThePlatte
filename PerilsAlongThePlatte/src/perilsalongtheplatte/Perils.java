@@ -154,6 +154,17 @@ public class Perils {
         return Injury.FELL_OFF_WAGON;  //30% chance
     }
 
+    /**
+     * Checks if the party, when crossing a river, will die. There is only two river crossing with a small chance of death, but it is possible to still die :-(. 
+     * @return True if the party dies in the river. 
+     */
+    public boolean diesInRiver() {
+    	int roll = rng.nextInt(100);
+    	if (roll <= 10)  //10% chance of drowning
+    		return true;
+    	return false; 
+    }
+    
     // -- Ox Injury Logic --
 
     /* MAY OR MAY NOT BE NEEDED. WON'T TOUCH FOR NOW. 
