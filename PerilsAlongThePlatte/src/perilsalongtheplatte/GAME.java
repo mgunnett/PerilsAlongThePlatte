@@ -189,19 +189,19 @@ public class GAME {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		GamePanel = new JPanel();
-		GamePanel.setBackground(new Color(0, 0, 0));
-		GamePanel.setBounds(0, 0, 1283, 699);
-		frame.getContentPane().add(GamePanel);
-		GamePanel.setLayout(null);
-		GamePanel.setVisible(false);
-		
 		StartingOptionsPanel = new JPanel();
 		StartingOptionsPanel.setBounds(0, 0, 1283, 688);
 		StartingOptionsPanel.setBackground(new Color(154, 128, 71));
 		frame.getContentPane().add(StartingOptionsPanel);
 		StartingOptionsPanel.setLayout(null);
 		StartingOptionsPanel.setVisible(false);
+		
+		GamePanel = new JPanel();
+		GamePanel.setBackground(new Color(0, 0, 0));
+		GamePanel.setBounds(0, 0, 1283, 699);
+		frame.getContentPane().add(GamePanel);
+		GamePanel.setLayout(null);
+		GamePanel.setVisible(false);
 		
 		JPanel ShopPanel = new JPanel();
 		ShopPanel.setBackground(new Color(156, 123, 82));
@@ -806,9 +806,24 @@ public class GAME {
 		StartingOptionsPanel.add(lblTrailSelection);
 		
 		JComboBox TrailComboBox = new JComboBox<>(trails);
+		TrailComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String choice = TrailComboBox.getSelectedItem().toString();
+				if (choice == "Oregon Trail") {
+					Popups.oregonTrailInfo();
+				}
+				if (choice == "Californian Trail") {
+					Popups.californiaTrailInfo();
+				}
+				if (choice == "Mormon Trail") {
+					Popups.mormonTrailInfo();
+				}
+			}
+		});
 		TrailComboBox.setFont(new Font("Serif", Font.PLAIN, 30));
 		TrailComboBox.setBounds(91, 375, 321, 46);
 		StartingOptionsPanel.add(TrailComboBox);
+		
 		
 		
 		JPanel panel = new JPanel();
