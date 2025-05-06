@@ -182,13 +182,15 @@ public class GAME {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-			
+		
+		// Initialized the JFrame
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(0, 0, 0));
 		frame.setBounds(100, 100, 1300, 726);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		// ******************************** PANELS *********************************
 		StartingOptionsPanel = new JPanel();
 		StartingOptionsPanel.setBounds(0, 0, 1283, 688);
 		StartingOptionsPanel.setBackground(new Color(154, 128, 71));
@@ -210,11 +212,6 @@ public class GAME {
 		ShopPanel.setLayout(null);
 		ShopPanel.setVisible(false);
 		
-		lblImageHolder = new JLabel();
-		lblImageHolder.setBounds(684, -3, 661, 201);
-		GamePanel.add(lblImageHolder);
-		GamePanel.repaint();
-		
 		HuntingPanel = new JPanel();
 		HuntingPanel.setBackground(new Color(154, 128, 71));
 		HuntingPanel.setBounds(100, 100, 450, 300);
@@ -227,6 +224,31 @@ public class GAME {
 		OptionsPanel.setBackground(new Color(154, 128, 71));
 		OptionsPanel.setBounds(25, 189, 1212, 490);
 		GamePanel.add(OptionsPanel);
+		
+		JPanel InventoryPanel = new JPanel();
+		InventoryPanel.setLayout(null);
+		InventoryPanel.setBackground(new Color(220, 207, 180));
+		InventoryPanel.setBounds(894, 11, 308, 468);
+		OptionsPanel.add(InventoryPanel);
+		
+		JPanel EventLogPanel = new JPanel();
+		EventLogPanel.setBackground(new Color(220, 207, 180));
+		EventLogPanel.setBounds(576, 11, 308, 468);
+		OptionsPanel.add(EventLogPanel);
+		EventLogPanel.setLayout(null);
+		
+		// *********************************** END OF PANELS **************************************
+		
+		
+		
+		
+		// *********************************** GAME PANEL OBJECTS ********************************
+		
+		// image holder for the wagon and oxen picture on the game panel
+		lblImageHolder = new JLabel();
+		lblImageHolder.setBounds(684, -3, 661, 201);
+		GamePanel.add(lblImageHolder);
+		GamePanel.repaint();
 		
 		spinnerSpeed = new JSpinner(new SpinnerNumberModel(1,1,3,1));
 		spinnerSpeed.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -295,6 +317,7 @@ public class GAME {
 		btnTrade.setBounds(215, 369, 145, 110);
 		OptionsPanel.add(btnTrade);
 		
+		// **************************************** HUNTING PANEL OBJECTS **************************************
 		lblResult = new JLabel("");
 		JButton btnHunt = new JButton("Hunt");
 		btnHunt.addActionListener(new ActionListener() {
@@ -441,12 +464,7 @@ public class GAME {
 		btnHunt.setBackground(new Color(220, 207, 180));
 		btnHunt.setBounds(421, 369, 145, 110);
 		OptionsPanel.add(btnHunt);
-		
-		JPanel InventoryPanel = new JPanel();
-		InventoryPanel.setLayout(null);
-		InventoryPanel.setBackground(new Color(220, 207, 180));
-		InventoryPanel.setBounds(894, 11, 308, 468);
-		OptionsPanel.add(InventoryPanel);
+		// ***************************************** END OF HUNTING PANEL OBJECTS **********************************
 		
 		JLabel lblInventory = new JLabel("<html><u>Inventory</u>");
 		lblInventory.setHorizontalAlignment(SwingConstants.CENTER);
@@ -458,31 +476,6 @@ public class GAME {
 		inventoryTextArea = new JTextArea();
 		inventoryTextArea.setBounds(20, 61, 266, 396);
 		InventoryPanel.add(inventoryTextArea);
-		
-		JButton btnBuyIntroSupplies = new JButton("Shop");
-		btnBuyIntroSupplies.setBackground(new Color(220, 207, 180));
-		btnBuyIntroSupplies.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ShopPanel.setVisible(true);
-				StartingOptionsPanel.setVisible(false);
-			}
-		});
-		btnBuyIntroSupplies.setFont(new Font("Serif", Font.PLAIN, 45));
-		btnBuyIntroSupplies.setBounds(749, 187, 471, 115);
-		StartingOptionsPanel.add(btnBuyIntroSupplies);
-		
-		JLabel lblConstBuyIntroSupplies = new JLabel("Buy Starting Supplies!!!");
-		lblConstBuyIntroSupplies.setHorizontalAlignment(SwingConstants.CENTER);
-		lblConstBuyIntroSupplies.setForeground(new Color(255, 255, 255));
-		lblConstBuyIntroSupplies.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblConstBuyIntroSupplies.setBounds(828, 130, 303, 46);
-		StartingOptionsPanel.add(lblConstBuyIntroSupplies);
-		
-		JPanel EventLogPanel = new JPanel();
-		EventLogPanel.setBackground(new Color(220, 207, 180));
-		EventLogPanel.setBounds(576, 11, 308, 468);
-		OptionsPanel.add(EventLogPanel);
-		EventLogPanel.setLayout(null);
 		
 		JLabel lblEventLog = new JLabel("<html><u>Event Log</u>");
 		lblEventLog.setBounds(10, 11, 288, 39);
@@ -639,6 +632,13 @@ public class GAME {
 		lblDaysPassed.setBounds(200, -3, 153, 39);
 		GamePanel.add(lblDaysPassed);
 		
+		// ************************************** END OF GAME PANEL OBJECTS ***********************************************
+		
+		
+		
+		
+		// ************************************** STARTING OPTIONS PANEL OBJECTS ******************************************
+		
 		txtPlayer1Name = new JTextField();
 		txtPlayer1Name.setFont(new Font("Serif", Font.PLAIN, 30));
 		txtPlayer1Name.setBounds(250, 30, 234, 35);
@@ -649,6 +649,25 @@ public class GAME {
 		    }
 		});
 		StartingOptionsPanel.add(txtPlayer1Name);
+		
+		JButton btnBuyIntroSupplies = new JButton("Shop");
+		btnBuyIntroSupplies.setBackground(new Color(220, 207, 180));
+		btnBuyIntroSupplies.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ShopPanel.setVisible(true);
+				StartingOptionsPanel.setVisible(false);
+			}
+		});
+		btnBuyIntroSupplies.setFont(new Font("Serif", Font.PLAIN, 45));
+		btnBuyIntroSupplies.setBounds(749, 187, 471, 115);
+		StartingOptionsPanel.add(btnBuyIntroSupplies);
+		
+		JLabel lblConstBuyIntroSupplies = new JLabel("Buy Starting Supplies!!!");
+		lblConstBuyIntroSupplies.setHorizontalAlignment(SwingConstants.CENTER);
+		lblConstBuyIntroSupplies.setForeground(new Color(255, 255, 255));
+		lblConstBuyIntroSupplies.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblConstBuyIntroSupplies.setBounds(828, 130, 303, 46);
+		StartingOptionsPanel.add(lblConstBuyIntroSupplies);
 		
 		txtPlayer2Name = new JTextField();
 		txtPlayer2Name.setFont(new Font("Serif", Font.PLAIN, 30));
@@ -1133,12 +1152,12 @@ public class GAME {
 		lblWallet.setBounds(947, 88, 218, 75);
 		ShopPanel.add(lblWallet);
 		
-		JLabel lblWalletAmount = new JLabel("$500.00");
+		JLabel lblWalletAmount = new JLabel();
 		lblWalletAmount.setHorizontalAlignment(SwingConstants.CENTER);
 		lblWalletAmount.setFont(new Font("Serif", Font.PLAIN, 25));
 		lblWalletAmount.setBounds(925, 0, 218, 52);
 		panel.add(lblWalletAmount);
-//		lblWalletAmount.setText("" + inventory.getSupply(SupplyType.CASH));
+		lblWalletAmount.setText("" + inventory.getSupply(SupplyType.CASH));
 		
 		JButton btnExitShop = new JButton("Exit Shop");
 		btnExitShop.addActionListener(new ActionListener() {
