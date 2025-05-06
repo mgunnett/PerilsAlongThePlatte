@@ -83,6 +83,11 @@ public class GAME {
 	private TravelDistance pace;
 	private Inventory inventory = new Inventory();
 	private Party party = new Party(inventory);
+	String input1;
+	String input2;
+	String input3;
+	String input4;
+	String input5;
 
 	//game state variables
 	private int rations; //stores the rations value, a number ranged [1-3]
@@ -696,6 +701,17 @@ public class GAME {
 				party.addPioneer(person3);
 				party.addPioneer(person4);
 				party.addPioneer(person5);
+				
+				input1 = txtPlayer1Name.getText();
+				lblPlayer1NameHealth.setText(input1 + " Health:");
+				input2 = txtPlayer2Name.getText();
+				lblPlayer2NameHealth.setText(input2 + " Health:");
+				input3 = txtPlayer3Name.getText();
+				lblPlayer3NameHealth.setText(input3 + " Health:");
+				input4 = txtPlayer4Name.getText();
+				lblPlayer4NameHealth.setText(input4 + " Health:");
+				input5 = txtPlayer5Name.getText();
+				lblPlayer5NameHealth.setText(input5 + " Health:");
 				
 				System.out.println(person1.getName()); 
 				
