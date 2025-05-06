@@ -26,6 +26,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 import javax.swing.JComboBox;
+import java.util.concurrent.TimeUnit;
 
 
 public class GAME {
@@ -60,6 +61,7 @@ public class GAME {
 	private boolean isMale = true;
 	public String[] trails = {"Oregon Trail", "Mormon Trail", "Californian Trail"};
 	JLabel lblScore;
+	JPanel ShopPanel;
 
 	//weather icons
 	ImageIcon sunnyIcon = new ImageIcon(getClass().getResource("/Images/Sunny.PNG"));
@@ -170,6 +172,18 @@ public class GAME {
 	        
 	        // Updates the running score every day
 	        updateScore();
+	        
+	        // Checks if game has ended and closes the game if they lost
+	        if (Popups.isGameDone == true) {
+	        	
+	        	try {
+					TimeUnit.SECONDS.sleep(1000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	        	System.exit(0);
+	        }
 	    });
 
 	    // Hook up the "Continue" button to start the game loop
@@ -189,19 +203,20 @@ public class GAME {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
+
+		ShopPanel = new JPanel();
+		ShopPanel.setBackground(new Color(156, 123, 82));
+		ShopPanel.setBounds(0, -3, 1283, 702);
+		frame.getContentPane().add(ShopPanel);
+		ShopPanel.setLayout(null);
+		ShopPanel.setVisible(false);
+		
 		GamePanel = new JPanel();
 		GamePanel.setBackground(new Color(0, 0, 0));
 		GamePanel.setBounds(0, 0, 1283, 699);
 		frame.getContentPane().add(GamePanel);
 		GamePanel.setLayout(null);
 		GamePanel.setVisible(false);
-		
-		JPanel ShopPanel = new JPanel();
-		ShopPanel.setBackground(new Color(156, 123, 82));
-		ShopPanel.setBounds(0, -3, 1283, 702);
-		frame.getContentPane().add(ShopPanel);
-		ShopPanel.setLayout(null);
-		ShopPanel.setVisible(false);
 		
 		lblImageHolder = new JLabel();
 		lblImageHolder.setBounds(684, -3, 661, 201);
@@ -1131,12 +1146,12 @@ public class GAME {
 		lblWallet.setBounds(947, 88, 218, 75);
 		ShopPanel.add(lblWallet);
 		
-		JLabel lblWalletAmount = new JLabel("$500.00");
+		JLabel lblWalletAmount = new JLabel();
 		lblWalletAmount.setHorizontalAlignment(SwingConstants.CENTER);
 		lblWalletAmount.setFont(new Font("Serif", Font.PLAIN, 25));
 		lblWalletAmount.setBounds(925, 0, 218, 52);
 		panel.add(lblWalletAmount);
-//		lblWalletAmount.setText("" + inventory.getSupply(SupplyType.CASH));
+		lblWalletAmount.setText("" + inventory.getSupply(SupplyType.CASH));
 		
 		JButton btnExitShop = new JButton("Exit Shop");
 		btnExitShop.addActionListener(new ActionListener() {
@@ -1363,4 +1378,8 @@ public class GAME {
 			lblScore.setText(totalScore + "");
 		}
 		 
+		public void openShopPanel() {
+			ShopPanel.setVisible(true);
+			
+		}
 }

@@ -6,11 +6,15 @@ import javax.swing.*;
  * (such as names, day to rest, etc.) and display when the user experiences an event. Each popup utilizes the JOptionPane class to show specific popups.
  * @author Parker West
  */
+
 public class Popups {
     private static LandmarkDescriptions landDesc = new LandmarkDescriptions(); //create landmark description instance
     private Perils peril = new Perils(); //create perils instance
+    private GAME game; // create game instance
     private int tradingCounter = 0; //track how many times the user has traded
-    private boolean isGameDone = false; //tracks if the game has ended  
+    public static boolean isGameDone = false; //tracks if the game has ended  
+    String[] options = {"Shop", "OK"};
+    
 
     /*******************
      *OPTION MENU ITEMS*
@@ -100,7 +104,7 @@ public class Popups {
                 JOptionPane.INFORMATION_MESSAGE,
                 null,
                 options,
-                options[0]);   // default selection is "Cross"
+                options[0]);  // Default
             //check the response and act based on that
             if (choice == 0) { //choosing to cross
                 if (peril.diesInRiver()) { //if the person dies from the river, tell them with a popup
@@ -142,7 +146,19 @@ public class Popups {
         }
         else if(landmark.equals("Fort Kearny")){ 
             //show Fort Kearny info
-            JOptionPane.showMessageDialog(null, landDesc.fortKearny, "Fort Kearny Information:", JOptionPane.INFORMATION_MESSAGE); 
+        	int choice = JOptionPane.showOptionDialog(
+        		    null,
+        		    landDesc.fortKearny,
+        		    "Fort Kearny Information:",
+        		    JOptionPane.DEFAULT_OPTION,
+        		    JOptionPane.INFORMATION_MESSAGE,
+        		    null,
+        		    options,
+        		    "Okay"
+        		);
+        	if (choice == 1) {
+        		game.openShopPanel();
+        	}
         }
         else if(landmark.equals("Chimney Rock")){ 
             //show Chimney Rock info
@@ -219,4 +235,5 @@ public class Popups {
     public boolean isGameDone() {
         return isGameDone; 
     }
+    
 }
