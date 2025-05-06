@@ -1,7 +1,7 @@
 /**
  * This class is what holds the entirety of the GUI for the Perils Along the Platte game. This is the parent function that 
  * connects all of the classes together.
- * @author Megan Gunnett, Parker West, Madalyn Jordan, Landon Bollenbacher
+ * @authors Megan Gunnett, Parker West, Madalyn Jordan, Landon Bollenbacher
  * @version 5.6
  * */
 
@@ -274,29 +274,6 @@ public class GAME {
 		frame.getContentPane().add(HuntingPanel);
 		HuntingPanel.setLayout(null);
 		HuntingPanel.setVisible(false);
-		lblNewLabel1 = new JLabel("Time");
-		lblNewLabel1.setBounds(338, 122, 49, 14);
-		HuntingPanel.add(lblNewLabel1);
-		// label to store the player's result
-		lblResult = new JLabel("");
-		lblResult.setHorizontalAlignment(SwingConstants.CENTER);
-		lblResult.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblResult.setBounds(217, 159, 209, 35);
-		HuntingPanel.add(lblResult);
-		txtFldResponse = new JTextField();
-		txtFldResponse.setHorizontalAlignment(SwingConstants.CENTER);
-		txtFldResponse.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		txtFldResponse.setBounds(170, 224, 96, 35);
-		HuntingPanel.add(txtFldResponse);
-		txtFldResponse.setColumns(10);
-		lblBang2Shoot = new JLabel("Type BANG to shoot");
-		lblBang2Shoot.setFont(new Font("Tw Cen MT", Font.BOLD, 25));
-		lblBang2Shoot.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBang2Shoot.setBounds(109, 11, 218, 24);
-		HuntingPanel.add(lblBang2Shoot);
-		
-		
-		
 		
 		// OptionsPanel that is attached to the GamePanel. Allows for resting, trading, etc.
 		JPanel OptionsPanel = new JPanel();
@@ -430,7 +407,7 @@ public class GAME {
 				        counter = 0;
 				        inventory.addSupply(SupplyType.AMMO, -5.0); //lose ammunition if you hunt
 				        timer.stop();
-				        // Resumes the travelling of the distance along the trail
+				        // Resumes the traveling of the distance along the trail
 				        travelDistance.resumeTimer();
 				        new Timer(2000, new ActionListener() {
 				            @Override
@@ -449,6 +426,8 @@ public class GAME {
 				});
 				
 
+				
+				
 				// the following are for the ASCII deer display
 				imageHolder = new JLabel("                                  \\      . .(");
 				imageHolder.setHorizontalAlignment(SwingConstants.LEFT);
@@ -535,6 +514,33 @@ public class GAME {
 		InventoryPanel.setBounds(894, 11, 308, 468);
 		OptionsPanel.add(InventoryPanel);
 		// ******************************************** END OF OPTIONS PANEL OBJECTS **************************************
+		
+		// ************************************* HUNTING MINIGAME LABELS ****************************************************
+		// Timer for player
+				lblNewLabel1 = new JLabel("Time");
+				lblNewLabel1.setBounds(338, 122, 49, 14);
+				HuntingPanel.add(lblNewLabel1);
+				
+				// label to store the player's result
+				lblResult = new JLabel("");
+				lblResult.setHorizontalAlignment(SwingConstants.CENTER);
+				lblResult.setFont(new Font("Tahoma", Font.PLAIN, 15));
+				lblResult.setBounds(217, 159, 209, 35);
+				HuntingPanel.add(lblResult);
+				
+				// Text field for player to type "bang"
+				txtFldResponse = new JTextField();
+				txtFldResponse.setHorizontalAlignment(SwingConstants.CENTER);
+				txtFldResponse.setFont(new Font("Tahoma", Font.PLAIN, 30));
+				txtFldResponse.setBounds(170, 224, 96, 35);
+				HuntingPanel.add(txtFldResponse);
+				txtFldResponse.setColumns(10);
+				
+				lblBang2Shoot = new JLabel("Type BANG to shoot");
+				lblBang2Shoot.setFont(new Font("Tw Cen MT", Font.BOLD, 25));
+				lblBang2Shoot.setHorizontalAlignment(SwingConstants.CENTER);
+				lblBang2Shoot.setBounds(109, 11, 218, 24);
+				HuntingPanel.add(lblBang2Shoot);
 		
 		//underlined label for the inventory text area
 		JLabel lblInventory = new JLabel("<html><u>Inventory</u>");
@@ -1432,7 +1438,7 @@ public class GAME {
 				 }
 				 
 				 if (p.getRecoveredStatus()) { 
-					 EventLogTextArea.append(p.getName() + " is now recovered!");
+//					 EventLogTextArea.append(p.getName() + " is now recovered!");
 				 }
 				 
 

@@ -52,7 +52,7 @@ public class Party {
 			int change = 0; //a cumulative value of each health penalty the pioneer suffers from
 			//start with checking if the pioneer is sick or recovered
 			if (p.isSick()) {
-				//check if the pioneer recovered from their sickness 
+//				check if the pioneer recovered from their sickness 
 				boolean recovered = p.getRecoveredStatus(); 
 				if (recovered) {
 					p.setSicknessBoolean(false); //set both values of isSick and theSickness
