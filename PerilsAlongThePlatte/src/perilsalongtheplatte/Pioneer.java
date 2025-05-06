@@ -45,7 +45,7 @@ public class Pioneer {
 	 * @param isSick Boolean status if the pioneer is sick or not. 
 	 */
 	public void setSicknessStatus(boolean isSick) {
-		Sickness status = peril.determineIfSick("Sunny", 1, 1, isSick); //IMPORTANT: FIGURE OUT HOW TO IMPORT RATIONS/SPPED
+		Sickness status = peril.determineIfSick(isSick);  
 		sicknessType = status; 
 	}
 	

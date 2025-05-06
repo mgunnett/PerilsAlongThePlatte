@@ -80,30 +80,27 @@ public class Perils {
     /**
      * A method to check what sickness a person is suffering from based on a random chance. Running this method will return the corresponding 
      * enum that the person is suffering from. This returned enum can then be used in the HealthPool to determine how much health to subtract. 
-     * @param weather Enum representation of the weather. 
-     * @param rations The current rations value from the GUI interface. 
-     * @param speed The current speed value from the GUI interface. 
      * @param isSick Boolean status of a person's sickness status. 
      * @return The enum a person suffers from based on chance. 
      */
-    public Sickness determineIfSick(String weather, int rations, int speed, boolean isSick) {
+    public Sickness determineIfSick(boolean isSick) {
     	if (isSick) { //only determine what sickness a person suffers from if they are sick
 	        int roll = rng.nextInt(100); //generate the random number
 	        if (roll >= 90) 
 	        	return Sickness.FEVER; 					 //10% chance of a fever
 	        if (roll >= 85) 
 	        	return Sickness.DEHYDRATION; 			 //5% chance 
-	        if (roll >= 80 && rations < 2) 
+	        if (roll >= 80 ) 
 	        	return Sickness.MALNUTRITION; 			 //5% chance 
-	        if (roll >= 75 && speed == 3) 
+	        if (roll >= 75) 
 	        	return Sickness.EXHAUSTION; 			 //5% chance
 	        if (roll >= 70) 
 	        	return Sickness.FOOD_POISONING; 		 //5% chance
 	        if (roll >= 60)
-	        	return Sickness.FLU; //10% chance
-	        if (roll >= 50 && weather == "Sunny")   //needs to be sunny to get hot
+	        	return Sickness.FLU; 					 //10% chance
+	        if (roll >= 50 )   
 	        	return Sickness.HYPERTHERMIA; 		     //10% chance
-	        if (roll >= 50 && weather == "Snowy")  //needs to be snowy to get cold
+	        if (roll >= 50)  
 	        	return Sickness.HYPOTHERMIA; 		     //10% chance 
 	        if (roll >= 30) 
 	        	return Sickness.CHOLERA; 				 //20% chance, most common and most deadly peril
