@@ -75,6 +75,7 @@ public class GAME {
 	private int counter = 0;
 	private int meat = 100;
 	private boolean closeGame = false;
+	String response1;
 
 	//custom game class instances
 	private Popups popup = new Popups(); 
@@ -215,6 +216,18 @@ public class GAME {
 		frame.getContentPane().add(HuntingPanel);
 		HuntingPanel.setLayout(null);
 		HuntingPanel.setVisible(false);
+		lblNewLabel1 = new JLabel("Time");
+		lblNewLabel1.setBounds(338, 122, 49, 14);
+		HuntingPanel.add(lblNewLabel1);
+
+		txtFldResponse = new JTextField();
+		//txtFldResponse.setText("");
+		
+		txtFldResponse.setHorizontalAlignment(SwingConstants.CENTER);
+		txtFldResponse.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		txtFldResponse.setBounds(170, 224, 96, 35);
+		HuntingPanel.add(txtFldResponse);
+		txtFldResponse.setColumns(10);
 		
 		JPanel OptionsPanel = new JPanel();
 		OptionsPanel.setLayout(null);
@@ -293,7 +306,9 @@ public class GAME {
 		JButton btnHunt = new JButton("Hunt");
 		btnHunt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				HuntingPanel.setVisible(true);
+				
 				GamePanel.setVisible(false);
 				
 				travelDistance.pauseTimer();
@@ -318,7 +333,9 @@ public class GAME {
 				lblResult.setBounds(217, 159, 209, 35);
 				HuntingPanel.add(lblResult);
 				
-				txtFldResponse = new JTextField();
+				
+				
+				//txtFldResponse = new JTextField();
 				//txtFldResponse.setText("");
 				txtFldResponse.addActionListener(new ActionListener() {
 				    public void actionPerformed(ActionEvent e) {
@@ -326,8 +343,9 @@ public class GAME {
 				        if (meat < 0) {
 				            meat = 0;
 				        }
-				        String response1 = txtFldResponse.getText().trim();
-				        if (response1.equalsIgnoreCase("bang")) {
+				        response1 = txtFldResponse.getText();
+				        System.out.println(response1);
+				        if (response1.trim().equalsIgnoreCase("bang")) {
 				            if (meat > 0) {
 				                lblResult.setText("You got " + meat + " meat.");
 				            } else {
@@ -340,11 +358,16 @@ public class GAME {
 				        txtFldResponse.setText("");
 				        counter = 0;
 				        timer.stop();
+				        timer.restart();
+				        counter = 0;
 				        travelDistance.resumeTimer();
+				        txtFldResponse.removeAll();
 				        new Timer(2000, new ActionListener() {
 				            @Override
 				            public void actionPerformed(ActionEvent evt) {
 				                txtFldResponse.setText("");
+				                counter = 0;
+				               
 				                HuntingPanel.setVisible(false);
 				                GamePanel.setVisible(true);
 				                ((Timer) evt.getSource()).stop();
@@ -353,15 +376,13 @@ public class GAME {
 				        }).start();
 				    }
 				});
-				txtFldResponse.setHorizontalAlignment(SwingConstants.CENTER);
-				txtFldResponse.setFont(new Font("Tahoma", Font.PLAIN, 30));
-				txtFldResponse.setBounds(170, 224, 96, 35);
-				HuntingPanel.add(txtFldResponse);
-				txtFldResponse.setColumns(10);
+//				txtFldResponse.setHorizontalAlignment(SwingConstants.CENTER);
+//				txtFldResponse.setFont(new Font("Tahoma", Font.PLAIN, 30));
+//				txtFldResponse.setBounds(170, 224, 96, 35);
+//				HuntingPanel.add(txtFldResponse);
+//				txtFldResponse.setColumns(10);
 				
-				lblNewLabel1 = new JLabel("Time");
-				lblNewLabel1.setBounds(338, 122, 49, 14);
-				HuntingPanel.add(lblNewLabel1);
+				
 				
 				JLabel lblt = new JLabel("                                   |  __T |");
 				lblt.setHorizontalAlignment(SwingConstants.LEFT);
@@ -1118,13 +1139,14 @@ public class GAME {
 		counter++;
 		lblNewLabel1.setText("" + counter);
 		meat -= 10;
+		response1 = txtFldResponse.getText();
 
-		if (closeGame == true) {
-			timer.stop();
-			
-			GamePanel.setVisible(true);
-			HuntingPanel.setVisible(false);
-		}
+//		if (closeGame == true) {
+//			timer.stop();
+//			
+//			GamePanel.setVisible(true);
+//			HuntingPanel.setVisible(false);
+//		}
 	}
 	
 	 private void updateDayAndDistanceLabel() {
@@ -1204,8 +1226,8 @@ public class GAME {
 		    meat = 100;// some initial value
 		    counter = 0;
 		    closeGame = false;
-		    txtFldResponse.setText("");
-		    lblResult.setText("");
+//		    txtFldResponse.setText("");
+//		    lblResult.setText("");
 		    lblNewLabel1.setText(""); // or whatever default
 		}
 	 
