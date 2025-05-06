@@ -1,3 +1,10 @@
+/**
+ * This class is what holds the entirety of the GUI for the Perils Along the Platte game. This is the parent function that 
+ * connects all of the classes together.
+ * @author Megan Gunnett, Parker West, Madalyn Jordan, Landon Bollenbacher
+ * @version 5.6
+ * */
+
 package perilsalongtheplatte;
 
 import java.awt.EventQueue;
@@ -32,36 +39,54 @@ import java.util.concurrent.TimeUnit;
 public class GAME {
 	//UI widgets
 	private JFrame frame;
+	// Holds the values of the player names chosen by the user
 	private JTextField txtPlayer1Name;
 	private JTextField txtPlayer2Name;
 	private JTextField txtPlayer3Name;
 	private JTextField txtPlayer4Name;
 	private JTextField txtPlayer5Name;
+	// Label to display how many days have passed
 	JLabel lblDaysPassed;
+	// Label to display how much distance the user has traveled
 	JLabel lblDistanceTraveled;
+	// Label to display the weather
 	JLabel lblWeather;
+	// The button that starts the actual game
 	JButton btnContinue;
-	JPanel GamePanel;
-	JPanel HuntingPanel;
-	JPanel StartingOptionsPanel;
+	// Label to display rations
 	JLabel lblRations;
+	// Spinner to control rations
 	JSpinner spinnerRations;
+	// Spinner to control speed
 	JSpinner spinnerSpeed;
+	// Label to display the distance until the next landmark is reached
 	JLabel lblDistanceUntilNextLandmark;
+	// Label to display the current date
 	JLabel lblDate;
+	// Text area to display the user's inventory
 	JTextArea inventoryTextArea;
+	// Text area to display the game's event log
 	JTextArea EventLogTextArea;
 	JLabel lblResult;
+	// Label to hold the images of the player traveling through different weather
 	JLabel lblImageHolder;
+	// Labels to hold each of the player's health values
 	JLabel lblName1HealthValue;
 	JLabel lblName2HealthValue;
 	JLabel lblName3HealthValue;
 	JLabel lblName4HealthValue;
 	JLabel lblName5HealthValue;
+	// Determines whether the player is male or female
 	private boolean isMale = true;
+	// An array holding the names of the three different trails
 	public String[] trails = {"Oregon Trail", "Mormon Trail", "Californian Trail"};
+	// Label to display the user's current score
 	JLabel lblScore;
+	// Class level panel declarations
 	JPanel ShopPanel;
+	JPanel GamePanel;
+	JPanel HuntingPanel;
+	JPanel StartingOptionsPanel;
 
 	//weather icons
 	ImageIcon sunnyIcon = new ImageIcon(getClass().getResource("/Images/Sunny.PNG"));
@@ -105,9 +130,6 @@ public class GAME {
 	private String weather; //stores the current weather
 	boolean isResting = false;
 
-	
-	
-	
 
 	/**
 	 * Launch the application.
@@ -126,7 +148,7 @@ public class GAME {
 	}
 
 	/**
-	 * Create the application.
+	 * Constructor that updates various aspects of the game depending on mainly the timer in TravelDistance
 	 */
 	public GAME() {
 	    // Initialize core game systems
@@ -202,13 +224,20 @@ public class GAME {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-			
+		
+		// Initializes the class' JFrame
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(0, 0, 0));
 		frame.setBounds(100, 100, 1300, 726);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		
+		
+		
+		// ********************************** JPANEL OBJECTS *************************************
+		
+		// StartingOptionsPanel that displays name selection, shop, gender, etc.
 		StartingOptionsPanel = new JPanel();
 		StartingOptionsPanel.setBounds(0, 0, 1283, 688);
 		StartingOptionsPanel.setBackground(new Color(154, 128, 71));
@@ -216,12 +245,14 @@ public class GAME {
 		StartingOptionsPanel.setLayout(null);
 		StartingOptionsPanel.setVisible(false);
 		
+		// WelcomePanel that displays the title and start button
 		JPanel WelcomePanel = new JPanel();
 		WelcomePanel.setBackground(new Color(154, 128, 71));
 		WelcomePanel.setBounds(0, 0, 1283, 689);
 		frame.getContentPane().add(WelcomePanel);
 		WelcomePanel.setLayout(null);
 
+		// ShopPanel that displays the game's shop so the user can buy things
 		ShopPanel = new JPanel();
 		ShopPanel.setBackground(new Color(156, 123, 82));
 		ShopPanel.setBounds(0, -3, 1283, 702);
@@ -229,6 +260,7 @@ public class GAME {
 		ShopPanel.setLayout(null);
 		ShopPanel.setVisible(false);
 		
+		// GamePanel that displays the actual game and allows for many different things
 		GamePanel = new JPanel();
 		GamePanel.setBackground(new Color(0, 0, 0));
 		GamePanel.setBounds(0, 0, 1283, 699);
@@ -236,11 +268,7 @@ public class GAME {
 		GamePanel.setLayout(null);
 		GamePanel.setVisible(false);
 		
-		lblImageHolder = new JLabel();
-		lblImageHolder.setBounds(684, -3, 661, 201);
-		GamePanel.add(lblImageHolder);
-		GamePanel.repaint();
-		
+		// HuntingPanel that holds the hunting minigame
 		HuntingPanel = new JPanel();
 		HuntingPanel.setBackground(new Color(154, 128, 71));
 		HuntingPanel.setBounds(100, 100, 450, 300);
@@ -248,18 +276,30 @@ public class GAME {
 		HuntingPanel.setLayout(null);
 		HuntingPanel.setVisible(false);
 		
+		// OptionsPanel that is attached to the GamePanel. Allows for resting, trading, etc.
 		JPanel OptionsPanel = new JPanel();
 		OptionsPanel.setLayout(null);
 		OptionsPanel.setBackground(new Color(154, 128, 71));
 		OptionsPanel.setBounds(25, 189, 1212, 490);
 		GamePanel.add(OptionsPanel);
+		// ******************************************* END OF JPANEL OBJECTS *****************************************
 		
+		// Image holder to display the images of oxen and wagon riding along the trails
+		lblImageHolder = new JLabel();
+		lblImageHolder.setBounds(684, -3, 661, 201);
+		GamePanel.add(lblImageHolder);
+		GamePanel.repaint();
+		
+		
+		
+		// **************************************** OPTIONS PANEL OBJECTS ***********************************************
+		
+		// Spinner object that can make the user travel faster or slower
 		spinnerSpeed = new JSpinner(new SpinnerNumberModel(1,1,3,1));
 		spinnerSpeed.setFont(new Font("Serif", Font.PLAIN, 20));
 		spinnerSpeed.setBackground(Color.WHITE);
 		spinnerSpeed.setBounds(115, 35, 172, 32);
 		OptionsPanel.add(spinnerSpeed);
-		
 		
 		JLabel lblSpeed = new JLabel("Speed:");
 		lblSpeed.setForeground(Color.BLACK);
@@ -273,7 +313,7 @@ public class GAME {
 		lblRations.setBounds(12, 78, 104, 32);
 		OptionsPanel.add(lblRations);
 		
-		//create a SpinnerNumberModel with bounds
+		// Spinner object that can make the user use less or more food for them & passengers
 		SpinnerNumberModel rationsModel = new SpinnerNumberModel(1, 1, 3, 1);
 	    spinnerRations = new JSpinner(rationsModel);
 	    spinnerRations.addChangeListener(e -> {
@@ -286,6 +326,7 @@ public class GAME {
 		spinnerRations.setBounds(115, 82, 172, 32);
 		OptionsPanel.add(spinnerRations);
 		
+		// Button that when pressed, allows the user to rest for their selected amount of days.
 		JButton btnRest = new JButton("Rest");
 		btnRest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -310,6 +351,7 @@ public class GAME {
 		btnRest.setBounds(16, 369, 145, 110);
 		OptionsPanel.add(btnRest);
 		
+		// button that when pressed, prompts the user for a trade deal
 		JButton btnTrade = new JButton("Trade");
 		btnTrade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -321,22 +363,20 @@ public class GAME {
 		btnTrade.setBounds(215, 369, 145, 110);
 		OptionsPanel.add(btnTrade);
 		
+		// Button that essentially controls the hunting minigame.
 		lblResult = new JLabel("");
 		JButton btnHunt = new JButton("Hunt");
 		btnHunt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// makes the hunting panel pop up
 				HuntingPanel.setVisible(true);
 				GamePanel.setVisible(false);
 				
+				// pauses the amount of days passing
 				travelDistance.pauseTimer();
 
+				// starts the timer count to determine how fast user types "bang"
 				timer.start();
-
-				imageHolder = new JLabel("                                  \\      . .(");
-				imageHolder.setHorizontalAlignment(SwingConstants.LEFT);
-				imageHolder.setBounds(95, 65, 246, 24);
-				HuntingPanel.add(imageHolder);
-				
 				
 				lblBang2Shoot = new JLabel("Type BANG to shoot");
 				lblBang2Shoot.setFont(new Font("Tw Cen MT", Font.BOLD, 25));
@@ -344,6 +384,7 @@ public class GAME {
 				lblBang2Shoot.setBounds(109, 11, 218, 24);
 				HuntingPanel.add(lblBang2Shoot);
 				
+				// label to store the player's result
 				lblResult.setText("");
 				lblResult.setHorizontalAlignment(SwingConstants.CENTER);
 				lblResult.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -354,10 +395,13 @@ public class GAME {
 				//txtFldResponse.setText("");
 				txtFldResponse.addActionListener(new ActionListener() {
 				    public void actionPerformed(ActionEvent e) {
-				        timer.stop();
-				        if (meat < 0) {
+				       // once user submits their answer (bang) the timer that was timing them will stop
+				    	timer.stop();
+				        // determines if they earned meat or not
+				    	if (meat < 0) {
 				            meat = 0;
 				        }
+				    	// Determines if you got meat or if you mmissed the deer
 				        String response1 = txtFldResponse.getText().trim();
 				        if (response1.equalsIgnoreCase("bang")) {
 				            if (meat > 0) {
@@ -368,10 +412,12 @@ public class GAME {
 				        } else {
 				            lblResult.setText("You missed. :(");
 				        }
+				        // resetting labels and the timer so you can play again in the future
 				        closeGame = true;
 				        txtFldResponse.setText("");
 				        counter = 0;
 				        timer.stop();
+				        // Resumes the travelling of the distance along the trail
 				        travelDistance.resumeTimer();
 				        new Timer(2000, new ActionListener() {
 				            @Override
@@ -394,6 +440,13 @@ public class GAME {
 				lblNewLabel1 = new JLabel("Time");
 				lblNewLabel1.setBounds(338, 122, 49, 14);
 				HuntingPanel.add(lblNewLabel1);
+				
+
+				// the following are for the ASCII deer display
+				imageHolder = new JLabel("                                  \\      . .(");
+				imageHolder.setHorizontalAlignment(SwingConstants.LEFT);
+				imageHolder.setBounds(95, 65, 246, 24);
+				HuntingPanel.add(imageHolder);
 				
 				JLabel lblt = new JLabel("                                   |  __T |");
 				lblt.setHorizontalAlignment(SwingConstants.LEFT);
@@ -473,6 +526,7 @@ public class GAME {
 		InventoryPanel.setBackground(new Color(220, 207, 180));
 		InventoryPanel.setBounds(894, 11, 308, 468);
 		OptionsPanel.add(InventoryPanel);
+		// ******************************************** END OF OPTIONS PANEL OBJECTS **************************************
 		
 		JLabel lblInventory = new JLabel("<html><u>Inventory</u>");
 		lblInventory.setHorizontalAlignment(SwingConstants.CENTER);
