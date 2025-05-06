@@ -25,6 +25,7 @@ import javax.swing.JTextPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
+import javax.swing.JComboBox;
 
 
 public class GAME {
@@ -57,6 +58,8 @@ public class GAME {
 	JLabel lblName4HealthValue;
 	JLabel lblName5HealthValue;
 	private boolean isMale = true;
+	public String[] trails = {"Oregon Trail", "Mormon Trail", "Californian Trail"};
+	JLabel lblScore;
 
 	//weather icons
 	ImageIcon sunnyIcon = new ImageIcon(getClass().getResource("/Images/Sunny.PNG"));
@@ -164,6 +167,9 @@ public class GAME {
 	        //check if the game ends
 	        checkIfGameIsDone();
 	        System.out.println("loop ran!");
+	        
+	        // Updates the running score every day
+	        updateScore();
 	    });
 
 	    // Hook up the "Continue" button to start the game loop
@@ -461,15 +467,15 @@ public class GAME {
 				StartingOptionsPanel.setVisible(false);
 			}
 		});
-		btnBuyIntroSupplies.setFont(new Font("Serif", Font.PLAIN, 30));
-		btnBuyIntroSupplies.setBounds(937, 357, 214, 95);
+		btnBuyIntroSupplies.setFont(new Font("Serif", Font.PLAIN, 45));
+		btnBuyIntroSupplies.setBounds(749, 187, 471, 115);
 		StartingOptionsPanel.add(btnBuyIntroSupplies);
 		
 		JLabel lblConstBuyIntroSupplies = new JLabel("Buy Starting Supplies!!!");
 		lblConstBuyIntroSupplies.setHorizontalAlignment(SwingConstants.CENTER);
 		lblConstBuyIntroSupplies.setForeground(new Color(255, 255, 255));
 		lblConstBuyIntroSupplies.setFont(new Font("Serif", Font.PLAIN, 30));
-		lblConstBuyIntroSupplies.setBounds(896, 308, 303, 46);
+		lblConstBuyIntroSupplies.setBounds(828, 130, 303, 46);
 		StartingOptionsPanel.add(lblConstBuyIntroSupplies);
 		
 		JPanel EventLogPanel = new JPanel();
@@ -556,6 +562,20 @@ public class GAME {
 		lblName5HealthValue.setFont(new Font("Serif", Font.PLAIN, 30));
 		lblName5HealthValue.setBounds(215, 313, 153, 32);
 		OptionsPanel.add(lblName5HealthValue);
+		
+		JLabel lblScoreConst = new JLabel("<html><u>Score</u>");
+		lblScoreConst.setHorizontalAlignment(SwingConstants.CENTER);
+		lblScoreConst.setForeground(Color.BLACK);
+		lblScoreConst.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblScoreConst.setBounds(390, 31, 93, 32);
+		OptionsPanel.add(lblScoreConst);
+
+		lblScore = new JLabel("");
+		lblScore.setHorizontalAlignment(SwingConstants.CENTER);
+		lblScore.setForeground(Color.BLACK);
+		lblScore.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblScore.setBounds(364, 74, 153, 32);
+		OptionsPanel.add(lblScore);
 		
 		JLabel lblConstDistanceUntilNext = new JLabel("Distance Until Next Landmark:");
 		lblConstDistanceUntilNext.setForeground(Color.WHITE);
@@ -779,6 +799,30 @@ public class GAME {
 		lblGender.setBounds(739, 30, 108, 39);
 		StartingOptionsPanel.add(lblGender);
 		
+		JLabel lblTrailSelection = new JLabel("Which trail would you like to travel?");
+		lblTrailSelection.setForeground(Color.WHITE);
+		lblTrailSelection.setFont(new Font("Serif", Font.PLAIN, 30));
+		lblTrailSelection.setBounds(38, 332, 497, 39);
+		StartingOptionsPanel.add(lblTrailSelection);
+
+		JComboBox TrailComboBox = new JComboBox<>(trails);
+		TrailComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String choice = TrailComboBox.getSelectedItem().toString();
+				if (choice == "Oregon Trail") {
+					Popups.oregonTrailInfo();
+				}
+				if (choice == "Californian Trail") {
+					Popups.californiaTrailInfo();
+				}
+				if (choice == "Mormon Trail") {
+					Popups.mormonTrailInfo();
+				}
+			}
+		});
+		TrailComboBox.setFont(new Font("Serif", Font.PLAIN, 30));
+		TrailComboBox.setBounds(91, 375, 321, 46);
+		StartingOptionsPanel.add(TrailComboBox);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(200, 186, 162));
@@ -1316,7 +1360,7 @@ public class GAME {
 			ScoreCalculation scoreCalculator = new ScoreCalculation(inventory.getTotalAmount(), party.getOverallHealth(), 
 																	party.getPartySize(), travelDistance.daysTraveled(), isMale); 
 			double totalScore = scoreCalculator.getScore();
-			//update labels here
+			lblScore.setText(totalScore + "");
 		}
 		 
 }
