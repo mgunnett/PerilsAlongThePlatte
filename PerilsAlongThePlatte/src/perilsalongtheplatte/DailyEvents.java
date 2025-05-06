@@ -2,6 +2,10 @@ package perilsalongtheplatte;
 
 import java.util.Random;
 
+/**
+ * This class handles all logic relating to the progression of time, and what events should play out. With this class, players can reach landmarks, decide to 
+ * cross rivers, and experience various weather conditions. The weather conditions use a random number generator to decide what weather event will play. 
+ */
 public class DailyEvents {
 	
 	private TravelDistance travelDistance;

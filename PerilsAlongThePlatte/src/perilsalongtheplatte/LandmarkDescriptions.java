@@ -1,7 +1,8 @@
 package perilsalongtheplatte;
 
-import javax.swing.JOptionPane;
-
+/**
+ * This class is a helper class and contains all the descriptions relating to various landmarks and events the user will encounter. 
+ */
 public class LandmarkDescriptions {
 	
 	//Kansas River description shown at river landmark

@@ -35,7 +35,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.JComboBox;
 import java.util.concurrent.TimeUnit;
 
-
+/**
+ * This class is the primary class of our game and controls everything relating to the GUI. The game advances with a timer construct, with every 3
+ * seconds simulating an in-game day. Pioneers can trade, buy supplies, rest, and suffer from many, many perils as they advance. They will also encounter educational popups
+ * when certain events are reached. Most of the logic relating to these events are stored within other classes. 
+ */
 public class GAME {
 	//UI widgets
 	private JFrame frame;

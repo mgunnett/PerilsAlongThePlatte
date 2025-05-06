@@ -3,6 +3,11 @@ import java.util.Random;
 import javax.swing.Timer;
 import java.awt.event.*;
 
+/**
+ * This class handles all logic relating to the progression of time, and what events should play out. With this class, players can reach landmarks and pass an in-game day of 3 seconds. 
+ * If the party reaches a landmark range, they will receive an educational popup about that location and have a choice to cross a river, if the landmark is a river, or 
+ * shop if they reach a fort. 
+ */ 
 public class TravelDistance {
 	
 	//declare public variables
