@@ -70,6 +70,12 @@ public class GAME {
 	ImageIcon windyIcon = new ImageIcon(getClass().getResource("/Images/Windy.PNG"));
 	ImageIcon stormyIcon = new ImageIcon(getClass().getResource("/Images/Stormy.PNG"));
 
+	// background icon
+	ImageIcon welcomeScreenIcon = new ImageIcon(getClass().getResource("/Images/canyon.jpg"));
+	
+	// starting options panel gif
+	ImageIcon pioneerGIF = new ImageIcon(getClass().getResource("/Images/wagons.gif"));
+	
 	//hunting game widgets
 	private JTextField txtFldResponse;
 	private ImageIcon icon;
@@ -202,7 +208,19 @@ public class GAME {
 		frame.setBounds(100, 100, 1300, 726);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
+		
+		StartingOptionsPanel = new JPanel();
+		StartingOptionsPanel.setBounds(0, 0, 1283, 688);
+		StartingOptionsPanel.setBackground(new Color(154, 128, 71));
+		frame.getContentPane().add(StartingOptionsPanel);
+		StartingOptionsPanel.setLayout(null);
+		StartingOptionsPanel.setVisible(false);
+		
+		JPanel WelcomePanel = new JPanel();
+		WelcomePanel.setBackground(new Color(154, 128, 71));
+		WelcomePanel.setBounds(0, 0, 1283, 689);
+		frame.getContentPane().add(WelcomePanel);
+		WelcomePanel.setLayout(null);
 
 		ShopPanel = new JPanel();
 		ShopPanel.setBackground(new Color(156, 123, 82));
@@ -222,13 +240,6 @@ public class GAME {
 		lblImageHolder.setBounds(684, -3, 661, 201);
 		GamePanel.add(lblImageHolder);
 		GamePanel.repaint();
-		
-		StartingOptionsPanel = new JPanel();
-		StartingOptionsPanel.setBounds(0, 0, 1283, 688);
-		StartingOptionsPanel.setBackground(new Color(154, 128, 71));
-		frame.getContentPane().add(StartingOptionsPanel);
-		StartingOptionsPanel.setLayout(null);
-		StartingOptionsPanel.setVisible(false);
 		
 		HuntingPanel = new JPanel();
 		HuntingPanel.setBackground(new Color(154, 128, 71));
@@ -761,19 +772,6 @@ public class GAME {
 		btnContinue.setBounds(312, 550, 572, 110);
 		StartingOptionsPanel.add(btnContinue);
 		
-		JPanel WelcomePanel = new JPanel();
-		WelcomePanel.setBackground(new Color(154, 128, 71));
-		WelcomePanel.setBounds(0, 0, 1283, 689);
-		frame.getContentPane().add(WelcomePanel);
-		WelcomePanel.setLayout(null);
-		
-		JLabel lblTitlePerils = new JLabel("Perils Along The Platte");
-		lblTitlePerils.setForeground(Color.BLACK);
-		lblTitlePerils.setFont(new Font("Serif", Font.PLAIN, 80));
-		lblTitlePerils.setBackground(new Color(220, 207, 180));
-		lblTitlePerils.setBounds(193, 5, 900, 102);
-		WelcomePanel.add(lblTitlePerils);
-		
 		JButton btnStart = new JButton("Start");
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -786,8 +784,22 @@ public class GAME {
 		});
 		btnStart.setBackground(new Color(220, 207, 180));
 		btnStart.setFont(new Font("Serif", Font.BOLD, 80));
-		btnStart.setBounds(193, 156, 815, 181);
+		btnStart.setBounds(241, 154, 815, 181);
 		WelcomePanel.add(btnStart);
+		
+		JLabel lblTitlePerils = new JLabel("Perils Along The Platte");
+		lblTitlePerils.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitlePerils.setForeground(Color.BLACK);
+		lblTitlePerils.setFont(new Font("Serif", Font.PLAIN, 80));
+		lblTitlePerils.setBackground(new Color(220, 207, 180));
+		lblTitlePerils.setBounds(193, 5, 900, 102);
+		WelcomePanel.add(lblTitlePerils);
+		
+		JLabel ImageHolder2 = new JLabel("");
+		ImageHolder2.setBounds(48, 109, 1188, 550);
+		WelcomePanel.add(ImageHolder2);
+		ImageHolder2.setIcon(welcomeScreenIcon);
+		
 		
 		JRadioButton rdbtnMale = new JRadioButton("Male");
 		rdbtnMale.setFont(new Font("Serif", Font.PLAIN, 35));
@@ -838,6 +850,11 @@ public class GAME {
 		TrailComboBox.setFont(new Font("Serif", Font.PLAIN, 30));
 		TrailComboBox.setBounds(91, 375, 321, 46);
 		StartingOptionsPanel.add(TrailComboBox);
+		
+		JLabel ImageHolder3 = new JLabel("");
+		ImageHolder3.setBounds(769, 313, 551, 226);
+		StartingOptionsPanel.add(ImageHolder3);
+		ImageHolder3.setIcon(pioneerGIF);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(200, 186, 162));
